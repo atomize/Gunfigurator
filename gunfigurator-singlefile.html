@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Gunfigurator BETA</title>
+  <meta name="description" content="Gunfigurator - by Berti">
+ 
+ 
+<style>
+  input:disabled {
+    background:#dddddd;
+}
+
+input:disabled+label{color:#ccc;}
+
+input[type=text]+label {
+    float: left;
+}
+
+  table {
+    border: 1px solid white;
+    padding: 0px;
+  }
+  
+  td {
+    border: 1px solid black;
+    padding: 0px;
+    width: 5%;
+    height: 0;
+    padding-bottom: 0%;
+    text-align: center;
+  }
+  
+  .hideme {
+    display: none;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background: #fff;
+    font-family: Verdana, sans-serif;
+  }
+  
+  #tabs {
+    width: auto;
+    margin: 0 auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-radius: 3px;
+  }
+  
+  input[type="radio"] {
+    display: none;
+  }
+  
+  label {
+    background: #e9e9e9;
+    display: inline-block;
+    margin-right: 2px;
+    border-radius: 3px;
+    padding: 14px 20px;
+    font-family: Arial;
+    font-size: 95%;
+    font-weight: 100;
+    color: black;
+    cursor: pointer;
+    text-shadow: 1px 1px white;
+    transition: background .3s;
+    -webkit-transition: background .3s;
+  }
+  
+  label:hover {
+    background: #d9d9d9;
+    color: #707070;
+  }
+  
+  #tableinput {
+    width: 30px;
+  }
+  
+  .tab {
+    min-height: 200px;
+    background: #d9d9d9;
+    display: none;
+    padding: 12px;
+    color: #444;
+    text-shadow: 1px 1px #fff;
+  }
+  
+  #toggle-tab1:checked ~ label[for="toggle-tab1"],
+  #toggle-tab2:checked ~ label[for="toggle-tab2"],
+  #toggle-tab3:checked ~ label[for="toggle-tab3"],
+  #toggle-tab4:checked ~ label[for="toggle-tab4"] {
+    background: #d9d9d9;
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-bottom: 18px;
+    color: #606060;
+    cursor: default;
+  }
+  
+
+  
+  #toggle-tab1:checked ~ #tab1,
+  #toggle-tab2:checked ~ #tab2,
+  #toggle-tab3:checked ~ #tab3,
+  #toggle-tab4:checked ~ #tab4 {
+    display: block;
+  }
+  
+  .wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(4, [col] auto);
+    grid-template-rows: repeat(2, [row] auto);
+    background-color: #fff;
+    color: #444;
+  }
+  
+  .box {
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 80%;
+        text-shadow: 0px 0px #fff;
+
+  }
+  
+  .box .box {
+    background-color: #ccc;
+    color: #444;
+  }
+  
+  .z {
+    grid-column: col / span 1;
+    grid-row: row;
+    height: 400px;
+  }
+  .aa {
+    grid-column: col / span 4;
+    grid-row: row;
+    height: 400px;
+    overflow: scroll;
+  }
+  
+  .b {
+    grid-column: col 2  / span 3;
+    grid-row: row;
+  }
+  
+  .c {
+    grid-column: col / span 2;
+    grid-row: row 2;
+  }
+  
+  .d {
+    grid-column: col 3 / span 2;
+    grid-row: row 2;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .e {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+  
+  .f {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  
+  .g {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  
+
+</style>
+</head>
+
+<body>
+
+  <div id="tabs">
+    <input type="radio" name="tabs" id="toggle-tab1" checked="checked" />
+    <label for="toggle-tab1">Global Config</label>
+
+    <input type="radio" disabled="disabled" name="tabs" id="toggle-tab2" />
+    <label for="toggle-tab2">Poloniex</label>
+
+    <input type="radio" disabled="disabled" name="tabs" id="toggle-tab3" />
+    <label for="toggle-tab3">Bittrex</label>
+
+    <input type="radio" disabled="disabled" name="tabs" id="toggle-tab4" />
+    <label id="krakenlabel" for="toggle-tab4">Kraken</label>
+
+    <div id="tab1" class="tab">
+      <div class="wrapper">
+        <div class="box z">
+          <input type="checkbox" id="c1" onclick="enableExchange(this,'toggle-tab2')" name="c1" />
+          <label id="enablepololabel" for="c1">Enable Poloniex</label>
+          <input type="checkbox" id="c2" onclick="enableExchange(this,'toggle-tab3')" name="c1" />
+          <label id="enabletrexlabel" for="c2">Enable Bittrex</label>
+          <input type="checkbox" id="c3" onclick="enableExchange(this,'toggle-tab4')" name="c1" />
+          <label id="enablekraklabel" for="c3">Enable Kraken</label>
+          
+
+        </div>
+        <div class="box b">B</div>
+
+        <div class="box c">C</div>
+        <div class="box d">
+          <div class="box e">E</div>
+          <div class="box f">F</div>
+          <div class="box g">G</div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div id="tab2" class="tab">
+      <div>
+
+        <INPUT type="button" value="Add Pair" onclick="addRow('poloniex')" />
+
+        <INPUT type="button" value="Remove Pair" onclick="deleteRow('poloniex')" />
+        <INPUT type="button" value="Generate Config Pair" onclick="generateConfig('poloniex')" />
+        <INPUT type="button" value="sdfgsdg" onclick="openInNewTab()" />
+
+        <div class="wrapper">
+
+          <div class="box aa">
+
+            <TABLE id="poloniex" border="1">
+              <tr>
+                <th>Select</th>
+                <th>Pair</th>
+                <th>Period</th>
+                <th>Trading Limit</th>
+                <th>Security MArgin</th>
+                <th>MinVol2Buy</th>
+                <th>BUYSTRAT</th>
+                <th>SELLSTRAT</th>
+                <th>Low BB</th>
+                <th>High BB</th>
+                <th>BUY_LEVEL (Gain BUY)</th>
+                <th>GAIN (SELL)</th>
+                <th>PPBUY</th>
+                <th>PPSELL</th>
+                <th>SGBUY1</th>
+                <th>SGBUY2</th>
+                <th>SGBUY3</th>
+                <th>SGSELL1</th>
+                <th>SGSELL2</th>
+                <th>SGSELL3</th>
+              </tr>
+              <TR>
+                <TD>
+                  <INPUT type="checkbox" name="chk" />
+                </TD>
+                <TD>
+                  <SELECT id="selectNumber" type="select-one" onChange="addRowClass(this);" name="country"></SELECT>
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <SELECT id="selectStrat" type="select-one" name="country">
+          <option value="BB">BB</option>
+          <option value="GAIN">GAIN</option>
+          <option value="PING PONG">PING PONG</option>
+          <option value="STEPGAIN">STEP GAIN</option>
+          </SELECT>
+                </TD>
+                <TD>
+                  <SELECT id="selectStrat" type="select-one" name="country">
+                  <option value="BB">BB</option>
+          <option value="GAIN">GAIN</option>
+          <option value="PING PONG">PING PONG</option>
+          <option value="STEPGAIN">STEP GAIN</option>
+          </SELECT>
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+
+
+              </TR>
+            </TABLE>
+          </div>
+
+          <div class="box c">
+            <input class="poloniexapi" type="text" />POLONIEX KEY
+            <br>
+            <br>
+            <input class="poloniexapi" type="text" />POLONIEX SECRET
+          </div>
+          <div class="box d">
+            <div class="box e">E</div>
+            <div class="box f">F</div>
+            <div class="box g">G</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div id="tab3" class="tab">
+      <div>
+
+        <INPUT type="button" value="Add Pair" onclick="addRow('bittrex')" />
+
+        <INPUT type="button" value="Remove Pair" onclick="deleteRow('bittrex')" />
+        <INPUT type="button" value="Generate Config Pair" onclick="generateConfig('bittrex')" />
+
+        <div class="wrapper">
+
+          <div class="box aa">
+
+            <TABLE id="bittrex" border="1">
+              <tr>
+                <th>Select</th>
+                <th>Pair</th>
+                <th>Period</th>
+                <th>Trading Limit</th>
+                <th>Security MArgin</th>
+                <th>MinVol2Buy</th>
+                <th>BUYSTRAT</th>
+                <th>SELLSTRAT</th>
+                <th>Low BB</th>
+                <th>High BB</th>
+                <th>BUY_LEVEL (Gain BUY)</th>
+                <th>GAIN (SELL)</th>
+                <th>PPBUY</th>
+                <th>PPSELL</th>
+                <th>SGBUY1</th>
+                <th>SGBUY2</th>
+                <th>SGBUY3</th>
+                <th>SGSELL1</th>
+                <th>SGSELL2</th>
+                <th>SGSELL3</th>
+              </tr>
+              <TR>
+                <TD>
+                  <INPUT type="checkbox" name="chk" />
+                </TD>
+                <TD>
+                  <SELECT id="fillTrex" type="select-one" onChange="addRowClass(this);" name=""></SELECT>
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <SELECT id="selectStrat" type="select-one" name="">
+          <option value="BB">BB</option>
+          <option value="GAIN">GAIN</option>
+          <option value="PING PONG">PING PONG</option>
+          <option value="STEPGAIN">STEP GAIN</option>
+          </SELECT>
+                </TD>
+                <TD>
+                  <SELECT id="selectStrat" type="select-one" name="">
+                  <option value="BB">BB</option>
+          <option value="GAIN">GAIN</option>
+          <option value="PING PONG">PING PONG</option>
+          <option value="STEPGAIN">STEP GAIN</option>
+          </SELECT>
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+                <TD>
+                  <INPUT id="tableinput" type="text" name="txt" />
+                </TD>
+
+
+              </TR>
+            </TABLE>
+          </div>
+
+          <div class="box c">
+            <input class="bittrexapi" type="text" />BITTREX KEY
+            <br>
+            <br>
+            <input class="bittrexapi" type="text" />BITTREX SECRET
+          </div>
+          <div class="box d">
+            <div class="box e">E</div>
+            <div class="box f">F</div>
+            <div class="box g">G</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="tab4" class="tab">
+      Sed tempus ante vitae orci fringilla, sit amet posuere mi imperdiet.
+    </div>
+  </div>
+
+</body>
+   <script>
+ 	pairOptions();
+	pairOptions2();
+	function addRow(tableID) {
+	  var table = document.getElementById(tableID);
+	  var rowCount = table.rows.length;
+	  var row = table.insertRow(rowCount);
+	  var colCount = table.rows[0].cells.length;
+	  for (var i = 0; i < colCount; i++) {
+	    var newcell = row.insertCell(i);
+	    newcell.innerHTML = table.rows[1].cells[i].innerHTML;
+	    //alert(newcell.childNodes);
+	    switch (newcell.childNodes[0].type) {
+	      case "text":
+	        newcell.childNodes[0].value = "";
+	        break;
+	      case "checkbox":
+	        newcell.childNodes[0].checked = false;
+	        break;
+	      case "select-one":
+	        newcell.childNodes[0].selectedIndex = 0;
+	        break;
+	    }
+	  }
+	}
+
+  		function deleteRow(tableID) {
+  		    try {
+  		        var table = document.getElementById(tableID);
+  		        var rowCount = table.rows.length;
+
+  		        for (var i = 0; i < rowCount; i++) {
+  		            var row = table.rows[i];
+  		            var chkbox = row.cells[0].childNodes[1];
+  		            if (null != chkbox && true == chkbox.checked) {
+  		                if (rowCount <= 2) {
+  		                    alert("Cannot delete all the rows.");
+  		                    break;
+  		                }
+  		                table.deleteRow(i);
+  		                rowCount--;
+  		                i--;
+  		            }
+
+
+  		        }
+  		    } catch (e) {
+  		        alert(e);
+  		    }
+  		}
+
+
+	function pairOptions() {
+	  var select = document.getElementById("selectNumber");
+	  var options = ["Select a pair...", "BTC_AMP", "BTC_ARDR", "BTC_BCN", "BTC_BCY", "BTC_BELA", "BTC_BLK", "BTC_BTCD", "BTC_BTM", "BTC_BTS", "BTC_BURST", "BTC_CLAM", "BTC_DASH", "BTC_DCR", "BTC_DGB", "BTC_DOGE", "BTC_EMC", "BTC_ETC", "BTC_ETH", "BTC_EXP", "BTC_FCT", "BTC_FLDC", "BTC_FLO", "BTC_GAME", "BTC_GNO", "BTC_GNT", "BTC_GRC", "BTC_HUC", "BTC_LBC", "BTC_LSK", "BTC_LTC", "BTC_MAID", "BTC_NAUT", "BTC_NAV", "BTC_NEOS", "BTC_NMC", "BTC_NOTE", "BTC_NXC", "BTC_NXT", "BTC_OMNI", "BTC_PASC", "BTC_PINK", "BTC_POT", "BTC_PPC", "BTC_RADS", "BTC_REP", "BTC_RIC", "BTC_SBD", "BTC_SC", "BTC_SJCX", "BTC_STEEM", "BTC_STR", "BTC_STRAT", "BTC_SYS", "BTC_VIA", "BTC_VRC", "BTC_VTC", "BTC_XBC", "BTC_XCP", "BTC_XEM", "BTC_XMR", "BTC_XPM", "BTC_XRP", "BTC_XVC", "BTC_ZEC", "ETH_ETC", "ETH_GNO", "ETH_GNT", "ETH_LSK", "ETH_REP", "ETH_STEEM", "ETH_ZEC"];
+	  for (var i = 0; i < options.length; i++) {
+	    var opt = options[i];
+	    var el = document.createElement("option");
+	    el.textContent = opt;
+	    el.value = opt;
+	    select.appendChild(el);
+	  }
+	}
+	function pairOptions2() {
+	  var select = document.getElementById("fillTrex");
+	  	    //  var row = bittrex.rows[1];
+	     //var chkbox = row.cells[1].childNodes[0];
+	  var options = ["Select a pair...","BTC-1ST","BTC-2GIVE","BTC-ABY","BTC-ADT","BTC-ADX","BTC-AEON","BTC-AGRS","BTC-AMP","BTC-ANT","BTC-APX","BTC-ARDR","BTC-ARK","BTC-AUR","BTC-BAT","BTC-BAY","BTC-BCC","BTC-BCY","BTC-BITB","BTC-BLITZ","BTC-BLK","BTC-BLOCK","BTC-BNT","BTC-BRK","BTC-BRX","BTC-BSD","BTC-BTA","BTC-BTCD","BTC-BTS","BTC-BURST","BTC-BYC","BTC-CANN","BTC-CFI","BTC-CLAM","BTC-CLOAK","BTC-CLUB","BTC-COVAL","BTC-CPC","BTC-CRB","BTC-CRW","BTC-CURE","BTC-CVC","BTC-DAR","BTC-DASH","BTC-DCR","BTC-DCT","BTC-DGB","BTC-DGD","BTC-DMD","BTC-DOGE","BTC-DOPE","BTC-DRACO","BTC-DTB","BTC-DYN","BTC-EBST","BTC-EDG","BTC-EFL","BTC-EGC","BTC-EMC","BTC-EMC2","BTC-ENRG","BTC-ERC","BTC-ETC","BTC-ETH","BTC-EXCL","BTC-EXP","BTC-FAIR","BTC-FCT","BTC-FLDC","BTC-FLO","BTC-FTC","BTC-FUN","BTC-GAM","BTC-GAME","BTC-GBG","BTC-GBYTE","BTC-GCR","BTC-GEO","BTC-GLD","BTC-GNO","BTC-GNT","BTC-GOLOS","BTC-GRC","BTC-GRS","BTC-GUP","BTC-HKG","BTC-HMQ","BTC-INCNT","BTC-INFX","BTC-IOC","BTC-ION","BTC-IOP","BTC-KMD","BTC-KORE","BTC-LBC","BTC-LGD","BTC-LMC","BTC-LSK","BTC-LTC","BTC-LUN","BTC-MAID","BTC-MCO","BTC-MEME","BTC-MLN","BTC-MONA","BTC-MTL","BTC-MUE","BTC-MUSIC","BTC-MYST","BTC-NAUT","BTC-NAV","BTC-NBT","BTC-NEO","BTC-NEOS","BTC-NLG","BTC-NMR","BTC-NXC","BTC-NXS","BTC-NXT","BTC-OK","BTC-OMG","BTC-OMNI","BTC-PART","BTC-PAY","BTC-PDC","BTC-PINK","BTC-PIVX","BTC-PKB","BTC-POT","BTC-PPC","BTC-PTC","BTC-PTOY","BTC-QRL","BTC-QTUM","BTC-QWARK","BTC-RADS","BTC-RBY","BTC-RDD","BTC-REP","BTC-RISE","BTC-RLC","BTC-SBD","BTC-SC","BTC-SEC","BTC-SEQ","BTC-SHIFT","BTC-SIB","BTC-SLR","BTC-SLS","BTC-SNGLS","BTC-SNRG","BTC-SNT","BTC-SPHR","BTC-SPR","BTC-START","BTC-STEEM","BTC-STORJ","BTC-STRAT","BTC-SWIFT","BTC-SWT","BTC-SYNX","BTC-SYS","BTC-THC","BTC-TIME","BTC-TKN","BTC-TKS","BTC-TRIG","BTC-TRST","BTC-TRUST","BTC-TX","BTC-UBQ","BTC-UNB","BTC-UNO","BTC-VIA","BTC-VOX","BTC-VRC","BTC-VRM","BTC-VTC","BTC-VTR","BTC-WAVES","BTC-WINGS","BTC-XAUR","BTC-XBB","BTC-XCP","BTC-XDN","BTC-XEL","BTC-XEM","BTC-XLM","BTC-XMG","BTC-XMR","BTC-XMY","BTC-XRP","BTC-XST","BTC-XVC","BTC-XVG","BTC-XWC","BTC-XZC","BTC-ZCL","BTC-ZEC","BTC-ZEN","ETH-1ST","ETH-ADT","ETH-ADX","ETH-ANS","ETH-ANT","ETH-BAT","ETH-BCC","ETH-BNT","ETH-BTS","ETH-CFI","ETH-CRB","ETH-CVC","ETH-DASH","ETH-DGB","ETH-DGD","ETH-ETC","ETH-FCT","ETH-FUN","ETH-GNO","ETH-GNT","ETH-GUP","ETH-HMQ","ETH-LGD","ETH-LTC","ETH-LUN","ETH-MCO","ETH-MTL","ETH-MYST","ETH-NMR","ETH-OMG","ETH-PAY","ETH-PTOY","ETH-QRL","ETH-QTUM","ETH-REP","ETH-RLC","ETH-SC","ETH-SNGLS","ETH-SNT","ETH-STORJ","ETH-STRAT","ETH-TIME","ETH-TKN","ETH-TRST","ETH-WAVES","ETH-WINGS","ETH-XEM","ETH-XLM","ETH-XMR","ETH-XRP","ETH-ZEC","USDT-ANS","USDT-BCC","USDT-BTC","USDT-DASH","USDT-ETC","USDT-ETH","USDT-LTC","USDT-XMR","USDT-XRP","USDT-ZEC","BTC-SAFEX","BTC-NEO","ETH-NEO","USDT-NEO"];
+	  for (var i = 0; i < options.length; i++) {
+	    var opt = options[i];
+	    var el = document.createElement("option");
+	    el.textContent = opt;
+	    el.value = opt;
+	    select.appendChild(el);
+	  }
+	}
+	function enableExchange(cbox, exchange) {
+	  var input = document.getElementById(exchange);
+
+	  if (cbox.checked) {
+	    input.removeAttribute('disabled'); // Set the input type to 'text', making it a text box.
+	  } else {
+	    input.setAttribute("disabled", "disabled");
+	  }
+	}
+
+	function addRowClass(selector) {
+	  var classtoadd = selector.value;
+	  selector.parentElement.parentElement.className =classtoadd;
+	}
+
+
+function generateConfig(tableID){
+	var table = document.getElementById(tableID);
+	    var rowCount = table.rows.length;
+	    var outputs = [];
+	  		        for (var i = 1; i < rowCount; i++) {
+  		            var row = table.rows[i];
+  		            var chkbox = row.cells[0].childNodes[1];
+  		            if (null != chkbox && true == chkbox.checked) {
+  		           	console.log(row.cells[19].childNodes[1].value);
+  		           	var DEFAULT_CURRENCY_PAIR = row.className;
+	        var DEFAULT_MARKET_EXCHANGE = table.id;
+	        var apiKey = document.getElementsByClassName(DEFAULT_MARKET_EXCHANGE + "api")[0].value
+	        var apiSecret = document.getElementsByClassName(DEFAULT_MARKET_EXCHANGE + "api")[1].value
+
+	        var pairConfig = `var config = {
+                              DEBUG_LOG: false,
+                              REALLY_WANT_IT: false,
+                              BUY_SMALL_PORTION: 1,
+                              INSUFFICIENT_FUNDS_ON_SELL_FIX: 0.0005,
+                              INSUFFICIENT_FUNDS_ON_BUY_FIX: 0.0005,
+                              SELL_ON_START: false,
+                              CANCEL_SELL_ORDERS_ON_START: false,
+                              CANCEL_BUY_ORDERS_ON_START: false,
+                              CANCEL_OPEN_ORDERS_ON_START: false,
+                              MAX_LATEST_PRICES: 300, 
+                              MAX_LATEST_PRICES_TREND: 30, 
+                              MAX_LATEST_DIRECTIONS: 30, 
+                              MAX_LAST_ORDERS: 5, 
+                              PERIOD: ` + row.cells[2].childNodes[1].value + `, 
+                              SAVEFILE_SUFFIX: '-save.json',
+                              DEFAULT_MARKET_NAME: '` + table.id + `',
+                              DEFAULT_CURRENCY_PAIR: '` + row.className + `', 
+                              BTC_TRADING_LIMIT: ` + row.cells[3].childNodes[1].value + `, 
+                              SECURITY_MARGIN: ` + row.cells[4].childNodes[1].value + `, 
+                              MIN_VOLUME_TO_BUY: ` + row.cells[5].childNodes[1].value + `,  
+                              BUY_STRATEGY: '` + row.cells[6].childNodes[1].value + `', 
+                              SELL_STRATEGY: '` + row.cells[7].childNodes[1].value + `', 
+                              LOW_BB: ` + row.cells[8].childNodes[1].value + `, 
+                              HIGH_BB: ` + row.cells[9].childNodes[1].value + `, 
+                              BUY_LEVEL: ` + row.cells[10].childNodes[1].value + `, 
+                              GAIN: ` + row.cells[11].childNodes[1].value + `, 
+                              PINGPONG_BUY: ` + row.cells[12].childNodes[1].value + `, 
+                              PINGPONG_SELL: ` + row.cells[13].childNodes[1].value + `, 
+                              BUYLVL1: ` + row.cells[14].childNodes[1].value + `, 
+                              BUYLVL2: ` + row.cells[15].childNodes[1].value + `, 
+                              BUYLVL3: ` + row.cells[16].childNodes[1].value + `, 
+                              SELLLVL1: ` + row.cells[17].childNodes[1].value + `, 
+                              SELLLVL2: ` + row.cells[18].childNodes[1].value + `, 
+                              SELLLVL3: ` + row.cells[19].childNodes[1].value + `, 
+                              BITTREX_KEY: '',
+                              BITTREX_SECRET: '',
+                              BITTREX_PRICE_METHOD:'ohlc',
+                              BITTREX_VWA_1_INTERVAL: 0.02,
+                              BITTREX_VWA_2_INTERVAL: 0.04,
+                              KRAKEN_ASSET_PAIR: 'XETHXXBT',
+                              KRAKEN_KEY: '',
+                              KRAKEN_SECRET: '',
+                              KRAKEN_PRICE_METHOD:'ohlc',
+                              KRAKEN_VWA_1_INTERVAL: 0.02,
+                              KRAKEN_VWA_2_INTERVAL: 0.04,
+                              POLONIEX_KEY: '` + apiKey + `',
+                              POLONIEX_SECRET: '` + apiSecret + `',
+                              POLONIEX_PRICE_METHOD:'vwa',
+                              POLONIEX_VWA_1_INTERVAL: 0.02,
+                              POLONIEX_VWA_2_INTERVAL: 0.04,
+                              BOT_SLEEP_DELAY: (1000) * 60, 
+                              BOT_ON_FAIL_DELAY: (1000) * 60, 
+                              BOT_MAX_LIFETIME: 999999999, 
+                              API_CALLS_DELAY: 777,
+                              ALERT_ON_NO_FUNDS: false,  
+                              SMTP_EMAIL: '%40@gmail.com',
+                              ALERT_EMAIL: '********',
+                              SMTP_PASSWORD: '**********',
+                              SMTP: true,
+                              SMTP_PROTOCOL: 'SMTPS',
+                              SMTP_HOST: 'smtp.gmail.com',
+                              MAX_LATEST_PRICES_SHOWN: 0, 
+                              SHOW_LASTEST_DIRECTIONS: false,  
+                              MAX_LATEST_DIRECTIONS_SHOWN: 0, 
+                              LASTEST_DIRECTIONS_LIST_WIDTH: 0, 
+                              BTC_BALANCE: 2 
+                              };`;
+  		           //	console.log(pairConfig);
+  		          // 	htmlstring = pairConfig.replace(/(,)/gm, ",<br>");
+outputs.push(pairConfig);
+
+  		            }
+  		          // 	var win = window.open("", '_blank');
+
+  		        }
+  		        				for (var e = 0; e <= outputs.length; e++) {console.log(outputs[e]);}
+
+	}
+	
+function openInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.document.write("<p>content");
+  win.focus();
+}
+
+
+  </script>
+
+</html>
+
