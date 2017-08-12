@@ -5,496 +5,936 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Gunfigurator BETA</title>
-  <meta name="description" content="Gunfigurator - by Berti">
- 
- 
+  <meta name="description" content="A Config Generator for Gunbot 4.0.6">
+
 <style>
-  input:disabled {
-    background:#dddddd;
+*{margin:0;padding:0;}
+
+body{
+  background:#fff;
+	font-family:Verdana,sans-serif;
 }
 
-input:disabled+label{color:#ccc;}
-
-input[type=text]+label {
-    float: left;
+#tabs{
+	width:auto;
+  margin:0 auto;
+  margin-top:2%;
+  margin-bottom:2%;
+  border-radius:3px;
 }
 
-  table {
-    border: 1px solid white;
-    padding: 0px;
-  }
-  
-  td {
-    border: 1px solid black;
-    padding: 0px;
-    width: 5%;
-    height: 0;
-    padding-bottom: 0%;
-    text-align: center;
-  }
-  
-  .hideme {
-    display: none;
-  }
-  
-  * {
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
+input[type="radio"]{
+	display:none;
+}
+
+label{
+  background:#e9e9e9;
+	display:inline-block;
+	margin-right:2px;
+  border-radius:3px;
+	padding:14px 20px;
+  font-family:Arial;
+  font-size:95%;
+  font-weight:700;
+  color:#777;
+	cursor:pointer;
+  text-shadow:1px 1px #fff;
+  transition:background .3s;
+  -webkit-transition:background .3s;
+}
+
+label:hover{
+  background:#d9d9d9;
+  color:#707070;
+}
+
+.tab{
+	min-height:200px;
+	background:#d9d9d9;
+	display:none;
+	padding:12px;
+  color:#444;
+  text-shadow:1px 1px #fff;
+}
+
+#toggle-tab1:checked ~ label[for="toggle-tab1"],#toggle-tab2:checked ~ label[for="toggle-tab2"],#toggle-tab3:checked ~ label[for="toggle-tab3"],#toggle-tab4:checked ~ label[for="toggle-tab4"],#toggle-tab5:checked ~ label[for="toggle-tab5"]{
+  background:#d9d9d9;
+  margin-bottom:0;
+  border-bottom-left-radius:0;
+  border-bottom-right-radius:0;
+  padding-bottom:18px;
+  color:#606060;
+  cursor:default;
+}
+
+#toggle-tab1:checked ~ #tab1,#toggle-tab2:checked ~ #tab2,#toggle-tab3:checked ~ #tab3,#toggle-tab4:checked ~ #tab4,#toggle-tab5:checked ~ #tab5{
+  display:block;
+}
+.datagrid table {
+    border-collapse: collapse;
+    text-align: left;
+    width: 100%;
+}
+.datagrid {
+    font: normal 12px/150% Verdana, Arial, Helvetica, sans-serif;
     background: #fff;
-    font-family: Verdana, sans-serif;
-  }
-  
-  #tabs {
-    width: auto;
-    margin: 0 auto;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    border-radius: 3px;
-  }
-  
-  input[type="radio"] {
-    display: none;
-  }
-  
-  label {
-    background: #e9e9e9;
-    display: inline-block;
-    margin-right: 2px;
-    border-radius: 3px;
-    padding: 14px 20px;
-    font-family: Arial;
-    font-size: 95%;
-    font-weight: 100;
-    color: black;
-    cursor: pointer;
-    text-shadow: 1px 1px white;
-    transition: background .3s;
-    -webkit-transition: background .3s;
-  }
-  
-  label:hover {
-    background: #d9d9d9;
-    color: #707070;
-  }
-  
-  #tableinput {
-    width: 30px;
-  }
-  
-  .tab {
-    min-height: 200px;
-    background: #d9d9d9;
-    display: none;
-    padding: 12px;
-    color: #444;
-    text-shadow: 1px 1px #fff;
-  }
-  
-  #toggle-tab1:checked ~ label[for="toggle-tab1"],
-  #toggle-tab2:checked ~ label[for="toggle-tab2"],
-  #toggle-tab3:checked ~ label[for="toggle-tab3"],
-  #toggle-tab4:checked ~ label[for="toggle-tab4"] {
-    background: #d9d9d9;
-    margin-bottom: 0;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    padding-bottom: 18px;
-    color: #606060;
-    cursor: default;
-  }
-  
-
-  
-  #toggle-tab1:checked ~ #tab1,
-  #toggle-tab2:checked ~ #tab2,
-  #toggle-tab3:checked ~ #tab3,
-  #toggle-tab4:checked ~ #tab4 {
-    display: block;
-  }
-  
-  .wrapper {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(4, [col] auto);
-    grid-template-rows: repeat(2, [row] auto);
-    background-color: #fff;
-    color: #444;
-  }
-  
-  .box {
-    background-color: #444;
-    color: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    font-size: 80%;
-        text-shadow: 0px 0px #fff;
-
-  }
-  
-  .box .box {
-    background-color: #ccc;
-    color: #444;
-  }
-  
-  .z {
-    grid-column: col / span 1;
-    grid-row: row;
-    height: 400px;
-  }
-  .aa {
-    grid-column: col / span 4;
-    grid-row: row;
-    height: 400px;
     overflow: scroll;
-  }
-  
-  .b {
-    grid-column: col 2  / span 3;
-    grid-row: row;
-  }
-  
-  .c {
-    grid-column: col / span 2;
-    grid-row: row 2;
-  }
-  
-  .d {
-    grid-column: col 3 / span 2;
-    grid-row: row 2;
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  .e {
-    grid-column: 1 / 3;
-    grid-row: 1;
-  }
-  
-  .f {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  
-  .g {
-    grid-column: 2;
-    grid-row: 2;
-  }
-  
-
+    border: 1px solid #003A57;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.datagrid table td,
+.datagrid table th {
+    padding: 3px 10px;
+    text-align:center;
+}
+.datagrid table thead th {
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #003A57), color-stop(1, #003A57));
+    background: -moz-linear-gradient( center top, #003A57 5%, #003A57 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#003A57', endColorstr='#003A57');
+    background-color: #003A57;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: bold;
+    border-left: 1px solid #003A57;
+}
+.datagrid table thead th:first-child {
+    border: none;
+}
+.datagrid table tbody td {
+    color: #00557F;
+    border-left: 1px solid #E1EEF4;
+    font-size: 12px;
+    border-bottom: 1px solid #E1EEF4;
+    font-weight: normal;
+}
+.datagrid table tbody .alt td {
+    background: #E1EEf4;
+    color: #00557F;
+}
+.datagrid table tbody td:first-child {
+    border-left: none;
+}
+.datagrid table tbody tr:last-child td {
+    border-bottom: none;
+}
+input[type="text"] {
+	width:40px;
+	text-align:center;
+	}
+.widetext {
+	width:100%;
+	}
+	.datagrid::-webkit-scrollbar { 
+  /* This is the magic bit */
+  display: none;
+}
 </style>
 </head>
-
 <body>
+	
+<!-!>
+<div id="tabs">
 
-  <div id="tabs">
-    <input type="radio" name="tabs" id="toggle-tab1" checked="checked" />
-    <label for="toggle-tab1">Global Config</label>
+  <input type="radio" name="tabs" id="toggle-tab1" checked="checked" />
+  <label for="toggle-tab1">Global Config</label>
 
-    <input type="radio" disabled="disabled" name="tabs" id="toggle-tab2" />
-    <label for="toggle-tab2">Poloniex</label>
+  <input type="radio" name="tabs" id="toggle-tab2" />
+  <label for="toggle-tab2">Poloniex</label>
 
-    <input type="radio" disabled="disabled" name="tabs" id="toggle-tab3" />
-    <label for="toggle-tab3">Bittrex</label>
+  <input type="radio" name="tabs" id="toggle-tab3" />
+  <label for="toggle-tab3">Bittrex</label>
 
-    <input type="radio" disabled="disabled" name="tabs" id="toggle-tab4" />
-    <label id="krakenlabel" for="toggle-tab4">Kraken</label>
+  <input type="radio" name="tabs" id="toggle-tab4" disabled/>
+  <label for="toggle-tab4">Kraken SOON</label>
+<input type="radio" name="tabs" id="toggle-tab5" disabled/>
+  <label for="toggle-tab5">Cryptopia SOON</label>
+<input type="button" onclick="test();"name="tabs" id="genbutton" style="display:none;" />
+  <label for="genbutton">GENERATE</label>
 
-    <div id="tab1" class="tab">
-      <div class="wrapper">
-        <div class="box z">
-          <input type="checkbox" id="c1" onclick="enableExchange(this,'toggle-tab2')" name="c1" />
-          <label id="enablepololabel" for="c1">Enable Poloniex</label>
-          <input type="checkbox" id="c2" onclick="enableExchange(this,'toggle-tab3')" name="c1" />
-          <label id="enabletrexlabel" for="c2">Enable Bittrex</label>
-          <input type="checkbox" id="c3" onclick="enableExchange(this,'toggle-tab4')" name="c1" />
-          <label id="enablekraklabel" for="c3">Enable Kraken</label>
-          
+  <div id="tab1" class="tab">
+	    		<form id="testForm">
 
-        </div>
-        <div class="box b">B</div>
-
-        <div class="box c">C</div>
-        <div class="box d">
-          <div class="box e">E</div>
-          <div class="box f">F</div>
-          <div class="box g">G</div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div id="tab2" class="tab">
-      <div>
-
-        <INPUT type="button" value="Add Pair" onclick="addRow('poloniex')" />
-
-        <INPUT type="button" value="Remove Pair" onclick="deleteRow('poloniex')" />
-        <INPUT type="button" value="Generate Config Pair" onclick="generateConfig('poloniex')" />
-        <INPUT type="button" value="sdfgsdg" onclick="openInNewTab()" />
-
-        <div class="wrapper">
-
-          <div class="box aa">
-
-            <TABLE id="poloniex" border="1">
-              <tr>
-                <th>Select</th>
-                <th>Pair</th>
-                <th>Period</th>
-                <th>Trading Limit</th>
-                <th>Security MArgin</th>
-                <th>MinVol2Buy</th>
-                <th>BUYSTRAT</th>
-                <th>SELLSTRAT</th>
-                <th>Low BB</th>
-                <th>High BB</th>
-                <th>BUY_LEVEL (Gain BUY)</th>
-                <th>GAIN (SELL)</th>
-                <th>PPBUY</th>
-                <th>PPSELL</th>
-                <th>SGBUY1</th>
-                <th>SGBUY2</th>
-                <th>SGBUY3</th>
-                <th>SGSELL1</th>
-                <th>SGSELL2</th>
-                <th>SGSELL3</th>
-              </tr>
-              <TR>
-                <TD>
-                  <INPUT type="checkbox" name="chk" />
-                </TD>
-                <TD>
-                  <SELECT id="selectNumber" type="select-one" onChange="addRowClass(this);" name="country"></SELECT>
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <SELECT id="selectStrat" type="select-one" name="country">
-          <option value="BB">BB</option>
-          <option value="GAIN">GAIN</option>
-          <option value="PING PONG">PING PONG</option>
-          <option value="STEPGAIN">STEP GAIN</option>
-          </SELECT>
-                </TD>
-                <TD>
-                  <SELECT id="selectStrat" type="select-one" name="country">
-                  <option value="BB">BB</option>
-          <option value="GAIN">GAIN</option>
-          <option value="PING PONG">PING PONG</option>
-          <option value="STEPGAIN">STEP GAIN</option>
-          </SELECT>
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-
-
-              </TR>
-            </TABLE>
-          </div>
-
-          <div class="box c">
-            <input class="poloniexapi" type="text" />POLONIEX KEY
-            <br>
-            <br>
-            <input class="poloniexapi" type="text" />POLONIEX SECRET
-          </div>
-          <div class="box d">
-            <div class="box e">E</div>
-            <div class="box f">F</div>
-            <div class="box g">G</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div id="tab3" class="tab">
-      <div>
-
-        <INPUT type="button" value="Add Pair" onclick="addRow('bittrex')" />
-
-        <INPUT type="button" value="Remove Pair" onclick="deleteRow('bittrex')" />
-        <INPUT type="button" value="Generate Config Pair" onclick="generateConfig('bittrex')" />
-
-        <div class="wrapper">
-
-          <div class="box aa">
-
-            <TABLE id="bittrex" border="1">
-              <tr>
-                <th>Select</th>
-                <th>Pair</th>
-                <th>Period</th>
-                <th>Trading Limit</th>
-                <th>Security MArgin</th>
-                <th>MinVol2Buy</th>
-                <th>BUYSTRAT</th>
-                <th>SELLSTRAT</th>
-                <th>Low BB</th>
-                <th>High BB</th>
-                <th>BUY_LEVEL (Gain BUY)</th>
-                <th>GAIN (SELL)</th>
-                <th>PPBUY</th>
-                <th>PPSELL</th>
-                <th>SGBUY1</th>
-                <th>SGBUY2</th>
-                <th>SGBUY3</th>
-                <th>SGSELL1</th>
-                <th>SGSELL2</th>
-                <th>SGSELL3</th>
-              </tr>
-              <TR>
-                <TD>
-                  <INPUT type="checkbox" name="chk" />
-                </TD>
-                <TD>
-                  <SELECT id="fillTrex" type="select-one" onChange="addRowClass(this);" name=""></SELECT>
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <SELECT id="selectStrat" type="select-one" name="">
-          <option value="BB">BB</option>
-          <option value="GAIN">GAIN</option>
-          <option value="PING PONG">PING PONG</option>
-          <option value="STEPGAIN">STEP GAIN</option>
-          </SELECT>
-                </TD>
-                <TD>
-                  <SELECT id="selectStrat" type="select-one" name="">
-                  <option value="BB">BB</option>
-          <option value="GAIN">GAIN</option>
-          <option value="PING PONG">PING PONG</option>
-          <option value="STEPGAIN">STEP GAIN</option>
-          </SELECT>
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-                <TD>
-                  <INPUT id="tableinput" type="text" name="txt" />
-                </TD>
-
-
-              </TR>
-            </TABLE>
-          </div>
-
-          <div class="box c">
-            <input class="bittrexapi" type="text" />BITTREX KEY
-            <br>
-            <br>
-            <input class="bittrexapi" type="text" />BITTREX SECRET
-          </div>
-          <div class="box d">
-            <div class="box e">E</div>
-            <div class="box f">F</div>
-            <div class="box g">G</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="tab4" class="tab">
-      Sed tempus ante vitae orci fringilla, sit amet posuere mi imperdiet.
-    </div>
+<div class="datagrid">
+	<div id="strategies">
+  <table>
+    <thead>
+      <tr>
+        <th>Strategy</th>
+        <th>Trading Limit</th>
+        <th>Period</th>
+        <th>High BB</th>
+        <th>Low BB</th>
+        <th>Buy Level</th>
+        <th>Gain</th>
+        <th>PP Buy</th>
+        <th>PP Sell</th>
+        <th>SG Buy Level</th>
+        <th>Buy Level 1</th>
+        <th>Buy Level 1</th>
+        <th>Buy Level 1</th>
+        <th>SG Sell Level</th>
+        <th>Sell Level 1</th>
+        <th>Sell Level 1</th>
+        <th>Sell Level 1</th>
+        <th>Double Up?</th>
+        <th>Minimum to Buy</th>
+        <th>Minimum to Sell</th>
+        <th>Stop Limit</th>
+        <th>Sell Only?</th>
+        <th>Panic Sell?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pure BB</td>
+<td><input name="strategies.bb.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.bb.PERIOD" value="15" type="text"></input></td>
+<td><input name="strategies.bb.HIGH_BB" value="40" type="text"></input></td>
+<td><input name="strategies.bb.LOW_BB" value="40" type="text"></input></td>
+<td><input name="strategies.bb.BUY_LEVEL" value="0.1" type="text"></input></td>
+<td><input name="strategies.bb.GAIN" value="2" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.bb.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.bb.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.bb.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.bb.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.bb.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.bb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+      </tr>
+      <tr class="alt">
+        <td>BB/Gain</td>
+<td><input name="strategies.bbgain.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.bbgain.PERIOD" value="15" type="text"></input></td>
+<td><input name="strategies.bbgain.HIGH_BB" value="40" type="text"></input></td>
+<td><input name="strategies.bbgain.LOW_BB" value="40" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.bbgain.GAIN" value="2" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.bbgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.bbgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.bbgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.bbgain.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.bbgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.bbgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr>
+        <td>BB/PP</td>
+<td><input name="strategies.bbpp.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.bbpp.PERIOD" value="15" type="text"></input></td>
+<td><input name="strategies.bbpp.HIGH_BB" value="40" type="text"></input></td>
+<td><input name="strategies.bbpp.LOW_BB" value="40" type="text"></input></td>
+<td><input name="strategies.bbpp.BUY_LEVEL" value="0.1" type="text"></input></td>
+<td><input name="strategies.bbpp.GAIN" value="2" type="text"></input></td>
+<td><input name="strategies.bbpp.PP_BUY" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.bbpp.PP_SELL" value="0.12345678" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.bbpp.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.bbpp.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.bbpp.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.bbpp.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.bbpp.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.bbpp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr class="alt">
+        <td>BB/Step Gain</td>
+<td><input name="strategies.bbstepgain.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.bbstepgain.PERIOD" value="15" type="text"></input></td>
+<td><input name="strategies.bbstepgain.HIGH_BB" value="40" type="text"></input></td>
+<td><input name="strategies.bbstepgain.LOW_BB" value="40" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.bbstepgain.GAIN" value="2" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.bbstepgain.BUYLVL" value="0.1" type="text"></input></td>
+<td><input name="strategies.bbstepgain.BUYLVL1" value="1" type="text"></input></td>
+<td><input name="strategies.bbstepgain.BUYLVL2" value="3" type="text"></input></td>
+<td><input name="strategies.bbstepgain.BUYLVL3" value="5" type="text"></input></td>
+<td><input name="strategies.bbstepgain.SELLLVL" value="2" type="text"></input></td>
+<td><input name="strategies.bbstepgain.SELLLVL1" value="2" type="text"></input></td>
+<td><input name="strategies.bbstepgain.SELLLVL2" value="5" type="text"></input></td>
+<td><input name="strategies.bbstepgain.SELLLVL3" value="10" type="text"></input></td>
+<td><input name="strategies.bbstepgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.bbstepgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.bbstepgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.bbstepgain.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.bbstepgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.bbstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr>
+        <td>Pure Gain</td>
+<td><input name="strategies.gain.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.gain.PERIOD" value="15" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text"disabled></input></td>
+<td><input name="strategies.gain.BUY_LEVEL" value="0.1" type="text"></input></td>
+<td><input name="strategies.gain.GAIN" value="2" type="text"></input></td>
+<td><input name="strategies.gain.PP_BUY" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.gain.PP_SELL" value="0.12345678" type="text"></input></td>
+<td><input name="strategies.gain.BUYLVL" value="0.1" type="text"></input></td>
+<td><input name="strategies.gain.BUYLVL1" value="1" type="text"></input></td>
+<td><input name="strategies.gain.BUYLVL2" value="3" type="text"></input></td>
+<td><input name="strategies.gain.BUYLVL3" value="5" type="text"></input></td>
+<td><input name="strategies.gain.SELLLVL" value="2" type="text"></input></td>
+<td><input name="strategies.gain.SELLLVL1" value="2" type="text"></input></td>
+<td><input name="strategies.gain.SELLLVL2" value="5" type="text"></input></td>
+<td><input name="strategies.gain.SELLLVL3" value="10" type="text"></input></td>
+<td><input name="strategies.gain.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.gain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.gain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.gain.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.gain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.gain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr class="alt">
+        <td>Gain/BB</td>
+<td><input name="strategies.gainbb.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.gainbb.PERIOD" value="15" type="text"></input></td>
+<td><input name="strategies.gainbb.HIGH_BB" value="40" type="text"></input></td>
+<td><input name="strategies.gainbb.LOW_BB" value="40" type="text"></input></td>
+<td><input name="strategies.gainbb.BUY_LEVEL" value="0.1" type="text"></input></td>
+<td><input name="strategies.gainbb.GAIN" value="2" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.gainbb.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.gainbb.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.gainbb.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.gainbb.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.gainbb.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.gainbb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr>
+        <td>Gain/PP</td>
+<td><input name="strategies.gainpp.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.gainpp.PERIOD" value="15" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text"disabled></input></td>
+<td><input name="strategies.gainpp.BUY_LEVEL" value="0.1" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.gainpp.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.gainpp.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.gainpp.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.gainpp.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.gainpp.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.gainpp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr class="alt">
+        <td>Gain/Step Gain</td>
+ <td><input name="strategies.gainstepgain.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.gainstepgain.PERIOD" value="15" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text"disabled></input></td>
+<td><input name="strategies.gainstepgain.BUY_LEVEL" value="0.1" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.gainstepgain.SELLLVL" value="2" type="text"></input></td>
+<td><input name="strategies.gainstepgain.SELLLVL1" value="2" type="text"></input></td>
+<td><input name="strategies.gainstepgain.SELLLVL2" value="5" type="text"></input></td>
+<td><input name="strategies.gainstepgain.SELLLVL3" value="10" type="text"></input></td>
+<td><input name="strategies.gainstepgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.gainstepgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.gainstepgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.gainstepgain.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.gainstepgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.gainstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr>
+        <td>Ping Pong</td>
+<td><input name="strategies.pp.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.pp.PERIOD" value="15" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.pp.PP_BUY" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.pp.PP_SELL" value="0.12345678" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.pp.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.pp.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.pp.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.pp.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.pp.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.pp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr class="alt">
+        <td>PP/BB</td>
+ <td><input name="strategies.ppbb.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.ppbb.PERIOD" value="15" type="text"></input></td>
+<td><input name="strategies.ppbb.HIGH_BB" value="40" type="text"></input></td>
+<td><input name="strategies.ppbb.LOW_BB" value="40" type="text"></input></td>
+<td><input name="strategies.ppbb.BUY_LEVEL" value="0.1" type="text"></input></td>
+<td><input name="strategies.ppbb.GAIN" value="2" type="text"></input></td>
+<td><input name="strategies.ppbb.PP_BUY" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.ppbb.PP_SELL" value="0.12345678" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.ppbb.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.ppbb.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.ppbb.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.ppbb.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.ppbb.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.ppbb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr>
+        <td>PP/Gain</td>
+<td><input name="strategies.ppgain.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.ppgain.PERIOD" value="15" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.ppgain.BUY_LEVEL" value="0.1" type="text"></input></td>
+<td><input name="strategies.ppgain.GAIN" value="2" type="text"></input></td>
+<td><input name="strategies.ppgain.PP_BUY" value="0.00000001" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.ppgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.ppgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.ppgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.ppgain.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.ppgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.ppgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr class="alt">
+        <td>PP/Step Gain</td>
+<td><input name="strategies.ppstepgain.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.ppstepgain.PERIOD" value="15" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.ppstepgain.PP_BUY" value="0.00000001" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.ppstepgain.BUYLVL" value="0.1" type="text"></input></td>
+<td><input name="strategies.ppstepgain.BUYLVL1" value="1" type="text"></input></td>
+<td><input name="strategies.ppstepgain.BUYLVL2" value="3" type="text"></input></td>
+<td><input name="strategies.ppstepgain.BUYLVL3" value="5" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.ppstepgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.ppstepgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.ppstepgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.ppstepgain.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.ppstepgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.ppstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr>
+        <td>Step Gain</td>
+<td><input name="strategies.stepgain.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.stepgain.PERIOD" value="15" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.stepgain.BUYLVL" value="0.1" type="text"></input></td>
+<td><input name="strategies.stepgain.BUYLVL1" value="1" type="text"></input></td>
+<td><input name="strategies.stepgain.BUYLVL2" value="3" type="text"></input></td>
+<td><input name="strategies.stepgain.BUYLVL3" value="5" type="text"></input></td>
+<td><input name="strategies.stepgain.SELLLVL" value="2" type="text"></input></td>
+<td><input name="strategies.stepgain.SELLLVL1" value="2" type="text"></input></td>
+<td><input name="strategies.stepgain.SELLLVL2" value="5" type="text"></input></td>
+<td><input name="strategies.stepgain.SELLLVL3" value="10" type="text"></input></td>
+<td><input name="strategies.stepgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.stepgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.stepgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.stepgain.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.stepgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.stepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr class="alt">
+        <td>Step Gain/BB</td>
+<td><input name="strategies.stepgainbb.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.stepgainbb.PERIOD" value="15" type="text"></input></td>
+<td><input name="strategies.stepgainbb.HIGH_BB" value="40" type="text"></input></td>
+<td><input name="strategies.stepgainbb.LOW_BB" value="40" type="text"></input></td>
+<td><input name="strategies.stepgainbb.BUY_LEVEL" value="0.1" type="text"></input></td>
+<td><input name="strategies.stepgainbb.GAIN" value="2" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.stepgainbb.BUYLVL" value="0.1" type="text"></input></td>
+<td><input name="strategies.stepgainbb.BUYLVL1" value="1" type="text"></input></td>
+<td><input name="strategies.stepgainbb.BUYLVL2" value="3" type="text"></input></td>
+<td><input name="strategies.stepgainbb.BUYLVL3" value="5" type="text"></input></td>
+<td><input name="strategies.stepgainbb.SELLLVL" value="2" type="text"></input></td>
+<td><input name="strategies.stepgainbb.SELLLVL1" value="2" type="text"></input></td>
+<td><input name="strategies.stepgainbb.SELLLVL2" value="5" type="text"></input></td>
+<td><input name="strategies.stepgainbb.SELLLVL3" value="10" type="text"></input></td>
+<td><input name="strategies.stepgainbb.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.stepgainbb.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.stepgainbb.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.stepgainbb.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.stepgainbb.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.stepgainbb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr>
+        <td>Step Gain/Gain</td>
+<td><input name="strategies.stepgaingain.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.stepgaingain.PERIOD" value="15" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.stepgaingain.GAIN" value="2" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.stepgaingain.BUYLVL" value="0.1" type="text"></input></td>
+<td><input name="strategies.stepgaingain.BUYLVL1" value="1" type="text"></input></td>
+<td><input name="strategies.stepgaingain.BUYLVL2" value="3" type="text"></input></td>
+<td><input name="strategies.stepgaingain.BUYLVL3" value="5" type="text"></input></td>
+<td><input name="strategies.stepgaingain.SELLLVL" value="2" type="text"></input></td>
+<td><input name="strategies.stepgaingain.SELLLVL1" value="2" type="text"></input></td>
+<td><input name="strategies.stepgaingain.SELLLVL2" value="5" type="text"></input></td>
+<td><input name="strategies.stepgaingain.SELLLVL3" value="10" type="text"></input></td>
+<td><input name="strategies.stepgaingain.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.stepgaingain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.stepgaingain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.stepgaingain.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.stepgaingain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.stepgaingain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+      <tr class="alt">
+        <td>Step Gain/PP</td>
+<td><input name="strategies.stepgainpp.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
+<td><input name="strategies.stepgainpp.PERIOD" value="15" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.stepgainpp.PP_SELL" value="0.12345678" type="text"></input></td>
+<td><input name="strategies.stepgainpp.BUYLVL" value="0.1" type="text"></input></td>
+<td><input name="strategies.stepgainpp.BUYLVL1" value="1" type="text"></input></td>
+<td><input name="strategies.stepgainpp.BUYLVL2" value="3" type="text"></input></td>
+<td><input name="strategies.stepgainpp.BUYLVL3" value="5" type="text"></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.stepgainpp.DOUBLE_UP" type="checkbox"></input></td>
+<td><input name="strategies.stepgainpp.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
+<td><input name="strategies.stepgainpp.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
+<td><input name="strategies.stepgainpp.STOP_LIMIT" value="60" type="text"></input></td>
+<td><select name="strategies.stepgainpp.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
+<td><select name="strategies.stepgainpp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+      </tr>
+    </tbody>
+  </table>
   </div>
+</div>
 
-</body>
-   <script>
- 	pairOptions();
-	pairOptions2();
+<div class="datagrid">
+  <table>
+    <thead>
+      <tr>
+        <th>INFO</th>
+        <th>Poloniex</th>
+        <th>Bittrex</th>
+        <th>Kraken</th>
+        <th>Cryptopia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="alt">
+        <td>KEY </td>
+        <td><input name="exchanges.poloniex.api" type="text" value="******************" placeholder="Poloniex API Key" style="width:100%"></input></td>
+        <td><input name="exchanges.bittrex.api" type="text" value="******************" placeholder="Bittrex API Key" style="width:100%""></input></td>
+        <td><input name="exchanges.kraken.api" type="text" value="******************" placeholder="Kraken API Key" style="width:100%"></input></td>
+        <td><input name="exchanges.cryptopia.api" type="text" value="******************" placeholder="Cryptopia API Key" style="width:100%"></input></td>
+      </tr>
+      <tr class="alt">
+        <td>Secret</td>
+        <td><input name="exchanges.poloniex.secret" type="password" value="******************" placeholder="Poloniex API Secret" class="widetext"></input></td>
+        <td><input name="exchanges.bittrex.secret" type="password" value="******************" placeholder="Bittrex API Secret" class="widetext"></input></td>
+        <td><input name="exchanges.kraken.secret" type="password" value="******************" placeholder="Kraken API Secret" class="widetext"></input></td>
+        <td><input name="exchanges.cryptopia.secret" type="password" value="******************" placeholder="Cryptopia API Secret" class="widetext"></input></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="bot">
+<div class="datagrid">
+  <table>
+    <thead>
+      <tr>
+        <th>Debug?</th>
+        <th>Period Storage Ticker</th>
+        <th>Interval Ticker Update</th>
+        <th>BUY Timeout</th>
+        <th>SELL Timeout</th>
+        <th>Enable Watch Mode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><select name="bot.debug" ><option value="true">TRUE</option><option value="false">FALSE</option></select></td>
+        <td><input name="bot.period_storage_ticker" value="300" type="text"></td>
+        <td><input name="bot.interval_ticker_update" value="25000" type="text"></td>
+        <td><input name="bot.timeout_buy" value="60000" type="text"></td>
+        <td><input name="bot.timeout_sell" value="60000" type="text"></td>
+        <td><select name="bot.WATCH_MODE" ><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+</form>
+
+  <div id="tab2" class="tab">
+<div id="addPairDiv">
+		<input type="button" value="Add Pair" onclick="addRow('poloniex')"/> <input type="button" value="Remove Pair" onclick="deleteRow('poloniex')"/>
+<form id="testForm2">
+<div class="datagrid">
+  <table id="poloniex">
+	  
+    <thead>
+      <tr>
+		 <th>Select</th>
+        <th>Pair</th>
+        <th>Strategy</th>
+
+      </tr>
+    </thead>
+    <tbody>
+       <tr>
+		   <td><input name="" type="checkbox"></input></td>
+        <td><select id="selectNumber" type="select-one" onChange="setClassForPair(this, 'poloniex');" name=""></select></td>
+        <td><select id="tradestrat" type="select-one" onChange="setClassForPair(this, 'poloniex');" name="">
+			<option value=""> Select a strategy...</option>
+           <option value="bb"> Pure BB</option>
+          <option value="bbgain">BB/GAIN</option>
+          <option value="bbstepgain">BB/STEP GAIN</option>
+          <option value="bbpp">BB/PING PONG</option>        
+          <option value="gain">GAIN</option>
+          <option value="gainbb">GAIN/BB</option>
+          <option value="gainpp">GAIN/PING PONG</option>
+          <option value="gainstepgain">GAIN/STEP GAIN</option>
+          <option value="pp">PING PONG</option>
+          <option value="ppbb">PP/BB</option>
+          <option value="ppgain">PP/GAIN</option>
+          <option value="ppstepgain">PP/STEP GAIN</option>
+          <option value="stepgain">STEP GAIN</option>
+          <option value="stepgainbb">STEP GAIN/BB</option>
+          <option value="stepgaingain">STEP GAIN/GAIN</option>
+          <option value="stepgainpp">STEP GAIN/PP</option>
+          
+          </select>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+  </div>
+</form>
+  <div id="tab3" class="tab">
+<div id="addPairDiv">
+	<input type="button" value="Add Pair" onclick="addRow('bittrex')"/> <input type="button" value="Remove Pair" onclick="deleteRow('bittrex')"/>
+	<form id="testForm3">
+<div class="datagrid">
+    <table id="bittrex">
+	  
+    <thead>
+      <tr>
+		 <th>Select</th>
+        <th>Pair</th>
+        <th>Strategy</th>
+
+      </tr>
+    </thead>
+    <tbody>
+       <tr>
+		   <td><input name="" type="checkbox"></input></td>
+        <td><select id="selectNumber2" type="select-one" onChange="setClassForPair(this,'bittrex');" name=""></select></td>
+        <td><select id="tradestrat2" type="select-one" onChange="setClassForPair(this, 'bittrex');" name="">
+			<option value=""> Select a strategy...</option>
+           <option value="bb"> Pure BB</option>
+          <option value="bbgain">BB/GAIN</option>
+          <option value="bbstepgain">BB/STEP GAIN</option>
+          <option value="bbpp">BB/PING PONG</option>        
+          <option value="gain">GAIN</option>
+          <option value="gainbb">GAIN/BB</option>
+          <option value="gainpp">GAIN/PING PONG</option>
+          <option value="gainstepgain">GAIN/STEP GAIN</option>
+          <option value="pp">PING PONG</option>
+          <option value="ppbb">PP/BB</option>
+          <option value="ppgain">PP/GAIN</option>
+          <option value="ppstepgain">PP/STEP GAIN</option>
+          <option value="stepgain">STEP GAIN</option>
+          <option value="stepgainbb">STEP GAIN/BB</option>
+          <option value="stepgaingain">STEP GAIN/GAIN</option>
+          <option value="stepgainpp">STEP GAIN/PP</option>
+          
+          </select>
+      </tr>
+    </tbody>
+  </table>
+
+</form>
+</div>
+</div>
+  </div>
+      
+
+  <div id="tab4" class="tab">
+<div id="addPairDiv">
+<div class="datagrid">
+  <table>
+    <thead>
+      <tr>
+        <th>Pair to Trade</th>
+        <th>Trading Strategy</th>
+        <th>ADD PAIR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><select id="fillKraken" type="select-one" onChange="addRowClass(this);" name=""></select></td>
+        <td><select id="tradestrat" type="select-one" onChange="addRowClass(this);" name="">
+          <option value="Select a pair...">Select a Strategy...</option>
+          <option value="PUREBB"> Pure BB</option>
+          <option value="BBGAIN">BB/GAIN</option>
+          <option value="BBSTEPGAIN">BB/STEP GAIN</option>
+          <option value="BBPP">BB/PING PONG</option>        
+          <option value="BB">BB</option>
+          <option value="PUREGAIN">GAIN</option>
+          <option value="GAINBB">GAIN/BB</option>
+          <option value="GAINPP">GAIN/PING PONG</option>
+          <option value="GAINSTEPGAIN">GAIN/STEP GAIN</option>
+          <option value="PINGPONG">PING PONG</option>
+          <option value="PPGAIN">PP/GAIN</option>
+          <option value="PPSTEPGAIN">PP/STEP GAIN</option>
+          <option value="STEPGAIN">STEP GAIN</option>
+          <option value="STEPGAINBB">STEP GAIN/BB</option>
+          <option value="STEPGAINGAIN">STEP GAIN/GAIN</option>
+          <option value="STEPGAINPP">STEP GAIN/PP</option>
+          </select></td>
+        <td><button onclick"addRow">Add Pair</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+  </div>
+ <div id="tab5" class="tab">
+<div id="addPairDiv">
+<div class="datagrid">
+  <table>
+    <thead>
+      <tr>
+        <th>Pair to Trade</th>
+        <th>Trading Strategy</th>
+        <th>ADD PAIR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><select id="fillCryp" type="select-one" onChange="addRowClass(this);" name=""></select></td>
+        <td><select id="tradestrat" type="select-one" onChange="addRowClass(this);" name="">
+          <option value="Select a pair...">Select a strategy...</option>
+          <option value="bb"> Pure BB</option>
+          <option value="bbgain">BB/GAIN</option>
+          <option value="bbstepgain">BB/STEP GAIN</option>
+          <option value="bbpp">BB/PING PONG</option>        
+          <option value="gain">GAIN</option>
+          <option value="gainbb">GAIN/BB</option>
+          <option value="gainpp">GAIN/PING PONG</option>
+          <option value="gainstepgain">GAIN/STEP GAIN</option>
+          <option value="pp">PING PONG</option>
+          <option value="ppbb">PP/BB</option>
+          <option value="ppgain">PP/GAIN</option>
+          <option value="ppstepgain">PP/STEP GAIN</option>
+          <option value="stepgain">STEP GAIN</option>
+          <option value="stepgainbb">STEP GAIN/BB</option>
+          <option value="stepgaingain">STEP GAIN/GAIN</option>
+          <option value="stepgainpp">STEP GAIN/PP</option>
+          
+          </select></td>
+        <td><button onclick"addRow">Add Pair</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+  </div>
+</div>
+
+
+<pre><code id="testArea">
+</code></pre>
+
+<script type="text/javascript">
+!function(e,n){"undefined"!=typeof exports&&"undefined"!=typeof module&&module.exports?module.exports=n():"function"==typeof define&&define.amd?define(n):e.form2js=n()}(this,function(){"use strict";function e(e,n,t){var r,u,i,a,l,o,c,s,f,d,h,m,g={},p={};for(r=0;r<e.length;r++)if(l=e[r].value,!n||""!==l&&null!==l){for(m=e[r].name.split(t),o=[],c=g,s="",u=0;u<m.length;u++)if((h=m[u].split("][")).length>1)for(i=0;i<h.length;i++)if(0==i?h[i]=h[i]+"]":i==h.length-1?h[i]="["+h[i]:h[i]="["+h[i]+"]",d=h[i].match(/([a-z_]+)?\[([a-z_][a-z0-9_]+?)\]/i))for(a=1;a<d.length;a++)d[a]&&o.push(d[a]);else o.push(h[i]);else o=o.concat(h);for(u=0;u<o.length;u++)(h=o[u]).indexOf("[]")>-1&&u==o.length-1?(s+=f=h.substr(0,h.indexOf("[")),c[f]||(c[f]=[]),c[f].push(l)):h.indexOf("[")>-1?(p[s+="_"+(f=h.substr(0,h.indexOf("[")))+"_"+(d=h.replace(/(^([a-z_]+)?\[)|(\]$)/gi,""))]||(p[s]={}),""==f||c[f]||(c[f]=[]),u==o.length-1?""==f?(c.push(l),p[s][d]=c[c.length-1]):(c[f].push(l),p[s][d]=c[f][c[f].length-1]):p[s][d]||(/^[0-9a-z_]+\[?/i.test(o[u+1])?c[f].push({}):c[f].push([]),p[s][d]=c[f][c[f].length-1]),c=p[s][d]):(s+=h,u<o.length-1?(c[h]||(c[h]={}),c=c[h]):c[h]=l)}return g}function n(e,n,u,i){var a=r(e,n,u,i);return a.length>0?a:t(e,n,u,i)}function t(e,n,t,u){for(var i=[],a=e.firstChild;a;)i=i.concat(r(a,n,t,u)),a=a.nextSibling;return i}function r(e,n,r,a){if(e.disabled&&!a)return[];var l,o,c,s=u(e,r);return l=n&&n(e),l&&l.name?c=[l]:""!=s&&e.nodeName.match(/INPUT|TEXTAREA/i)?c=null===(o=i(e,a))?[]:[{name:s,value:o}]:""!=s&&e.nodeName.match(/SELECT/i)?(o=i(e,a),c=[{name:s.replace(/\[\]$/,""),value:o}]):c=t(e,n,r,a),c}function u(e,n){return e.name&&""!=e.name?e.name:n&&e.id&&""!=e.id?e.id:""}function i(e,n){if(e.disabled&&!n)return null;switch(e.nodeName){case"INPUT":case"TEXTAREA":switch(e.type.toLowerCase()){case"radio":if(e.checked&&"false"===e.value)return!1;case"checkbox":if(e.checked&&"true"===e.value)return!0;if(!e.checked&&"true"===e.value)return!1;if(e.checked)return e.value;break;case"button":case"reset":case"submit":case"image":return"";default:return e.value}break;case"SELECT":return a(e)}return null}function a(e){var n,t,r,u=[];if(!e.multiple)return e.value;for(t=0,r=(n=e.getElementsByTagName("option")).length;t<r;t++)n[t].selected&&u.push(n[t].value);return u}return function(t,r,u,i,a,l){l=!!l,void 0!==u&&null!=u||(u=!0),void 0!==r&&null!=r||(r="."),arguments.length<5&&(a=!1);var o,c=[],s=0;if((t="string"==typeof t?document.getElementById(t):t).constructor==Array||"undefined"!=typeof NodeList&&t.constructor==NodeList)for(;o=t[s++];)c=c.concat(n(o,i,a,l));else c=n(t,i,a,l);return e(c,u,r)}});
+</script>
+<script type="text/javascript">
+this.JSON||(this.JSON={}),function(){function f(t){return t<10?"0"+t:t}function quote(t){return escapable.lastIndex=0,escapable.test(t)?'"'+t.replace(escapable,function(t){var e=meta[t];return"string"==typeof e?e:"\\u"+("0000"+t.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+t+'"'}function str(t,e){var n,r,f,o,u,i=gap,a=e[t];switch(a&&"object"==typeof a&&"function"==typeof a.toJSON&&(a=a.toJSON(t)),"function"==typeof rep&&(a=rep.call(e,t,a)),typeof a){case"string":return quote(a);case"number":return isFinite(a)?String(a):"null";case"boolean":case"null":return String(a);case"object":if(!a)return"null";if(gap+=indent,u=[],"[object Array]"===Object.prototype.toString.apply(a)){for(o=a.length,n=0;n<o;n+=1)u[n]=str(n,a)||"null";return f=0===u.length?"[]":gap?"[\n"+gap+u.join(",\n"+gap)+"\n"+i+"]":"["+u.join(",")+"]",gap=i,f}if(rep&&"object"==typeof rep)for(o=rep.length,n=0;n<o;n+=1)"string"==typeof(r=rep[n])&&(f=str(r,a))&&u.push(quote(r)+(gap?": ":":")+f);else for(r in a)Object.hasOwnProperty.call(a,r)&&(f=str(r,a))&&u.push(quote(r)+(gap?": ":":")+f);return f=0===u.length?"{}":gap?"{\n"+gap+u.join(",\n"+gap)+"\n"+i+"}":"{"+u.join(",")+"}",gap=i,f}}"function"!=typeof Date.prototype.toJSON&&(Date.prototype.toJSON=function(t){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(t){return this.valueOf()});var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},rep;"function"!=typeof JSON.stringify&&(JSON.stringify=function(t,e,n){var r;if(gap="",indent="","number"==typeof n)for(r=0;r<n;r+=1)indent+=" ";else"string"==typeof n&&(indent=n);if(rep=e,e&&"function"!=typeof e&&("object"!=typeof e||"number"!=typeof e.length))throw new Error("JSON.stringify");return str("",{"":t})}),"function"!=typeof JSON.parse&&(JSON.parse=function(text,reviver){function walk(t,e){var n,r,f=t[e];if(f&&"object"==typeof f)for(n in f)Object.hasOwnProperty.call(f,n)&&(void 0!==(r=walk(f,n))?f[n]=r:delete f[n]);return reviver.call(t,e,f)}var j;if(text=String(text),cx.lastIndex=0,cx.test(text)&&(text=text.replace(cx,function(t){return"\\u"+("0000"+t.charCodeAt(0).toString(16)).slice(-4)})),/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))return j=eval("("+text+")"),"function"==typeof reviver?walk({"":j},""):j;throw new SyntaxError("JSON.parse")})}();
+</script>
+<script type="text/javascript">
+	function extend(){
+    for(var i=1; i<arguments.length; i++)
+        for(var key in arguments[i])
+            if(arguments[i].hasOwnProperty(key)) { 
+                if (typeof arguments[0][key] === 'object'
+                    && typeof arguments[i][key] === 'object')
+             				extend(arguments[0][key], arguments[i][key]);
+                else
+                   arguments[0][key] = arguments[i][key];
+             }
+    return arguments[0];
+}
+
+	function test()
+	{
+		var formData = form2js('testForm', '.', true);
+		var formData2 = form2js('testForm2', '.', true);
+		var formData3 = form2js('testForm3', '.', true);
+		var texty = JSON.stringify(formData3);
+		console.log(texty.replace(/"(-?(\d+\.?\d*|\.\d+))"/g,"$1"));
+		var pairs = extend(formData2,formData3)
+		document.getElementById('testArea').innerHTML = JSON.stringify(extend(pairs,formData), null, '\t').replace(/"(-?(\d+\.?\d*|\.\d+))"/g,"$1").replace(/"(-?(true|false))"/g,"$1");
+	}
+</script>
+<script type="text/javascript">
+function pairOptions() {
+	  var select = document.getElementById("selectNumber");
+	  var options = ["Select a pair...","BTC_AMP", "BTC_ARDR", "BTC_BCN", "BTC_BCY", "BTC_BELA", "BTC_BLK", "BTC_BTCD", "BTC_BTM", "BTC_BTS", "BTC_BURST", "BTC_CLAM", "BTC_DASH", "BTC_DCR", "BTC_DGB", "BTC_DOGE", "BTC_EMC", "BTC_ETC", "BTC_ETH", "BTC_EXP", "BTC_FCT", "BTC_FLDC", "BTC_FLO", "BTC_GAME", "BTC_GNO", "BTC_GNT", "BTC_GRC", "BTC_HUC", "BTC_LBC", "BTC_LSK", "BTC_LTC", "BTC_MAID", "BTC_NAUT", "BTC_NAV", "BTC_NEOS", "BTC_NMC", "BTC_NOTE", "BTC_NXC", "BTC_NXT", "BTC_OMNI", "BTC_PASC", "BTC_PINK", "BTC_POT", "BTC_PPC", "BTC_RADS", "BTC_REP", "BTC_RIC", "BTC_SBD", "BTC_SC", "BTC_SJCX", "BTC_STEEM", "BTC_STR", "BTC_STRAT", "BTC_SYS", "BTC_VIA", "BTC_VRC", "BTC_VTC", "BTC_XBC", "BTC_XCP", "BTC_XEM", "BTC_XMR", "BTC_XPM", "BTC_XRP", "BTC_XVC", "BTC_ZEC", "ETH_ETC", "ETH_GNO", "ETH_GNT", "ETH_LSK", "ETH_REP", "ETH_STEEM", "ETH_ZEC"];
+	  for (var i = 0; i < options.length; i++) {
+	    var opt = options[i];
+	    var el = document.createElement("option");
+	    el.textContent = opt;
+	    el.value = opt;
+	    select.appendChild(el);
+	  }
+	}
+	function pairOptions2() {
+	  var select = document.getElementById("selectNumber2");
+	  var options = ["Select a pair...","BTC-1ST","BTC-2GIVE","BTC-ABY","BTC-ADT","BTC-ADX","BTC-AEON","BTC-AGRS","BTC-AMP","BTC-ANT","BTC-APX","BTC-ARDR","BTC-ARK","BTC-AUR","BTC-BAT","BTC-BAY","BTC-BCC","BTC-BCY","BTC-BITB","BTC-BLITZ","BTC-BLK","BTC-BLOCK","BTC-BNT","BTC-BRK","BTC-BRX","BTC-BSD","BTC-BTA","BTC-BTCD","BTC-BTS","BTC-BURST","BTC-BYC","BTC-CANN","BTC-CFI","BTC-CLAM","BTC-CLOAK","BTC-CLUB","BTC-COVAL","BTC-CPC","BTC-CRB","BTC-CRW","BTC-CURE","BTC-CVC","BTC-DAR","BTC-DASH","BTC-DCR","BTC-DCT","BTC-DGB","BTC-DGD","BTC-DMD","BTC-DOGE","BTC-DOPE","BTC-DRACO","BTC-DTB","BTC-DYN","BTC-EBST","BTC-EDG","BTC-EFL","BTC-EGC","BTC-EMC","BTC-EMC2","BTC-ENRG","BTC-ERC","BTC-ETC","BTC-ETH","BTC-EXCL","BTC-EXP","BTC-FAIR","BTC-FCT","BTC-FLDC","BTC-FLO","BTC-FTC","BTC-FUN","BTC-GAM","BTC-GAME","BTC-GBG","BTC-GBYTE","BTC-GCR","BTC-GEO","BTC-GLD","BTC-GNO","BTC-GNT","BTC-GOLOS","BTC-GRC","BTC-GRS","BTC-GUP","BTC-HKG","BTC-HMQ","BTC-INCNT","BTC-INFX","BTC-IOC","BTC-ION","BTC-IOP","BTC-KMD","BTC-KORE","BTC-LBC","BTC-LGD","BTC-LMC","BTC-LSK","BTC-LTC","BTC-LUN","BTC-MAID","BTC-MCO","BTC-MEME","BTC-MLN","BTC-MONA","BTC-MTL","BTC-MUE","BTC-MUSIC","BTC-MYST","BTC-NAUT","BTC-NAV","BTC-NBT","BTC-NEO","BTC-NEOS","BTC-NLG","BTC-NMR","BTC-NXC","BTC-NXS","BTC-NXT","BTC-OK","BTC-OMG","BTC-OMNI","BTC-PART","BTC-PAY","BTC-PDC","BTC-PINK","BTC-PIVX","BTC-PKB","BTC-POT","BTC-PPC","BTC-PTC","BTC-PTOY","BTC-QRL","BTC-QTUM","BTC-QWARK","BTC-RADS","BTC-RBY","BTC-RDD","BTC-REP","BTC-RISE","BTC-RLC","BTC-SBD","BTC-SC","BTC-SEC","BTC-SEQ","BTC-SHIFT","BTC-SIB","BTC-SLR","BTC-SLS","BTC-SNGLS","BTC-SNRG","BTC-SNT","BTC-SPHR","BTC-SPR","BTC-START","BTC-STEEM","BTC-STORJ","BTC-STRAT","BTC-SWIFT","BTC-SWT","BTC-SYNX","BTC-SYS","BTC-THC","BTC-TIME","BTC-TKN","BTC-TKS","BTC-TRIG","BTC-TRST","BTC-TRUST","BTC-TX","BTC-UBQ","BTC-UNB","BTC-UNO","BTC-VIA","BTC-VOX","BTC-VRC","BTC-VRM","BTC-VTC","BTC-VTR","BTC-WAVES","BTC-WINGS","BTC-XAUR","BTC-XBB","BTC-XCP","BTC-XDN","BTC-XEL","BTC-XEM","BTC-XLM","BTC-XMG","BTC-XMR","BTC-XMY","BTC-XRP","BTC-XST","BTC-XVC","BTC-XVG","BTC-XWC","BTC-XZC","BTC-ZCL","BTC-ZEC","BTC-ZEN","ETH-1ST","ETH-ADT","ETH-ADX","ETH-ANS","ETH-ANT","ETH-BAT","ETH-BCC","ETH-BNT","ETH-BTS","ETH-CFI","ETH-CRB","ETH-CVC","ETH-DASH","ETH-DGB","ETH-DGD","ETH-ETC","ETH-FCT","ETH-FUN","ETH-GNO","ETH-GNT","ETH-GUP","ETH-HMQ","ETH-LGD","ETH-LTC","ETH-LUN","ETH-MCO","ETH-MTL","ETH-MYST","ETH-NMR","ETH-OMG","ETH-PAY","ETH-PTOY","ETH-QRL","ETH-QTUM","ETH-REP","ETH-RLC","ETH-SC","ETH-SNGLS","ETH-SNT","ETH-STORJ","ETH-STRAT","ETH-TIME","ETH-TKN","ETH-TRST","ETH-WAVES","ETH-WINGS","ETH-XEM","ETH-XLM","ETH-XMR","ETH-XRP","ETH-ZEC","USDT-ANS","USDT-BCC","USDT-BTC","USDT-DASH","USDT-ETC","USDT-ETH","USDT-LTC","USDT-XMR","USDT-XRP","USDT-ZEC","BTC-SAFEX","BTC-NEO","ETH-NEO","USDT-NEO"];
+	  for (var i = 0; i < options.length; i++) {
+	    var opt = options[i];
+	    var el = document.createElement("option");
+	    el.textContent = opt;
+	    el.value = opt;
+	    select.appendChild(el);
+	  }
+	}
+		function pairOptions4() {
+	  var select = document.getElementById("fillCryp");
+	  var options = ["Select a pair...","$$$_BTC","1337_BTC","21M_BTC","300_BTC","42_BTC","4CHN_BTC","611_BTC","808_BTC","888_BTC","8BIT_BTC","ABC_BTC","ABY_BTC","AC_BTC","ACC_BTC","ACOIN_BTC","ADC_BTC","ADST_BTC","ALEX_BTC","ALL_BTC","ALT_BTC","AMP_BTC","ANI_BTC","ARC_BTC","ARCO_BTC","ARG_BTC","ARGUS_BTC","ARI_BTC","ARK_BTC","ATMS_BTC","ATOM_BTC","AU_BTC","AUR_BTC","B@_BTC","B3_BTC","BAY_BTC","BBR_BTC","BCF_BTC","BCH_BTC","BCN_BTC","BEEZ_BTC","BENJI_BTC","BERN_BTC","BEST_BTC","BIP_BTC","BITB_BTC","BITS_BTC","BLC_BTC","BLK_BTC","BNC_BTC","BNX_BTC","BOB_BTC","BOLI_BTC","BRO_BTC","BSD_BTC","BSTY_BTC","BTA_BTC","BTB_BTC","BTCD_BTC","BTCS_BTC","BTG_BTC","BTX_BTC","BUCKS_BTC","BUMBA_BTC","BVB_BTC","BVC_BTC","BXC_BTC","C2_BTC","CACH_BTC","CANN_BTC","CAP_BTC","CAR_BTC","CAT_BTC","CBX_BTC","CC_BTC","CCN_BTC","CDC_BTC","CDN_BTC","CFC_BTC","CFT_BTC","CHAO_BTC","CHC_BTC","CHESS_BTC","CHIEF_BTC","CJ_BTC","CLAM_BTC","CLOAK_BTC","CMT_BTC","CNO_BTC","COAL_BTC","COE_BTC","CON_BTC","CORG_BTC","CPN_BTC","CQST_BTC","CRAVE_BTC","CREA_BTC","CRX_BTC","CRYPT_BTC","CSC_BTC","CTIC2_BTC","CXT_BTC","DALC_BTC","DARK_BTC","DASH_BTC","DAXX_BTC","DCN_BTC","DCR_BTC","DCY_BTC","DDF_BTC","DEM_BTC","DGB_BTC","DGC_BTC","DIBC_BTC","DNR_BTC","DOGE_BTC","DON_BTC","DOPE_BTC","DOT_BTC","DRP_BTC","DRXNE_BTC","DSH_BTC","DUO_BTC","EBG_BTC","EC_BTC","ECO_BTC","ECOB_BTC","EDC_BTC","EDRC_BTC","EFL_BTC","EGC_BTC","ELC_BTC","ELS_BTC","EMB_BTC","EMC_BTC","EMC2_BTC","EMD_BTC","EQT_BTC","ERSO_BTC","ERY_BTC","ETB_BTC","ETC_BTC","ETH_BTC","EUC_BTC","EVIL_BTC","EVO_BTC","EXP_BTC","FAME_BTC","FAZZ_BTC","FCN_BTC","FCT_BTC","FFC_BTC","FJC_BTC","FLASH_BTC","FLAX_BTC","FLT_BTC","FONZ_BTC","FOOT_BTC","FORT_BTC","FRC_BTC","FRN_BTC","FST_BTC","FTC_BTC","FUEL_BTC","FUZZ_BTC","GAIA_BTC","GAME_BTC","GAP_BTC","GAY_BTC","GBYTE_BTC","GEERT_BTC","GEO_BTC","GLD_BTC","GNO_BTC","GNT_BTC","GP_BTC","GPL_BTC","GPU_BTC","GRN_BTC","GRS_BTC","GRW_BTC","GRWI_BTC","GUN_BTC","HAL_BTC","HBN_BTC","HUSH_BTC","HXX_BTC","HYP_BTC","I0C_BTC","ICOB_BTC","IEC_BTC","IFLT_BTC","IFT_BTC","IMPCH_BTC","IMS_BTC","IN_BTC","INCNT_BTC","INFX_BTC","INPAY_BTC","INSN_BTC","IOU_BTC","IRL_BTC","ITI_BTC","IXC_BTC","JET_BTC","KASH_BTC","KAYI_BTC","KDC_BTC","KED_BTC","KEK_BTC","KING_BTC","KMD_BTC","KOBO_BTC","KRB_BTC","KURT_BTC","KUSH_BTC","LANA_BTC","LBC_BTC","LDC_BTC","LDOGE_BTC","LEMON_BTC","LEPEN_BTC","LINDA_BTC","LINX_BTC","LIT_BTC","LIZI_BTC","LTB_BTC","LTC_BTC","MAC_BTC","MAGN_BTC","MAID_BTC","MAR_BTC","MARS_BTC","MARX_BTC","MCRN_BTC","MEC_BTC","MER_BTC","MGO_BTC","MINEX_BTC","MINT_BTC","MLITE_BTC","MNE_BTC","MNM_BTC","MOIN_BTC","MOJO_BTC","MOTO_BTC","MSP_BTC","MST_BTC","MTLMC_BTC","MUSIC_BTC","MZC_BTC","NAMO_BTC","NAV_BTC","NET_BTC","NETKO_BTC","NEVA_BTC","NKA_BTC","NLC2_BTC","NMC_BTC","NOBL_BTC","NOTE_BTC","NSR_BTC","NTRN_BTC","NVC_BTC","NXS_BTC","NYAN_BTC","OFF_BTC","OK_BTC","OOO_BTC","OPAL_BTC","ORB_BTC","OSC_BTC","OTX_BTC","OX_BTC","PAK_BTC","PASC_BTC","PASL_BTC","PCC_BTC","PEPE_BTC","PHS_BTC","PIE_BTC","PIGGY_BTC","PING_BTC","PINK_BTC","PIVX_BTC","PLC_BTC","PLR_BTC","POST_BTC","POSW_BTC","POT_BTC","PPC_BTC","PR_BTC","PROC_BTC","PTC_BTC","PUT_BTC","PXC_BTC","PXI_BTC","Q2C_BTC","QBT_BTC","QRK_BTC","QTL_BTC","RAIN_BTC","RBT_BTC","RBX_BTC","RBY_BTC","RC_BTC","RDD_BTC","RED_BTC","REP_BTC","RIYA_BTC","RNS_BTC","RPC_BTC","SAFEX_BTC","SAK_BTC","SAND_BTC","SBC_BTC","SC_BTC","SCD_BTC","SCORE_BTC","SEL_BTC","SFC_BTC","SHA_BTC","SHRM_BTC","SIB_BTC","SIGT_BTC","SKC_BTC","SKR_BTC","SKY_BTC","SLG_BTC","SMART_BTC","SMC_BTC","SOIL_BTC","SONG_BTC","SOON_BTC","SPACE_BTC","SPT_BTC","SQL_BTC","SRC_BTC","START_BTC","STC_BTC","STRAT_BTC","STV_BTC","SUMO_BTC","SWING_BTC","SXC_BTC","SYNX_BTC","TAJ_BTC","TEK_BTC","TER_BTC","TES_BTC","TGC_BTC","TIC_BTC","TIT_BTC","TOA_BTC","TOP_BTC","TOR_BTC","TRC_BTC","TRI_BTC","TRK_BTC","TRUMP_BTC","TSE_BTC","TTC_BTC","TX_BTC","UBQ_BTC","UIS_BTC","UMO_BTC","UNB_BTC","UNIC_BTC","UNIFY_BTC","UNITS_BTC","UNO_BTC","UR_BTC","USNBT_BTC","UTC_BTC","V_BTC","VCC_BTC","VIDZ_BTC","VISIO_BTC","VRC_BTC","VRM_BTC","VSM_BTC","VUC_BTC","WAVES_BTC","WDC_BTC","WEED_BTC","WLC_BTC","WRC_BTC","WSX_BTC","WW_BTC","XBC_BTC","XBTS_BTC","XBY_BTC","XCO_BTC","XCRE_BTC","XCT_BTC","XCXT_BTC","XEM_BTC","XGR_BTC","XID_BTC","XJO_BTC","XLR_BTC","XMG_BTC","XMR_BTC","XMY_BTC","XPD_BTC","XPM_BTC","XPTX_BTC","XRA_BTC","XRE_BTC","XRY_BTC","XSPEC_BTC","XVG_BTC","XZC_BTC","YOVI_BTC","ZCL_BTC","ZEC_BTC","ZEIT_BTC","ZER_BTC","ZET_BTC","ZOI_BTC","ZSE_BTC"
+];
+	  for (var i = 0; i < options.length; i++) {
+	    var opt = options[i];
+	    var el = document.createElement("option");
+	    el.textContent = opt;
+	    el.value = opt;
+	    select.appendChild(el);
+	  }
+	}
+		function pairOptions3() {
+	  var select = document.getElementById("fillKraken");
+	  var options = ["Select a pair...","XBTEUR","XBTUSD","XBTJPY","XBTGBP","XBTCAD","BCHEUR","BCHUSD","BCHXBT","DASHEUR","DASHUSD","DASHXBT","EOSETH","EOSEUR","EOSUSD","EOSXBT","GNOETH","GNOEUR","GNOUSD","GNOXBT","USDTUSD","ETCETH","ETCXBT","ETCEUR","ETCUSD","ETHXBT","ETHXBT.d","ETHCAD","ETHCAD.d","ETHEUR","ETHEUR.d","ETHGBP","ETHGBP.d","ETHJPY","ETHJPY.d","ETHUSD","ETHUSD.d","ICNETH","ICNXBT","LTCXBT","LTCEUR","LTCUSD","MLNETH","MLNXBT","REPETH","REPXBT","REPEUR","REPUSD","XBTCAD.d","XBTEUR.d","XBTGBP.d","XBTJPY.d","XBTUSD.d","XDGXBT","XLMXBT","XLMEUR","XLMUSD","XMRXBT","XMREUR","XMRUSD","XRPXBT","XRPCAD","XRPEUR","XRPJPY","XRPUSD","ZECXBT","ZECEUR","ZECUSD"];
+	  for (var i = 0; i < options.length; i++) {
+	    var opt = options[i];
+	    var el = document.createElement("option");
+	    el.textContent = opt;
+	    el.value = opt;
+	    select.appendChild(el);
+	  }
+	}
+	
+function getNearestTableAncestor(htmlElementNode) {
+    while (htmlElementNode) {
+        htmlElementNode = htmlElementNode.parentNode;
+        if (htmlElementNode.tagName.toLowerCase() === 'tr') {
+            return htmlElementNode;
+        }
+    }
+    return undefined;
+}
+	function setClassForPair(selector, exchange){
+  	 var row = selector.parentElement;
+  	 console.log(exchange);
+      var thisrow = getNearestTableAncestor(row);
+      var pair = thisrow.cells[1].childNodes[0].value
+		var strategy = thisrow.cells[2].childNodes[0].value;
+		var strategyInput = thisrow.cells[2].childNodes[0];
+		//strategyInput.name="";
+		strategyInput.name = "pairs."+exchange+"."+pair+".strategy";
+		console.log(thisrow.cells[1].childNodes[0].value)
+		console.log(thisrow.cells[2].childNodes[0].value);
+  
+}
+	
 	function addRow(tableID) {
 	  var table = document.getElementById(tableID);
 	  var rowCount = table.rows.length;
@@ -503,7 +943,6 @@ input[type=text]+label {
 	  for (var i = 0; i < colCount; i++) {
 	    var newcell = row.insertCell(i);
 	    newcell.innerHTML = table.rows[1].cells[i].innerHTML;
-	    //alert(newcell.childNodes);
 	    switch (newcell.childNodes[0].type) {
 	      case "text":
 	        newcell.childNodes[0].value = "";
@@ -525,7 +964,7 @@ input[type=text]+label {
 
   		        for (var i = 0; i < rowCount; i++) {
   		            var row = table.rows[i];
-  		            var chkbox = row.cells[0].childNodes[1];
+  		            var chkbox = row.cells[0].childNodes[0];
   		            if (null != chkbox && true == chkbox.checked) {
   		                if (rowCount <= 2) {
   		                    alert("Cannot delete all the rows.");
@@ -542,150 +981,14 @@ input[type=text]+label {
   		        alert(e);
   		    }
   		}
-
-
-	function pairOptions() {
-	  var select = document.getElementById("selectNumber");
-	  var options = ["Select a pair...", "BTC_AMP", "BTC_ARDR", "BTC_BCN", "BTC_BCY", "BTC_BELA", "BTC_BLK", "BTC_BTCD", "BTC_BTM", "BTC_BTS", "BTC_BURST", "BTC_CLAM", "BTC_DASH", "BTC_DCR", "BTC_DGB", "BTC_DOGE", "BTC_EMC", "BTC_ETC", "BTC_ETH", "BTC_EXP", "BTC_FCT", "BTC_FLDC", "BTC_FLO", "BTC_GAME", "BTC_GNO", "BTC_GNT", "BTC_GRC", "BTC_HUC", "BTC_LBC", "BTC_LSK", "BTC_LTC", "BTC_MAID", "BTC_NAUT", "BTC_NAV", "BTC_NEOS", "BTC_NMC", "BTC_NOTE", "BTC_NXC", "BTC_NXT", "BTC_OMNI", "BTC_PASC", "BTC_PINK", "BTC_POT", "BTC_PPC", "BTC_RADS", "BTC_REP", "BTC_RIC", "BTC_SBD", "BTC_SC", "BTC_SJCX", "BTC_STEEM", "BTC_STR", "BTC_STRAT", "BTC_SYS", "BTC_VIA", "BTC_VRC", "BTC_VTC", "BTC_XBC", "BTC_XCP", "BTC_XEM", "BTC_XMR", "BTC_XPM", "BTC_XRP", "BTC_XVC", "BTC_ZEC", "ETH_ETC", "ETH_GNO", "ETH_GNT", "ETH_LSK", "ETH_REP", "ETH_STEEM", "ETH_ZEC"];
-	  for (var i = 0; i < options.length; i++) {
-	    var opt = options[i];
-	    var el = document.createElement("option");
-	    el.textContent = opt;
-	    el.value = opt;
-	    select.appendChild(el);
-	  }
-	}
-	function pairOptions2() {
-	  var select = document.getElementById("fillTrex");
-	  	    //  var row = bittrex.rows[1];
-	     //var chkbox = row.cells[1].childNodes[0];
-	  var options = ["Select a pair...","BTC-1ST","BTC-2GIVE","BTC-ABY","BTC-ADT","BTC-ADX","BTC-AEON","BTC-AGRS","BTC-AMP","BTC-ANT","BTC-APX","BTC-ARDR","BTC-ARK","BTC-AUR","BTC-BAT","BTC-BAY","BTC-BCC","BTC-BCY","BTC-BITB","BTC-BLITZ","BTC-BLK","BTC-BLOCK","BTC-BNT","BTC-BRK","BTC-BRX","BTC-BSD","BTC-BTA","BTC-BTCD","BTC-BTS","BTC-BURST","BTC-BYC","BTC-CANN","BTC-CFI","BTC-CLAM","BTC-CLOAK","BTC-CLUB","BTC-COVAL","BTC-CPC","BTC-CRB","BTC-CRW","BTC-CURE","BTC-CVC","BTC-DAR","BTC-DASH","BTC-DCR","BTC-DCT","BTC-DGB","BTC-DGD","BTC-DMD","BTC-DOGE","BTC-DOPE","BTC-DRACO","BTC-DTB","BTC-DYN","BTC-EBST","BTC-EDG","BTC-EFL","BTC-EGC","BTC-EMC","BTC-EMC2","BTC-ENRG","BTC-ERC","BTC-ETC","BTC-ETH","BTC-EXCL","BTC-EXP","BTC-FAIR","BTC-FCT","BTC-FLDC","BTC-FLO","BTC-FTC","BTC-FUN","BTC-GAM","BTC-GAME","BTC-GBG","BTC-GBYTE","BTC-GCR","BTC-GEO","BTC-GLD","BTC-GNO","BTC-GNT","BTC-GOLOS","BTC-GRC","BTC-GRS","BTC-GUP","BTC-HKG","BTC-HMQ","BTC-INCNT","BTC-INFX","BTC-IOC","BTC-ION","BTC-IOP","BTC-KMD","BTC-KORE","BTC-LBC","BTC-LGD","BTC-LMC","BTC-LSK","BTC-LTC","BTC-LUN","BTC-MAID","BTC-MCO","BTC-MEME","BTC-MLN","BTC-MONA","BTC-MTL","BTC-MUE","BTC-MUSIC","BTC-MYST","BTC-NAUT","BTC-NAV","BTC-NBT","BTC-NEO","BTC-NEOS","BTC-NLG","BTC-NMR","BTC-NXC","BTC-NXS","BTC-NXT","BTC-OK","BTC-OMG","BTC-OMNI","BTC-PART","BTC-PAY","BTC-PDC","BTC-PINK","BTC-PIVX","BTC-PKB","BTC-POT","BTC-PPC","BTC-PTC","BTC-PTOY","BTC-QRL","BTC-QTUM","BTC-QWARK","BTC-RADS","BTC-RBY","BTC-RDD","BTC-REP","BTC-RISE","BTC-RLC","BTC-SBD","BTC-SC","BTC-SEC","BTC-SEQ","BTC-SHIFT","BTC-SIB","BTC-SLR","BTC-SLS","BTC-SNGLS","BTC-SNRG","BTC-SNT","BTC-SPHR","BTC-SPR","BTC-START","BTC-STEEM","BTC-STORJ","BTC-STRAT","BTC-SWIFT","BTC-SWT","BTC-SYNX","BTC-SYS","BTC-THC","BTC-TIME","BTC-TKN","BTC-TKS","BTC-TRIG","BTC-TRST","BTC-TRUST","BTC-TX","BTC-UBQ","BTC-UNB","BTC-UNO","BTC-VIA","BTC-VOX","BTC-VRC","BTC-VRM","BTC-VTC","BTC-VTR","BTC-WAVES","BTC-WINGS","BTC-XAUR","BTC-XBB","BTC-XCP","BTC-XDN","BTC-XEL","BTC-XEM","BTC-XLM","BTC-XMG","BTC-XMR","BTC-XMY","BTC-XRP","BTC-XST","BTC-XVC","BTC-XVG","BTC-XWC","BTC-XZC","BTC-ZCL","BTC-ZEC","BTC-ZEN","ETH-1ST","ETH-ADT","ETH-ADX","ETH-ANS","ETH-ANT","ETH-BAT","ETH-BCC","ETH-BNT","ETH-BTS","ETH-CFI","ETH-CRB","ETH-CVC","ETH-DASH","ETH-DGB","ETH-DGD","ETH-ETC","ETH-FCT","ETH-FUN","ETH-GNO","ETH-GNT","ETH-GUP","ETH-HMQ","ETH-LGD","ETH-LTC","ETH-LUN","ETH-MCO","ETH-MTL","ETH-MYST","ETH-NMR","ETH-OMG","ETH-PAY","ETH-PTOY","ETH-QRL","ETH-QTUM","ETH-REP","ETH-RLC","ETH-SC","ETH-SNGLS","ETH-SNT","ETH-STORJ","ETH-STRAT","ETH-TIME","ETH-TKN","ETH-TRST","ETH-WAVES","ETH-WINGS","ETH-XEM","ETH-XLM","ETH-XMR","ETH-XRP","ETH-ZEC","USDT-ANS","USDT-BCC","USDT-BTC","USDT-DASH","USDT-ETC","USDT-ETH","USDT-LTC","USDT-XMR","USDT-XRP","USDT-ZEC","BTC-SAFEX","BTC-NEO","ETH-NEO","USDT-NEO"];
-	  for (var i = 0; i < options.length; i++) {
-	    var opt = options[i];
-	    var el = document.createElement("option");
-	    el.textContent = opt;
-	    el.value = opt;
-	    select.appendChild(el);
-	  }
-	}
-	function enableExchange(cbox, exchange) {
-	  var input = document.getElementById(exchange);
-
-	  if (cbox.checked) {
-	    input.removeAttribute('disabled'); // Set the input type to 'text', making it a text box.
-	  } else {
-	    input.setAttribute("disabled", "disabled");
-	  }
-	}
-
-	function addRowClass(selector) {
+  			function addRowClass(selector, exchange, pair,strategy) {
 	  var classtoadd = selector.value;
 	  selector.parentElement.parentElement.className =classtoadd;
 	}
-
-
-function generateConfig(tableID){
-	var table = document.getElementById(tableID);
-	    var rowCount = table.rows.length;
-	    var outputs = [];
-	  		        for (var i = 1; i < rowCount; i++) {
-  		            var row = table.rows[i];
-  		            var chkbox = row.cells[0].childNodes[1];
-  		            if (null != chkbox && true == chkbox.checked) {
-  		           	console.log(row.cells[19].childNodes[1].value);
-  		           	var DEFAULT_CURRENCY_PAIR = row.className;
-	        var DEFAULT_MARKET_EXCHANGE = table.id;
-	        var apiKey = document.getElementsByClassName(DEFAULT_MARKET_EXCHANGE + "api")[0].value
-	        var apiSecret = document.getElementsByClassName(DEFAULT_MARKET_EXCHANGE + "api")[1].value
-
-	        var pairConfig = `var config = {
-                              DEBUG_LOG: false,
-                              REALLY_WANT_IT: false,
-                              BUY_SMALL_PORTION: 1,
-                              INSUFFICIENT_FUNDS_ON_SELL_FIX: 0.0005,
-                              INSUFFICIENT_FUNDS_ON_BUY_FIX: 0.0005,
-                              SELL_ON_START: false,
-                              CANCEL_SELL_ORDERS_ON_START: false,
-                              CANCEL_BUY_ORDERS_ON_START: false,
-                              CANCEL_OPEN_ORDERS_ON_START: false,
-                              MAX_LATEST_PRICES: 300, 
-                              MAX_LATEST_PRICES_TREND: 30, 
-                              MAX_LATEST_DIRECTIONS: 30, 
-                              MAX_LAST_ORDERS: 5, 
-                              PERIOD: ` + row.cells[2].childNodes[1].value + `, 
-                              SAVEFILE_SUFFIX: '-save.json',
-                              DEFAULT_MARKET_NAME: '` + table.id + `',
-                              DEFAULT_CURRENCY_PAIR: '` + row.className + `', 
-                              BTC_TRADING_LIMIT: ` + row.cells[3].childNodes[1].value + `, 
-                              SECURITY_MARGIN: ` + row.cells[4].childNodes[1].value + `, 
-                              MIN_VOLUME_TO_BUY: ` + row.cells[5].childNodes[1].value + `,  
-                              BUY_STRATEGY: '` + row.cells[6].childNodes[1].value + `', 
-                              SELL_STRATEGY: '` + row.cells[7].childNodes[1].value + `', 
-                              LOW_BB: ` + row.cells[8].childNodes[1].value + `, 
-                              HIGH_BB: ` + row.cells[9].childNodes[1].value + `, 
-                              BUY_LEVEL: ` + row.cells[10].childNodes[1].value + `, 
-                              GAIN: ` + row.cells[11].childNodes[1].value + `, 
-                              PINGPONG_BUY: ` + row.cells[12].childNodes[1].value + `, 
-                              PINGPONG_SELL: ` + row.cells[13].childNodes[1].value + `, 
-                              BUYLVL1: ` + row.cells[14].childNodes[1].value + `, 
-                              BUYLVL2: ` + row.cells[15].childNodes[1].value + `, 
-                              BUYLVL3: ` + row.cells[16].childNodes[1].value + `, 
-                              SELLLVL1: ` + row.cells[17].childNodes[1].value + `, 
-                              SELLLVL2: ` + row.cells[18].childNodes[1].value + `, 
-                              SELLLVL3: ` + row.cells[19].childNodes[1].value + `, 
-                              BITTREX_KEY: '',
-                              BITTREX_SECRET: '',
-                              BITTREX_PRICE_METHOD:'ohlc',
-                              BITTREX_VWA_1_INTERVAL: 0.02,
-                              BITTREX_VWA_2_INTERVAL: 0.04,
-                              KRAKEN_ASSET_PAIR: 'XETHXXBT',
-                              KRAKEN_KEY: '',
-                              KRAKEN_SECRET: '',
-                              KRAKEN_PRICE_METHOD:'ohlc',
-                              KRAKEN_VWA_1_INTERVAL: 0.02,
-                              KRAKEN_VWA_2_INTERVAL: 0.04,
-                              POLONIEX_KEY: '` + apiKey + `',
-                              POLONIEX_SECRET: '` + apiSecret + `',
-                              POLONIEX_PRICE_METHOD:'vwa',
-                              POLONIEX_VWA_1_INTERVAL: 0.02,
-                              POLONIEX_VWA_2_INTERVAL: 0.04,
-                              BOT_SLEEP_DELAY: (1000) * 60, 
-                              BOT_ON_FAIL_DELAY: (1000) * 60, 
-                              BOT_MAX_LIFETIME: 999999999, 
-                              API_CALLS_DELAY: 777,
-                              ALERT_ON_NO_FUNDS: false,  
-                              SMTP_EMAIL: '%40@gmail.com',
-                              ALERT_EMAIL: '********',
-                              SMTP_PASSWORD: '**********',
-                              SMTP: true,
-                              SMTP_PROTOCOL: 'SMTPS',
-                              SMTP_HOST: 'smtp.gmail.com',
-                              MAX_LATEST_PRICES_SHOWN: 0, 
-                              SHOW_LASTEST_DIRECTIONS: false,  
-                              MAX_LATEST_DIRECTIONS_SHOWN: 0, 
-                              LASTEST_DIRECTIONS_LIST_WIDTH: 0, 
-                              BTC_BALANCE: 2 
-                              };`;
-  		           //	console.log(pairConfig);
-  		          // 	htmlstring = pairConfig.replace(/(,)/gm, ",<br>");
-outputs.push(pairConfig);
-
-  		            }
-  		          // 	var win = window.open("", '_blank');
-
-  		        }
-  		        				for (var e = 0; e <= outputs.length; e++) {console.log(outputs[e]);}
-
-	}
-	
-function openInNewTab(url) {
-  var win = window.open(url, '_blank');
-  win.document.write("<p>content");
-  win.focus();
-}
-
-
-  </script>
-
+pairOptions();
+pairOptions3();
+pairOptions2();
+pairOptions4();
+</script>
+</body>
 </html>
-
