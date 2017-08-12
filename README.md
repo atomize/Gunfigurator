@@ -4,4 +4,4 @@ Localized Gunbot Configuration interface written in all all native web code. (Pu
 To Do:
 
 Add over ride for parameters of individual pairs (underway)
-Enable Kraken and Cryptopia (underway)
+
