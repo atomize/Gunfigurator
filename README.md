@@ -1,9 +1,11 @@
 # Gunfigurator
 Localized Gunbot Configuration interface written in all all native web code. (Pure HTML/CSS/JS)
+##Try it here
+###[https://atomize.github.io/Gunfigurator/](https://atomize.github.io/Gunfigurator/)
 
-To Do:
 
-### Make it look better.
+####To Do:
+#### Make it look better.
 
 ##### If you like this at all please feel free to buy me beer!
 ###### BTC 14L4yYwj4fkpB4P5vrKAvvvUdmyjG2JQyH
