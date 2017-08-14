@@ -130,11 +130,12 @@ input[type="text"] {
   /* This is the magic bit */
   display: none;
 }
+.row1 {display:none;}
 </style>
 </head>
 <body>
 	
-<!-!>
+
 <div id="tabs">
 
   <input type="radio" name="tabs" id="toggle-tab1" checked="checked" />
@@ -150,7 +151,7 @@ input[type="text"] {
   <label for="toggle-tab4">Kraken</label>
 <input type="radio" name="tabs" id="toggle-tab5" />
   <label for="toggle-tab5">Cryptopia </label>
-<input type="button" onclick="test();"name="tabs" id="genbutton" style="display:none;" />
+<input type="button" onclick="gunfigure();"name="tabs" id="genbutton" style="display:none;" />
   <label for="genbutton">GENERATE</label>
 
   <div id="tab1" class="tab">
@@ -184,6 +185,11 @@ input[type="text"] {
         <th>Stop Limit</th>
         <th>Sell Only?</th>
         <th>Panic Sell?</th>
+        <th> Last Points</th>
+		<th> Avg. Points</th>
+		<th> Avg. Minimum</th>
+		<th>EMA 1</th>
+		<th>EMA 2</th>
       </tr>
     </thead>
     <tbody>
@@ -205,12 +211,17 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.bb.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.bb.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.bb.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.bb.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.bb.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.bb.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
 <td><select name="strategies.bb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.bb.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.bb.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr class="alt">
         <td>BB/Gain</td>
@@ -230,14 +241,21 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.bbgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.bbgain.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.bbgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.bbgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.bbgain.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.bbgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.bbgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.bbgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.bbgain.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.bbgain.EMA2" value="50" type="text"></input></td>
       </tr>
-      <tr>
+      
+      
+     
         <td>BB/PP</td>
 <td><input name="strategies.bbpp.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
 <td><input name="strategies.bbpp.PERIOD" value="15" type="text"></input></td>
@@ -255,13 +273,20 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.bbpp.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.bbpp.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.bbpp.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.bbpp.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.bbpp.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.bbpp.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.bbpp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
-      </tr>
+<td><select name="strategies.bbpp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.bbpp.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.bbpp.EMA2" value="50" type="text"></input></td>
+ </tr>
+      
+      
       <tr class="alt">
         <td>BB/Step Gain</td>
 <td><input name="strategies.bbstepgain.BTC_TRADING_LIMIT" value="0.01" type="text"></input></td>
@@ -280,12 +305,17 @@ input[type="text"] {
 <td><input name="strategies.bbstepgain.SELLLVL1" value="2" type="text"></input></td>
 <td><input name="strategies.bbstepgain.SELLLVL2" value="5" type="text"></input></td>
 <td><input name="strategies.bbstepgain.SELLLVL3" value="10" type="text"></input></td>
-<td><input name="strategies.bbstepgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.bbstepgain.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.bbstepgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.bbstepgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.bbstepgain.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.bbstepgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.bbstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.bbstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="strategies.bbstepgain.LASTPOINTS" value="1" type="text"></input></td>
+<td><input name="strategies.bbstepgain.AVGPOINTS" value="10" type="text"></input></td>
+<td><input name="strategies.bbstepgain.AVGMINIMUM" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.bbstepgain.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.bbstepgain.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr>
         <td>Pure Gain</td>
@@ -305,12 +335,17 @@ input[type="text"] {
 <td><input name="strategies.gain.SELLLVL1" value="2" type="text"></input></td>
 <td><input name="strategies.gain.SELLLVL2" value="5" type="text"></input></td>
 <td><input name="strategies.gain.SELLLVL3" value="10" type="text"></input></td>
-<td><input name="strategies.gain.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.gain.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.gain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.gain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.gain.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.gain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.gain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.gain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.gain.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.gain.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr class="alt">
         <td>Gain/BB</td>
@@ -330,12 +365,17 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.gainbb.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.gainbb.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.gainbb.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.gainbb.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.gainbb.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.gainbb.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.gainbb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.gainbb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.gainbb.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.gainbb.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr>
         <td>Gain/PP</td>
@@ -355,12 +395,17 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.gainpp.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.gainpp.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.gainpp.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.gainpp.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.gainpp.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.gainpp.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.gainpp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.gainpp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.gainpp.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.gainpp.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr class="alt">
         <td>Gain/Step Gain</td>
@@ -380,12 +425,17 @@ input[type="text"] {
 <td><input name="strategies.gainstepgain.SELLLVL1" value="2" type="text"></input></td>
 <td><input name="strategies.gainstepgain.SELLLVL2" value="5" type="text"></input></td>
 <td><input name="strategies.gainstepgain.SELLLVL3" value="10" type="text"></input></td>
-<td><input name="strategies.gainstepgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.gainstepgain.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.gainstepgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.gainstepgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.gainstepgain.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.gainstepgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.gainstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.gainstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="strategies.gainstepgain.LASTPOINTS" value="1" type="text"></input></td>
+<td><input name="strategies.gainstepgain.AVGPOINTS" value="10" type="text"></input></td>
+<td><input name="strategies.gainstepgain.AVGMINIMUM" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.gainstepgain.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.gainstepgain.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr>
         <td>Ping Pong</td>
@@ -405,12 +455,17 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.pp.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.pp.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.pp.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.pp.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.pp.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.pp.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.pp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.pp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.pp.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.pp.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr class="alt">
         <td>PP/BB</td>
@@ -430,12 +485,17 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.ppbb.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.ppbb.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.ppbb.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.ppbb.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.ppbb.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.ppbb.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.ppbb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.ppbb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.ppbb.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.ppbb.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr>
         <td>PP/Gain</td>
@@ -455,12 +515,17 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.ppgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.ppgain.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.ppgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.ppgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.ppgain.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.ppgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.ppgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.ppgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="" value="" type="text" disabled></input></td>
+<td><input name="strategies.ppgain.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.ppgain.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr class="alt">
         <td>PP/Step Gain</td>
@@ -480,12 +545,17 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.ppstepgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.ppstepgain.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.ppstepgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.ppstepgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.ppstepgain.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.ppstepgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.ppstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.ppstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="strategies.ppstepgain.LASTPOINTS" value="1" type="text"></input></td>
+<td><input name="strategies.ppstepgain.AVGPOINTS" value="10" type="text"></input></td>
+<td><input name="strategies.ppstepgain.AVGMINIMUM" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.ppstepgain.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.ppstepgain.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr>
         <td>Step Gain</td>
@@ -505,12 +575,17 @@ input[type="text"] {
 <td><input name="strategies.stepgain.SELLLVL1" value="2" type="text"></input></td>
 <td><input name="strategies.stepgain.SELLLVL2" value="5" type="text"></input></td>
 <td><input name="strategies.stepgain.SELLLVL3" value="10" type="text"></input></td>
-<td><input name="strategies.stepgain.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.stepgain.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.stepgain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.stepgain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.stepgain.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.stepgain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.stepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.stepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="strategies.stepgain.LASTPOINTS" value="1" type="text"></input></td>
+<td><input name="strategies.stepgain.AVGPOINTS" value="10" type="text"></input></td>
+<td><input name="strategies.stepgain.AVGMINIMUM" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.stepgain.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.stepgain.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr class="alt">
         <td>Step Gain/BB</td>
@@ -530,12 +605,17 @@ input[type="text"] {
 <td><input name="strategies.stepgainbb.SELLLVL1" value="2" type="text"></input></td>
 <td><input name="strategies.stepgainbb.SELLLVL2" value="5" type="text"></input></td>
 <td><input name="strategies.stepgainbb.SELLLVL3" value="10" type="text"></input></td>
-<td><input name="strategies.stepgainbb.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.stepgainbb.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.stepgainbb.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.stepgainbb.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.stepgainbb.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.stepgainbb.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.stepgainbb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.stepgainbb.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="strategies.stepgainbb.LASTPOINTS" value="1" type="text"></input></td>
+<td><input name="strategies.stepgainbb.AVGPOINTS" value="10" type="text"></input></td>
+<td><input name="strategies.stepgainbb.AVGMINIMUM" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.stepgainbb.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.stepgainbb.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr>
         <td>Step Gain/Gain</td>
@@ -555,12 +635,17 @@ input[type="text"] {
 <td><input name="strategies.stepgaingain.SELLLVL1" value="2" type="text"></input></td>
 <td><input name="strategies.stepgaingain.SELLLVL2" value="5" type="text"></input></td>
 <td><input name="strategies.stepgaingain.SELLLVL3" value="10" type="text"></input></td>
-<td><input name="strategies.stepgaingain.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.stepgaingain.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.stepgaingain.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.stepgaingain.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.stepgaingain.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.stepgaingain.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.stepgaingain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.stepgaingain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="strategies.stepgaingain.LASTPOINTS" value="1" type="text"></input></td>
+<td><input name="strategies.stepgaingain.AVGPOINTS" value="10" type="text"></input></td>
+<td><input name="strategies.stepgaingain.AVGMINIMUM" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.stepgaingain.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.stepgaingain.EMA2" value="50" type="text"></input></td>
       </tr>
       <tr class="alt">
         <td>Step Gain/PP</td>
@@ -580,12 +665,17 @@ input[type="text"] {
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
 <td><input name="" value="" type="text" disabled></input></td>
-<td><input name="strategies.stepgainpp.DOUBLE_UP" type="checkbox"></input></td>
+<td><select name="strategies.stepgainpp.DOUBLE_UP"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.stepgainpp.MIN_VOLUME_TO_BUY" value="0.001" type="text"></input></td>
 <td><input name="strategies.stepgainpp.MIN_VOLUME_TO_SELL" value="0.001" type="text"></input></td>
 <td><input name="strategies.stepgainpp.STOP_LIMIT" value="60" type="text"></input></td>
 <td><select name="strategies.stepgainpp.BUY_ENABLED"><option value="true">FALSE</option><option value="false">TRUE</option></select></td>
-<td><select name="strategies.stepgainpp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></td>
+<td><select name="strategies.stepgainpp.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
+<td><input name="strategies.stepgainpp.LASTPOINTS" value="1" type="text"></input></td>
+<td><input name="strategies.stepgainpp.AVGPOINTS" value="10" type="text"></input></td>
+<td><input name="strategies.stepgainpp.AVGMINIMUM" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.stepgainpp.EMA1" value="200" type="text"></input></td>
+<td><input name="strategies.stepgainpp.EMA2" value="50" type="text"></input></td>
       </tr>
     </tbody>
   </table>
@@ -606,10 +696,10 @@ input[type="text"] {
     <tbody>
       <tr class="alt">
         <td>KEY </td>
-        <td><input name="exchanges.poloniex.api" type="text" value="******************" placeholder="Poloniex API Key" style="width:100%"></input></td>
-        <td><input name="exchanges.bittrex.api" type="text" value="******************" placeholder="Bittrex API Key" style="width:100%""></input></td>
-        <td><input name="exchanges.kraken.api" type="text" value="******************" placeholder="Kraken API Key" style="width:100%"></input></td>
-        <td><input name="exchanges.cryptopia.api" type="text" value="******************" placeholder="Cryptopia API Key" style="width:100%"></input></td>
+        <td><input name="exchanges.poloniex.key" type="text" value="******************" placeholder="Poloniex API Key" style="width:100%"></input></td>
+        <td><input name="exchanges.bittrex.key" type="text" value="******************" placeholder="Bittrex API Key" style="width:100%"></input></td>
+        <td><input name="exchanges.kraken.key" type="text" value="******************" placeholder="Kraken API Key" style="width:100%"></input></td>
+        <td><input name="exchanges.cryptopia.key" type="text" value="******************" placeholder="Cryptopia API Key" style="width:100%"></input></td>
       </tr>
       <tr class="alt">
         <td>Secret</td>
@@ -667,7 +757,7 @@ input[type="text"] {
       </tr>
     </thead>
     <tbody>
-       <tr>
+       <tr class="row1">
 		   <td><input name="" type="checkbox"></input></td>
         <td><select id="selectNumber" type="select-one" onChange="setClassForPair(this, 'poloniex');" name=""></select></td>
         <td><select id="tradestrat" type="select-one" onChange="setClassForPair(this, 'poloniex');" name="">
@@ -690,6 +780,38 @@ input[type="text"] {
           <option value="stepgainpp">STEP GAIN/PP</option>
           
           </select>
+          <select id="tradestrat2" type="select-one" onChange="addOverride(this);" name="">
+<option value=""> Select a parameter...</option>
+<option value="BTC_TRADING_LIMIT">Trading Limit</option>
+<option value="PERIOD">Period</option>
+<option value="HIGH_BB">High BB</option>
+<option value="LOW_BB">Low BB</option>
+<option value="BUY_LEVEL">Buy Level</option>
+<option value="GAIN">Gain</option>
+<option value="PP_BUY">PP Buy</option>
+<option value="PP_SELL">PP Sell</option>
+<option value="BUYLVL">SG Buy Level</option>
+<option value="BUYLVL1">Buy Level 1</option>
+<option value="BUYLVL2">Buy Level 1</option>
+<option value="BUYLVL3">Buy Level 1</option>
+<option value="SELLLVL">SG Sell Level</option>
+<option value="SELLLVL1">Sell Level 1</option>
+<option value="SELLLVL2">Sell Level 1</option>
+<option value="SELLLVL3">Sell Level 1</option>
+<option value="DOUBLE_UP">Double Up?</option>
+<option value="MINIMUM_BUY_LEVEL">Minimum to Buy</option>
+<option value="MINIMUM_SELL_LEVEL">Minimum to Sell</option>
+<option value="STOP_LIMIT">Stop Limit</option>
+<option value="BUY_ENABLED">Sell Only?</option>
+<option value="PANIC_SELL">Panic Sell?</option>
+<option value="LASTPOINTS"> Last Points</option>
+<option value="AVGPOINTS"> Avg. Points</option>
+<option value="AVGMINIMUM"> Avg. Minimum</option>
+<option value="EMA1">EMA 1</option>
+<option value="EMA2">EMA 2</option>
+</select>
+          <a onclick="addOverride(this)">Test</a>
+          </td>
       </tr>
     </tbody>
   </table>
@@ -714,7 +836,7 @@ input[type="text"] {
       </tr>
     </thead>
     <tbody>
-       <tr>
+       <tr class="row1">
 		   <td><input name="" type="checkbox"></input></td>
         <td><select id="selectNumber2" type="select-one" onChange="setClassForPair(this,'bittrex');" name=""></select></td>
         <td><select id="tradestrat2" type="select-one" onChange="setClassForPair(this, 'bittrex');" name="">
@@ -737,6 +859,37 @@ input[type="text"] {
           <option value="stepgainpp">STEP GAIN/PP</option>
           
           </select>
+          <select id="tradestrat2" type="select-one" onChange="addOverride(this);" name="">
+<option value=""> Select a parameter...</option>
+<option value="BTC_TRADING_LIMIT">Trading Limit</option>
+<option value="PERIOD">Period</option>
+<option value="HIGH_BB">High BB</option>
+<option value="LOW_BB">Low BB</option>
+<option value="BUY_LEVEL">Buy Level</option>
+<option value="GAIN">Gain</option>
+<option value="PP_BUY">PP Buy</option>
+<option value="PP_SELL">PP Sell</option>
+<option value="BUYLVL">SG Buy Level</option>
+<option value="BUYLVL1">Buy Level 1</option>
+<option value="BUYLVL2">Buy Level 1</option>
+<option value="BUYLVL3">Buy Level 1</option>
+<option value="SELLLVL">SG Sell Level</option>
+<option value="SELLLVL1">Sell Level 1</option>
+<option value="SELLLVL2">Sell Level 1</option>
+<option value="SELLLVL3">Sell Level 1</option>
+<option value="DOUBLE_UP">Double Up?</option>
+<option value="MINIMUM_BUY_LEVEL">Minimum to Buy</option>
+<option value="MINIMUM_SELL_LEVEL">Minimum to Sell</option>
+<option value="STOP_LIMIT">Stop Limit</option>
+<option value="BUY_ENABLED">Sell Only?</option>
+<option value="PANIC_SELL">Panic Sell?</option>
+<option value="LASTPOINTS"> Last Points</option>
+<option value="AVGPOINTS"> Avg. Points</option>
+<option value="AVGMINIMUM"> Avg. Minimum</option>
+<option value="EMA1">EMA 1</option>
+<option value="EMA2">EMA 2</option>
+</select>
+          </td>
       </tr>
     </tbody>
   </table>
@@ -763,7 +916,7 @@ input[type="text"] {
       </tr>
     </thead>
     <tbody>
-       <tr>
+       <tr class="row1">
 		   <td><input name="" type="checkbox"></input></td>
         <td><select id="fillKraken" type="select-one" onChange="setClassForPair(this,'kraken');" name=""></select></td>
         <td><select id="tradestrat2" type="select-one" onChange="setClassForPair(this, 'kraken');" name="">
@@ -786,6 +939,37 @@ input[type="text"] {
           <option value="stepgainpp">STEP GAIN/PP</option>
           
           </select>
+          <select id="tradestrat2" type="select-one" onChange="addOverride(this);" name="">
+<option value=""> Select a parameter...</option>
+<option value="BTC_TRADING_LIMIT">Trading Limit</option>
+<option value="PERIOD">Period</option>
+<option value="HIGH_BB">High BB</option>
+<option value="LOW_BB">Low BB</option>
+<option value="BUY_LEVEL">Buy Level</option>
+<option value="GAIN">Gain</option>
+<option value="PP_BUY">PP Buy</option>
+<option value="PP_SELL">PP Sell</option>
+<option value="BUYLVL">SG Buy Level</option>
+<option value="BUYLVL1">Buy Level 1</option>
+<option value="BUYLVL2">Buy Level 1</option>
+<option value="BUYLVL3">Buy Level 1</option>
+<option value="SELLLVL">SG Sell Level</option>
+<option value="SELLLVL1">Sell Level 1</option>
+<option value="SELLLVL2">Sell Level 1</option>
+<option value="SELLLVL3">Sell Level 1</option>
+<option value="DOUBLE_UP">Double Up?</option>
+<option value="MINIMUM_BUY_LEVEL">Minimum to Buy</option>
+<option value="MINIMUM_SELL_LEVEL">Minimum to Sell</option>
+<option value="STOP_LIMIT">Stop Limit</option>
+<option value="BUY_ENABLED">Sell Only?</option>
+<option value="PANIC_SELL">Panic Sell?</option>
+<option value="LASTPOINTS"> Last Points</option>
+<option value="AVGPOINTS"> Avg. Points</option>
+<option value="AVGMINIMUM"> Avg. Minimum</option>
+<option value="EMA1">EMA 1</option>
+<option value="EMA2">EMA 2</option>
+</select>
+          </td>
       </tr>
     </tbody>
   </table>
@@ -809,7 +993,7 @@ input[type="text"] {
       </tr>
     </thead>
     <tbody>
-       <tr>
+       <tr class="row1">
 		   <td><input name="" type="checkbox"></input></td>
         <td><select id="fillCryp" type="select-one" onChange="setClassForPair(this,'cryptopia');" name=""></select></td>
         <td><select id="tradestrat2" type="select-one" onChange="setClassForPair(this, 'cryptopia');" name="">
@@ -832,6 +1016,37 @@ input[type="text"] {
           <option value="stepgainpp">STEP GAIN/PP</option>
           
           </select>
+          <select id="tradestrat2" type="select-one" onChange="addOverride(this);" name="">
+<option value=""> Select a parameter...</option>
+<option value="BTC_TRADING_LIMIT">Trading Limit</option>
+<option value="PERIOD">Period</option>
+<option value="HIGH_BB">High BB</option>
+<option value="LOW_BB">Low BB</option>
+<option value="BUY_LEVEL">Buy Level</option>
+<option value="GAIN">Gain</option>
+<option value="PP_BUY">PP Buy</option>
+<option value="PP_SELL">PP Sell</option>
+<option value="BUYLVL">SG Buy Level</option>
+<option value="BUYLVL1">Buy Level 1</option>
+<option value="BUYLVL2">Buy Level 1</option>
+<option value="BUYLVL3">Buy Level 1</option>
+<option value="SELLLVL">SG Sell Level</option>
+<option value="SELLLVL1">Sell Level 1</option>
+<option value="SELLLVL2">Sell Level 1</option>
+<option value="SELLLVL3">Sell Level 1</option>
+<option value="DOUBLE_UP">Double Up?</option>
+<option value="MINIMUM_BUY_LEVEL">Minimum to Buy</option>
+<option value="MINIMUM_SELL_LEVEL">Minimum to Sell</option>
+<option value="STOP_LIMIT">Stop Limit</option>
+<option value="BUY_ENABLED">Sell Only?</option>
+<option value="PANIC_SELL">Panic Sell?</option>
+<option value="LASTPOINTS"> Last Points</option>
+<option value="AVGPOINTS"> Avg. Points</option>
+<option value="AVGMINIMUM"> Avg. Minimum</option>
+<option value="EMA1">EMA 1</option>
+<option value="EMA2">EMA 2</option>
+</select>
+          </td>
       </tr>
     </tbody>
   </table>
@@ -846,12 +1061,10 @@ input[type="text"] {
 </code></pre>
 
 <script type="text/javascript">
-!function(e,n){"undefined"!=typeof exports&&"undefined"!=typeof module&&module.exports?module.exports=n():"function"==typeof define&&define.amd?define(n):e.form2js=n()}(this,function(){"use strict";function e(e,n,t){var r,u,i,a,l,o,c,s,f,d,h,m,g={},p={};for(r=0;r<e.length;r++)if(l=e[r].value,!n||""!==l&&null!==l){for(m=e[r].name.split(t),o=[],c=g,s="",u=0;u<m.length;u++)if((h=m[u].split("][")).length>1)for(i=0;i<h.length;i++)if(0==i?h[i]=h[i]+"]":i==h.length-1?h[i]="["+h[i]:h[i]="["+h[i]+"]",d=h[i].match(/([a-z_]+)?\[([a-z_][a-z0-9_]+?)\]/i))for(a=1;a<d.length;a++)d[a]&&o.push(d[a]);else o.push(h[i]);else o=o.concat(h);for(u=0;u<o.length;u++)(h=o[u]).indexOf("[]")>-1&&u==o.length-1?(s+=f=h.substr(0,h.indexOf("[")),c[f]||(c[f]=[]),c[f].push(l)):h.indexOf("[")>-1?(p[s+="_"+(f=h.substr(0,h.indexOf("[")))+"_"+(d=h.replace(/(^([a-z_]+)?\[)|(\]$)/gi,""))]||(p[s]={}),""==f||c[f]||(c[f]=[]),u==o.length-1?""==f?(c.push(l),p[s][d]=c[c.length-1]):(c[f].push(l),p[s][d]=c[f][c[f].length-1]):p[s][d]||(/^[0-9a-z_]+\[?/i.test(o[u+1])?c[f].push({}):c[f].push([]),p[s][d]=c[f][c[f].length-1]),c=p[s][d]):(s+=h,u<o.length-1?(c[h]||(c[h]={}),c=c[h]):c[h]=l)}return g}function n(e,n,u,i){var a=r(e,n,u,i);return a.length>0?a:t(e,n,u,i)}function t(e,n,t,u){for(var i=[],a=e.firstChild;a;)i=i.concat(r(a,n,t,u)),a=a.nextSibling;return i}function r(e,n,r,a){if(e.disabled&&!a)return[];var l,o,c,s=u(e,r);return l=n&&n(e),l&&l.name?c=[l]:""!=s&&e.nodeName.match(/INPUT|TEXTAREA/i)?c=null===(o=i(e,a))?[]:[{name:s,value:o}]:""!=s&&e.nodeName.match(/SELECT/i)?(o=i(e,a),c=[{name:s.replace(/\[\]$/,""),value:o}]):c=t(e,n,r,a),c}function u(e,n){return e.name&&""!=e.name?e.name:n&&e.id&&""!=e.id?e.id:""}function i(e,n){if(e.disabled&&!n)return null;switch(e.nodeName){case"INPUT":case"TEXTAREA":switch(e.type.toLowerCase()){case"radio":if(e.checked&&"false"===e.value)return!1;case"checkbox":if(e.checked&&"true"===e.value)return!0;if(!e.checked&&"true"===e.value)return!1;if(e.checked)return e.value;break;case"button":case"reset":case"submit":case"image":return"";default:return e.value}break;case"SELECT":return a(e)}return null}function a(e){var n,t,r,u=[];if(!e.multiple)return e.value;for(t=0,r=(n=e.getElementsByTagName("option")).length;t<r;t++)n[t].selected&&u.push(n[t].value);return u}return function(t,r,u,i,a,l){l=!!l,void 0!==u&&null!=u||(u=!0),void 0!==r&&null!=r||(r="."),arguments.length<5&&(a=!1);var o,c=[],s=0;if((t="string"==typeof t?document.getElementById(t):t).constructor==Array||"undefined"!=typeof NodeList&&t.constructor==NodeList)for(;o=t[s++];)c=c.concat(n(o,i,a,l));else c=n(t,i,a,l);return e(c,u,r)}});
-</script>
-<script type="text/javascript">
-this.JSON||(this.JSON={}),function(){function f(t){return t<10?"0"+t:t}function quote(t){return escapable.lastIndex=0,escapable.test(t)?'"'+t.replace(escapable,function(t){var e=meta[t];return"string"==typeof e?e:"\\u"+("0000"+t.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+t+'"'}function str(t,e){var n,r,f,o,u,i=gap,a=e[t];switch(a&&"object"==typeof a&&"function"==typeof a.toJSON&&(a=a.toJSON(t)),"function"==typeof rep&&(a=rep.call(e,t,a)),typeof a){case"string":return quote(a);case"number":return isFinite(a)?String(a):"null";case"boolean":case"null":return String(a);case"object":if(!a)return"null";if(gap+=indent,u=[],"[object Array]"===Object.prototype.toString.apply(a)){for(o=a.length,n=0;n<o;n+=1)u[n]=str(n,a)||"null";return f=0===u.length?"[]":gap?"[\n"+gap+u.join(",\n"+gap)+"\n"+i+"]":"["+u.join(",")+"]",gap=i,f}if(rep&&"object"==typeof rep)for(o=rep.length,n=0;n<o;n+=1)"string"==typeof(r=rep[n])&&(f=str(r,a))&&u.push(quote(r)+(gap?": ":":")+f);else for(r in a)Object.hasOwnProperty.call(a,r)&&(f=str(r,a))&&u.push(quote(r)+(gap?": ":":")+f);return f=0===u.length?"{}":gap?"{\n"+gap+u.join(",\n"+gap)+"\n"+i+"}":"{"+u.join(",")+"}",gap=i,f}}"function"!=typeof Date.prototype.toJSON&&(Date.prototype.toJSON=function(t){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(t){return this.valueOf()});var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},rep;"function"!=typeof JSON.stringify&&(JSON.stringify=function(t,e,n){var r;if(gap="",indent="","number"==typeof n)for(r=0;r<n;r+=1)indent+=" ";else"string"==typeof n&&(indent=n);if(rep=e,e&&"function"!=typeof e&&("object"!=typeof e||"number"!=typeof e.length))throw new Error("JSON.stringify");return str("",{"":t})}),"function"!=typeof JSON.parse&&(JSON.parse=function(text,reviver){function walk(t,e){var n,r,f=t[e];if(f&&"object"==typeof f)for(n in f)Object.hasOwnProperty.call(f,n)&&(void 0!==(r=walk(f,n))?f[n]=r:delete f[n]);return reviver.call(t,e,f)}var j;if(text=String(text),cx.lastIndex=0,cx.test(text)&&(text=text.replace(cx,function(t){return"\\u"+("0000"+t.charCodeAt(0).toString(16)).slice(-4)})),/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))return j=eval("("+text+")"),"function"==typeof reviver?walk({"":j},""):j;throw new SyntaxError("JSON.parse")})}();
-</script>
-<script type="text/javascript">
+	!function(e,n){"undefined"!=typeof exports&&"undefined"!=typeof module&&module.exports?module.exports=n():"function"==typeof define&&define.amd?define(n):e.form2js=n()}(this,function(){"use strict";function e(e,n,t){var r,u,i,a,l,o,c,s,f,d,h,m,g={},p={};for(r=0;r<e.length;r++)if(l=e[r].value,!n||""!==l&&null!==l){for(m=e[r].name.split(t),o=[],c=g,s="",u=0;u<m.length;u++)if((h=m[u].split("][")).length>1)for(i=0;i<h.length;i++)if(0==i?h[i]=h[i]+"]":i==h.length-1?h[i]="["+h[i]:h[i]="["+h[i]+"]",d=h[i].match(/([a-z_]+)?\[([a-z_][a-z0-9_]+?)\]/i))for(a=1;a<d.length;a++)d[a]&&o.push(d[a]);else o.push(h[i]);else o=o.concat(h);for(u=0;u<o.length;u++)(h=o[u]).indexOf("[]")>-1&&u==o.length-1?(s+=f=h.substr(0,h.indexOf("[")),c[f]||(c[f]=[]),c[f].push(l)):h.indexOf("[")>-1?(p[s+="_"+(f=h.substr(0,h.indexOf("[")))+"_"+(d=h.replace(/(^([a-z_]+)?\[)|(\]$)/gi,""))]||(p[s]={}),""==f||c[f]||(c[f]=[]),u==o.length-1?""==f?(c.push(l),p[s][d]=c[c.length-1]):(c[f].push(l),p[s][d]=c[f][c[f].length-1]):p[s][d]||(/^[0-9a-z_]+\[?/i.test(o[u+1])?c[f].push({}):c[f].push([]),p[s][d]=c[f][c[f].length-1]),c=p[s][d]):(s+=h,u<o.length-1?(c[h]||(c[h]={}),c=c[h]):c[h]=l)}return g}function n(e,n,u,i){var a=r(e,n,u,i);return a.length>0?a:t(e,n,u,i)}function t(e,n,t,u){for(var i=[],a=e.firstChild;a;)i=i.concat(r(a,n,t,u)),a=a.nextSibling;return i}function r(e,n,r,a){if(e.disabled&&!a)return[];var l,o,c,s=u(e,r);return l=n&&n(e),l&&l.name?c=[l]:""!=s&&e.nodeName.match(/INPUT|TEXTAREA/i)?c=null===(o=i(e,a))?[]:[{name:s,value:o}]:""!=s&&e.nodeName.match(/SELECT/i)?(o=i(e,a),c=[{name:s.replace(/\[\]$/,""),value:o}]):c=t(e,n,r,a),c}function u(e,n){return e.name&&""!=e.name?e.name:n&&e.id&&""!=e.id?e.id:""}function i(e,n){if(e.disabled&&!n)return null;switch(e.nodeName){case"INPUT":case"TEXTAREA":switch(e.type.toLowerCase()){case"radio":if(e.checked&&"false"===e.value)return!1;case"checkbox":if(e.checked&&"true"===e.value)return!0;if(!e.checked&&"true"===e.value)return!1;if(e.checked)return e.value;break;case"button":case"reset":case"submit":case"image":return"";default:return e.value}break;case"SELECT":return a(e)}return null}function a(e){var n,t,r,u=[];if(!e.multiple)return e.value;for(t=0,r=(n=e.getElementsByTagName("option")).length;t<r;t++)n[t].selected&&u.push(n[t].value);return u}return function(t,r,u,i,a,l){l=!!l,void 0!==u&&null!=u||(u=!0),void 0!==r&&null!=r||(r="."),arguments.length<5&&(a=!1);var o,c=[],s=0;if((t="string"==typeof t?document.getElementById(t):t).constructor==Array||"undefined"!=typeof NodeList&&t.constructor==NodeList)for(;o=t[s++];)c=c.concat(n(o,i,a,l));else c=n(t,i,a,l);return e(c,u,r)}});
+
+	this.JSON||(this.JSON={}),function(){function f(t){return t<10?"0"+t:t}function quote(t){return escapable.lastIndex=0,escapable.test(t)?'"'+t.replace(escapable,function(t){var e=meta[t];return"string"==typeof e?e:"\\u"+("0000"+t.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+t+'"'}function str(t,e){var n,r,f,o,u,i=gap,a=e[t];switch(a&&"object"==typeof a&&"function"==typeof a.toJSON&&(a=a.toJSON(t)),"function"==typeof rep&&(a=rep.call(e,t,a)),typeof a){case"string":return quote(a);case"number":return isFinite(a)?String(a):"null";case"boolean":case"null":return String(a);case"object":if(!a)return"null";if(gap+=indent,u=[],"[object Array]"===Object.prototype.toString.apply(a)){for(o=a.length,n=0;n<o;n+=1)u[n]=str(n,a)||"null";return f=0===u.length?"[]":gap?"[\n"+gap+u.join(",\n"+gap)+"\n"+i+"]":"["+u.join(",")+"]",gap=i,f}if(rep&&"object"==typeof rep)for(o=rep.length,n=0;n<o;n+=1)"string"==typeof(r=rep[n])&&(f=str(r,a))&&u.push(quote(r)+(gap?": ":":")+f);else for(r in a)Object.hasOwnProperty.call(a,r)&&(f=str(r,a))&&u.push(quote(r)+(gap?": ":":")+f);return f=0===u.length?"{}":gap?"{\n"+gap+u.join(",\n"+gap)+"\n"+i+"}":"{"+u.join(",")+"}",gap=i,f}}"function"!=typeof Date.prototype.toJSON&&(Date.prototype.toJSON=function(t){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(t){return this.valueOf()});var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},rep;"function"!=typeof JSON.stringify&&(JSON.stringify=function(t,e,n){var r;if(gap="",indent="","number"==typeof n)for(r=0;r<n;r+=1)indent+=" ";else"string"==typeof n&&(indent=n);if(rep=e,e&&"function"!=typeof e&&("object"!=typeof e||"number"!=typeof e.length))throw new Error("JSON.stringify");return str("",{"":t})}),"function"!=typeof JSON.parse&&(JSON.parse=function(text,reviver){function walk(t,e){var n,r,f=t[e];if(f&&"object"==typeof f)for(n in f)Object.hasOwnProperty.call(f,n)&&(void 0!==(r=walk(f,n))?f[n]=r:delete f[n]);return reviver.call(t,e,f)}var j;if(text=String(text),cx.lastIndex=0,cx.test(text)&&(text=text.replace(cx,function(t){return"\\u"+("0000"+t.charCodeAt(0).toString(16)).slice(-4)})),/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))return j=eval("("+text+")"),"function"==typeof reviver?walk({"":j},""):j;throw new SyntaxError("JSON.parse")})}();
+
 	function extend(){
     for(var i=1; i<arguments.length; i++)
         for(var key in arguments[i])
@@ -865,18 +1078,16 @@ this.JSON||(this.JSON={}),function(){function f(t){return t<10?"0"+t:t}function 
     return arguments[0];
 }
 
-	function test()
-	{
+	function gunfigure()
+	{		
 		var formData = form2js('testForm', '.', true);
 		var formData2 = form2js('testForm2', '.', true);
 		var formData3 = form2js('testForm3', '.', true);
 		var formData4 = form2js('testForm4', '.', true);
 		var formData5 = form2js('testForm5', '.', true);
 		var pairs = extend(formData2,formData3, formData4, formData5)
-		document.getElementById('testArea').innerHTML = JSON.stringify(extend(pairs,formData), null, '\t').replace(/"(-?(\d+\.?\d*|\.\d+))"/g,"$1").replace(/"(-?(true|false))"/g,"$1");
+		document.getElementById('testArea').innerHTML = JSON.stringify(extend(pairs,formData), null, '\t').replace(/"(-?(\d+\.?\d*|\.\d+))"/g,"$1").replace(/"(-?(true|false))"/g,"$1");		
 	}
-</script>
-<script type="text/javascript">
 
 	function fillPairsMenus() {
 	  var poloniex = document.getElementById("selectNumber"); 
@@ -888,14 +1099,14 @@ this.JSON||(this.JSON={}),function(){function f(t){return t<10?"0"+t:t}function 
 	  var krakenpairs = ["Select a pair...","XBTEUR","XBTUSD","XBTJPY","XBTGBP","XBTCAD","BCHEUR","BCHUSD","BCHXBT","DASHEUR","DASHUSD","DASHXBT","EOSETH","EOSEUR","EOSUSD","EOSXBT","GNOETH","GNOEUR","GNOUSD","GNOXBT","USDTUSD","ETCETH","ETCXBT","ETCEUR","ETCUSD","ETHXBT","ETHXBT.d","ETHCAD","ETHCAD.d","ETHEUR","ETHEUR.d","ETHGBP","ETHGBP.d","ETHJPY","ETHJPY.d","ETHUSD","ETHUSD.d","ICNETH","ICNXBT","LTCXBT","LTCEUR","LTCUSD","MLNETH","MLNXBT","REPETH","REPXBT","REPEUR","REPUSD","XBTCAD.d","XBTEUR.d","XBTGBP.d","XBTJPY.d","XBTUSD.d","XDGXBT","XLMXBT","XLMEUR","XLMUSD","XMRXBT","XMREUR","XMRUSD","XRPXBT","XRPCAD","XRPEUR","XRPJPY","XRPUSD","ZECXBT","ZECEUR","ZECUSD"];
 	  var cryptopiapairs = ["Select a pair...","$$$_BTC","1337_BTC","21M_BTC","300_BTC","42_BTC","4CHN_BTC","611_BTC","808_BTC","888_BTC","8BIT_BTC","ABC_BTC","ABY_BTC","AC_BTC","ACC_BTC","ACOIN_BTC","ADC_BTC","ADST_BTC","ALEX_BTC","ALL_BTC","ALT_BTC","AMP_BTC","ANI_BTC","ARC_BTC","ARCO_BTC","ARG_BTC","ARGUS_BTC","ARI_BTC","ARK_BTC","ATMS_BTC","ATOM_BTC","AU_BTC","AUR_BTC","B@_BTC","B3_BTC","BAY_BTC","BBR_BTC","BCF_BTC","BCH_BTC","BCN_BTC","BEEZ_BTC","BENJI_BTC","BERN_BTC","BEST_BTC","BIP_BTC","BITB_BTC","BITS_BTC","BLC_BTC","BLK_BTC","BNC_BTC","BNX_BTC","BOB_BTC","BOLI_BTC","BRO_BTC","BSD_BTC","BSTY_BTC","BTA_BTC","BTB_BTC","BTCD_BTC","BTCS_BTC","BTG_BTC","BTX_BTC","BUCKS_BTC","BUMBA_BTC","BVB_BTC","BVC_BTC","BXC_BTC","C2_BTC","CACH_BTC","CANN_BTC","CAP_BTC","CAR_BTC","CAT_BTC","CBX_BTC","CC_BTC","CCN_BTC","CDC_BTC","CDN_BTC","CFC_BTC","CFT_BTC","CHAO_BTC","CHC_BTC","CHESS_BTC","CHIEF_BTC","CJ_BTC","CLAM_BTC","CLOAK_BTC","CMT_BTC","CNO_BTC","COAL_BTC","COE_BTC","CON_BTC","CORG_BTC","CPN_BTC","CQST_BTC","CRAVE_BTC","CREA_BTC","CRX_BTC","CRYPT_BTC","CSC_BTC","CTIC2_BTC","CXT_BTC","DALC_BTC","DARK_BTC","DASH_BTC","DAXX_BTC","DCN_BTC","DCR_BTC","DCY_BTC","DDF_BTC","DEM_BTC","DGB_BTC","DGC_BTC","DIBC_BTC","DNR_BTC","DOGE_BTC","DON_BTC","DOPE_BTC","DOT_BTC","DRP_BTC","DRXNE_BTC","DSH_BTC","DUO_BTC","EBG_BTC","EC_BTC","ECO_BTC","ECOB_BTC","EDC_BTC","EDRC_BTC","EFL_BTC","EGC_BTC","ELC_BTC","ELS_BTC","EMB_BTC","EMC_BTC","EMC2_BTC","EMD_BTC","EQT_BTC","ERSO_BTC","ERY_BTC","ETB_BTC","ETC_BTC","ETH_BTC","EUC_BTC","EVIL_BTC","EVO_BTC","EXP_BTC","FAME_BTC","FAZZ_BTC","FCN_BTC","FCT_BTC","FFC_BTC","FJC_BTC","FLASH_BTC","FLAX_BTC","FLT_BTC","FONZ_BTC","FOOT_BTC","FORT_BTC","FRC_BTC","FRN_BTC","FST_BTC","FTC_BTC","FUEL_BTC","FUZZ_BTC","GAIA_BTC","GAME_BTC","GAP_BTC","GAY_BTC","GBYTE_BTC","GEERT_BTC","GEO_BTC","GLD_BTC","GNO_BTC","GNT_BTC","GP_BTC","GPL_BTC","GPU_BTC","GRN_BTC","GRS_BTC","GRW_BTC","GRWI_BTC","GUN_BTC","HAL_BTC","HBN_BTC","HUSH_BTC","HXX_BTC","HYP_BTC","I0C_BTC","ICOB_BTC","IEC_BTC","IFLT_BTC","IFT_BTC","IMPCH_BTC","IMS_BTC","IN_BTC","INCNT_BTC","INFX_BTC","INPAY_BTC","INSN_BTC","IOU_BTC","IRL_BTC","ITI_BTC","IXC_BTC","JET_BTC","KASH_BTC","KAYI_BTC","KDC_BTC","KED_BTC","KEK_BTC","KING_BTC","KMD_BTC","KOBO_BTC","KRB_BTC","KURT_BTC","KUSH_BTC","LANA_BTC","LBC_BTC","LDC_BTC","LDOGE_BTC","LEMON_BTC","LEPEN_BTC","LINDA_BTC","LINX_BTC","LIT_BTC","LIZI_BTC","LTB_BTC","LTC_BTC","MAC_BTC","MAGN_BTC","MAID_BTC","MAR_BTC","MARS_BTC","MARX_BTC","MCRN_BTC","MEC_BTC","MER_BTC","MGO_BTC","MINEX_BTC","MINT_BTC","MLITE_BTC","MNE_BTC","MNM_BTC","MOIN_BTC","MOJO_BTC","MOTO_BTC","MSP_BTC","MST_BTC","MTLMC_BTC","MUSIC_BTC","MZC_BTC","NAMO_BTC","NAV_BTC","NET_BTC","NETKO_BTC","NEVA_BTC","NKA_BTC","NLC2_BTC","NMC_BTC","NOBL_BTC","NOTE_BTC","NSR_BTC","NTRN_BTC","NVC_BTC","NXS_BTC","NYAN_BTC","OFF_BTC","OK_BTC","OOO_BTC","OPAL_BTC","ORB_BTC","OSC_BTC","OTX_BTC","OX_BTC","PAK_BTC","PASC_BTC","PASL_BTC","PCC_BTC","PEPE_BTC","PHS_BTC","PIE_BTC","PIGGY_BTC","PING_BTC","PINK_BTC","PIVX_BTC","PLC_BTC","PLR_BTC","POST_BTC","POSW_BTC","POT_BTC","PPC_BTC","PR_BTC","PROC_BTC","PTC_BTC","PUT_BTC","PXC_BTC","PXI_BTC","Q2C_BTC","QBT_BTC","QRK_BTC","QTL_BTC","RAIN_BTC","RBT_BTC","RBX_BTC","RBY_BTC","RC_BTC","RDD_BTC","RED_BTC","REP_BTC","RIYA_BTC","RNS_BTC","RPC_BTC","SAFEX_BTC","SAK_BTC","SAND_BTC","SBC_BTC","SC_BTC","SCD_BTC","SCORE_BTC","SEL_BTC","SFC_BTC","SHA_BTC","SHRM_BTC","SIB_BTC","SIGT_BTC","SKC_BTC","SKR_BTC","SKY_BTC","SLG_BTC","SMART_BTC","SMC_BTC","SOIL_BTC","SONG_BTC","SOON_BTC","SPACE_BTC","SPT_BTC","SQL_BTC","SRC_BTC","START_BTC","STC_BTC","STRAT_BTC","STV_BTC","SUMO_BTC","SWING_BTC","SXC_BTC","SYNX_BTC","TAJ_BTC","TEK_BTC","TER_BTC","TES_BTC","TGC_BTC","TIC_BTC","TIT_BTC","TOA_BTC","TOP_BTC","TOR_BTC","TRC_BTC","TRI_BTC","TRK_BTC","TRUMP_BTC","TSE_BTC","TTC_BTC","TX_BTC","UBQ_BTC","UIS_BTC","UMO_BTC","UNB_BTC","UNIC_BTC","UNIFY_BTC","UNITS_BTC","UNO_BTC","UR_BTC","USNBT_BTC","UTC_BTC","V_BTC","VCC_BTC","VIDZ_BTC","VISIO_BTC","VRC_BTC","VRM_BTC","VSM_BTC","VUC_BTC","WAVES_BTC","WDC_BTC","WEED_BTC","WLC_BTC","WRC_BTC","WSX_BTC","WW_BTC","XBC_BTC","XBTS_BTC","XBY_BTC","XCO_BTC","XCRE_BTC","XCT_BTC","XCXT_BTC","XEM_BTC","XGR_BTC","XID_BTC","XJO_BTC","XLR_BTC","XMG_BTC","XMR_BTC","XMY_BTC","XPD_BTC","XPM_BTC","XPTX_BTC","XRA_BTC","XRE_BTC","XRY_BTC","XSPEC_BTC","XVG_BTC","XZC_BTC","YOVI_BTC","ZCL_BTC","ZEC_BTC","ZEIT_BTC","ZER_BTC","ZET_BTC","ZOI_BTC","ZSE_BTC"
 ];
-	  	  for (var i = 0; i < polopairs.length; i++) {
+	   for (var i = 0; i < polopairs.length; i++) {
 	    var opt = polopairs[i];
 	    var el = document.createElement("option");
 	    el.textContent = opt;
 	    el.value = opt;
 	    poloniex.appendChild(el);
 	  }
- for (var i = 0; i < bittrexpairs.length; i++) {
+	   for (var i = 0; i < bittrexpairs.length; i++) {
 	    var opt = bittrexpairs[i];
 	    var el = document.createElement("option");
 	    el.textContent = opt;
@@ -903,7 +1114,7 @@ this.JSON||(this.JSON={}),function(){function f(t){return t<10?"0"+t:t}function 
 	    bittrex.appendChild(el);
 	  }
 
-	  	  for (var i = 0; i < krakenpairs.length; i++) {
+	  for (var i = 0; i < krakenpairs.length; i++) {
 	    var opt = krakenpairs[i];
 	    var el = document.createElement("option");
 	    el.textContent = opt;
@@ -920,28 +1131,24 @@ this.JSON||(this.JSON={}),function(){function f(t){return t<10?"0"+t:t}function 
 	  }
 	}
 
-function getNearestTableAncestor(htmlElementNode) {
-    while (htmlElementNode) {
-        htmlElementNode = htmlElementNode.parentNode;
-        if (htmlElementNode.tagName.toLowerCase() === 'tr') {
-            return htmlElementNode;
-        }
-    }
-    return undefined;
-}
+	function getNearestTableAncestor(htmlElementNode) {
+		while (htmlElementNode) {
+			htmlElementNode = htmlElementNode.parentNode;
+				if (htmlElementNode.tagName.toLowerCase() === 'tr') {
+			return htmlElementNode;
+			}
+		}
+		return undefined;
+	}
+	
 	function setClassForPair(selector, exchange){
   	 var row = selector.parentElement;
-  	 console.log(exchange);
       var thisrow = getNearestTableAncestor(row);
       var pair = thisrow.cells[1].childNodes[0].value
 		var strategy = thisrow.cells[2].childNodes[0].value;
 		var strategyInput = thisrow.cells[2].childNodes[0];
-		//strategyInput.name="";
 		strategyInput.name = "pairs."+exchange+"."+pair+".strategy";
-		console.log(thisrow.cells[1].childNodes[0].value)
-		console.log(thisrow.cells[2].childNodes[0].value);
-  
-}
+	}
 	
 	function addRow(tableID) {
 	  var table = document.getElementById(tableID);
@@ -965,39 +1172,55 @@ function getNearestTableAncestor(htmlElementNode) {
 	  }
 	}
 
-  		function deleteRow(tableID) {
+  	function deleteRow(tableID) {
   		    try {
   		        var table = document.getElementById(tableID);
   		        var rowCount = table.rows.length;
-
   		        for (var i = 0; i < rowCount; i++) {
   		            var row = table.rows[i];
   		            var chkbox = row.cells[0].childNodes[0];
-  		            if (null != chkbox && true == chkbox.checked) {
-  		                if (rowCount <= 2) {
-  		                    alert("Cannot delete all the rows.");
-  		                    break;
-  		                }
-  		                table.deleteRow(i);
-  		                rowCount--;
-  		                i--;
-  		            }
-
-
-  		        }
-  		    } catch (e) {
-  		        alert(e);
-  		    }
-  		}
-  			function addRowClass(selector, exchange, pair,strategy) {
+ 	            if (null != chkbox && true == chkbox.checked) {
+  	                if (rowCount <= 2) {
+  	                    alert("Cannot delete all the rows.");
+ 		                break;
+  	                }
+  	                table.deleteRow(i);
+ 		            rowCount--;
+  	                i--;
+  	            }
+  		       }
+  		   } catch (e) {
+  		       alert(e);
+  		   }
+  	}
+  		
+  	function addRowClass(selector, exchange, pair,strategy) {
 	  var classtoadd = selector.value;
 	  selector.parentElement.parentElement.className =classtoadd;
 	}
-//pairOptions();
-//pairOptions3();
-fillPairsMenus();
-//pairOptions2();
-//pairOptions4();
+	function addOverride(selector){
+	  var row = selector.parentElement;
+      var thisrow = getNearestTableAncestor(row);
+      var exchange = thisrow.parentElement.parentElement.id;
+      console.log(exchange);
+      var pair = thisrow.cells[1].childNodes[0].value
+      var newcellnum = thisrow.cells.length;
+      var newcell = thisrow.insertCell(newcellnum);
+	    newcell.innerHTML = selector.value+" <input  name='pairs."+exchange+"."+pair+"[override]["+selector.value+"]' type='text'></input><a onclick='removeOverride(this)'>  (-)</a>";
+ 
+		}
+	function	removeOverride(cell){
+			var cellNumber = cell.parentElement.cellIndex;
+			var row = cell.parentElement;
+			var thisrow = getNearestTableAncestor(row);
+			thisrow.deleteCell(cellNumber);
+			var colCount = thisrow.parentElement.rows[1].cells.length;
+			
+			console.log(tableid);
+			}
+		
+	fillPairsMenus();
+
 </script>
 </body>
 </html>
