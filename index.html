@@ -14,7 +14,85 @@ body{
   background:#fff;
 	font-family:Verdana,sans-serif;
 }
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+}
 
+/* Modal Content */
+.modal-content {
+    position: fixed;
+    bottom: 0;
+    background-color: #fefefe;
+    width: 100%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+}
+
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0} 
+    to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+}
 #tabs{
 	width:auto;
   margin:0 auto;
@@ -49,7 +127,7 @@ label:hover{
 }
 
 .tab{
-	min-height:200px;
+	min-height:20px;
 	background:#d9d9d9;
 	display:none;
 	padding:12px;
@@ -71,7 +149,7 @@ label:hover{
 }
 .datagrid table {
     border-collapse: collapse;
-    text-align: left;
+    text-align: center;
     width: 100%;
 }
 .datagrid {
@@ -121,12 +199,22 @@ label:hover{
 input[type="text"] {
 	width:40px;
 	text-align:center;
+border:none;
+border-width:0px;
 	}
 .widetext {
 	width:100%;
+	border:none;
+	border-width:none;
+	text-align:center;
 	}
-
 .row1 {display:none;}
+
+
+code#testArea {
+    margin-left: 40px;
+    font-size: 20px;
+}
 </style>
 </head>
 <body>
@@ -167,23 +255,23 @@ input[type="text"] {
         <th>Gain</th>
         <th>PP Buy</th>
         <th>PP Sell</th>
-        <th>SG Buy Level</th>
-        <th>Buy Level 1</th>
-        <th>Buy Level 2</th>
-        <th>Buy Level 3</th>
-        <th>SG Sell Level</th>
-        <th>Sell Level 1</th>
-        <th>Sell Level 2</th>
-        <th>Sell Level 3</th>
+        <th>SG Buy Lvl</th>
+        <th>Buy Lvl 1</th>
+        <th>Buy Lvl 2</th>
+        <th>Buy Lvl 3</th>
+        <th>SG Sell Lvl</th>
+        <th>Sell Lvl 1</th>
+        <th>Sell Lvl 2</th>
+        <th>Sell Lvl 3</th>
         <th>Double Up?</th>
-        <th>Minimum to Buy</th>
-        <th>Minimum to Sell</th>
+        <th>Min. to Buy</th>
+        <th>Min to Sell</th>
         <th>Stop Limit</th>
         <th>Sell Only?</th>
         <th>Panic Sell?</th>
-        <th> Last Points</th>
-		<th> Avg. Points</th>
-		<th> Avg. Minimum</th>
+        <th>Last Points</th>
+		<th>Avg. Points</th>
+		<th>Avg. Min.</th>
 		<th>EMA 1</th>
 		<th>EMA 2</th>
       </tr>
@@ -690,7 +778,7 @@ input[type="text"] {
       </tr>
     </thead>
     <tbody>
-      <tr class="alt">
+      <tr>
         <td>KEY </td>
         <td><input name="exchanges.poloniex.key" type="text" value="******************" placeholder="Poloniex API Key" style="width:100%"></input></td>
         <td><input name="exchanges.bittrex.key" type="text" value="******************" placeholder="Bittrex API Key" style="width:100%"></input></td>
@@ -788,12 +876,12 @@ input[type="text"] {
 <option value="PP_SELL">PP Sell</option>
 <option value="BUYLVL">SG Buy Level</option>
 <option value="BUYLVL1">Buy Level 1</option>
-<option value="BUYLVL2">Buy Level 1</option>
-<option value="BUYLVL3">Buy Level 1</option>
+<option value="BUYLVL2">Buy Level 2</option>
+<option value="BUYLVL3">Buy Level 3</option>
 <option value="SELLLVL">SG Sell Level</option>
 <option value="SELLLVL1">Sell Level 1</option>
-<option value="SELLLVL2">Sell Level 1</option>
-<option value="SELLLVL3">Sell Level 1</option>
+<option value="SELLLVL2">Sell Level 2</option>
+<option value="SELLLVL3">Sell Level 3</option>
 <option value="DOUBLE_UP">Double Up?</option>
 <option value="MINIMUM_BUY_LEVEL">Minimum to Buy</option>
 <option value="MINIMUM_SELL_LEVEL">Minimum to Sell</option>
@@ -806,7 +894,6 @@ input[type="text"] {
 <option value="EMA1">EMA 1</option>
 <option value="EMA2">EMA 2</option>
 </select>
-          
           </td>
       </tr>
     </tbody>
@@ -1024,12 +1111,12 @@ input[type="text"] {
 <option value="PP_SELL">PP Sell</option>
 <option value="BUYLVL">SG Buy Level</option>
 <option value="BUYLVL1">Buy Level 1</option>
-<option value="BUYLVL2">Buy Level 1</option>
-<option value="BUYLVL3">Buy Level 1</option>
+<option value="BUYLVL2">Buy Level 2</option>
+<option value="BUYLVL3">Buy Level 3</option>
 <option value="SELLLVL">SG Sell Level</option>
 <option value="SELLLVL1">Sell Level 1</option>
-<option value="SELLLVL2">Sell Level 1</option>
-<option value="SELLLVL3">Sell Level 1</option>
+<option value="SELLLVL2">Sell Level 2</option>
+<option value="SELLLVL3">Sell Level 3</option>
 <option value="DOUBLE_UP">Double Up?</option>
 <option value="MINIMUM_BUY_LEVEL">Minimum to Buy</option>
 <option value="MINIMUM_SELL_LEVEL">Minimum to Sell</option>
@@ -1052,9 +1139,11 @@ input[type="text"] {
   </div>
 </div>
 
-
-<pre><code id="testArea">
+<div style="padding-left:30px">
+<pre ><code id="testArea">
 </code></pre>
+
+</div>
 
 <script type="text/javascript">
 	!function(e,n){"undefined"!=typeof exports&&"undefined"!=typeof module&&module.exports?module.exports=n():"function"==typeof define&&define.amd?define(n):e.form2js=n()}(this,function(){"use strict";function e(e,n,t){var r,u,i,a,l,o,c,s,f,d,h,m,g={},p={};for(r=0;r<e.length;r++)if(l=e[r].value,!n||""!==l&&null!==l){for(m=e[r].name.split(t),o=[],c=g,s="",u=0;u<m.length;u++)if((h=m[u].split("][")).length>1)for(i=0;i<h.length;i++)if(0==i?h[i]=h[i]+"]":i==h.length-1?h[i]="["+h[i]:h[i]="["+h[i]+"]",d=h[i].match(/([a-z_]+)?\[([a-z_][a-z0-9_]+?)\]/i))for(a=1;a<d.length;a++)d[a]&&o.push(d[a]);else o.push(h[i]);else o=o.concat(h);for(u=0;u<o.length;u++)(h=o[u]).indexOf("[]")>-1&&u==o.length-1?(s+=f=h.substr(0,h.indexOf("[")),c[f]||(c[f]=[]),c[f].push(l)):h.indexOf("[")>-1?(p[s+="_"+(f=h.substr(0,h.indexOf("[")))+"_"+(d=h.replace(/(^([a-z_]+)?\[)|(\]$)/gi,""))]||(p[s]={}),""==f||c[f]||(c[f]=[]),u==o.length-1?""==f?(c.push(l),p[s][d]=c[c.length-1]):(c[f].push(l),p[s][d]=c[f][c[f].length-1]):p[s][d]||(/^[0-9a-z_]+\[?/i.test(o[u+1])?c[f].push({}):c[f].push([]),p[s][d]=c[f][c[f].length-1]),c=p[s][d]):(s+=h,u<o.length-1?(c[h]||(c[h]={}),c=c[h]):c[h]=l)}return g}function n(e,n,u,i){var a=r(e,n,u,i);return a.length>0?a:t(e,n,u,i)}function t(e,n,t,u){for(var i=[],a=e.firstChild;a;)i=i.concat(r(a,n,t,u)),a=a.nextSibling;return i}function r(e,n,r,a){if(e.disabled&&!a)return[];var l,o,c,s=u(e,r);return l=n&&n(e),l&&l.name?c=[l]:""!=s&&e.nodeName.match(/INPUT|TEXTAREA/i)?c=null===(o=i(e,a))?[]:[{name:s,value:o}]:""!=s&&e.nodeName.match(/SELECT/i)?(o=i(e,a),c=[{name:s.replace(/\[\]$/,""),value:o}]):c=t(e,n,r,a),c}function u(e,n){return e.name&&""!=e.name?e.name:n&&e.id&&""!=e.id?e.id:""}function i(e,n){if(e.disabled&&!n)return null;switch(e.nodeName){case"INPUT":case"TEXTAREA":switch(e.type.toLowerCase()){case"radio":if(e.checked&&"false"===e.value)return!1;case"checkbox":if(e.checked&&"true"===e.value)return!0;if(!e.checked&&"true"===e.value)return!1;if(e.checked)return e.value;break;case"button":case"reset":case"submit":case"image":return"";default:return e.value}break;case"SELECT":return a(e)}return null}function a(e){var n,t,r,u=[];if(!e.multiple)return e.value;for(t=0,r=(n=e.getElementsByTagName("option")).length;t<r;t++)n[t].selected&&u.push(n[t].value);return u}return function(t,r,u,i,a,l){l=!!l,void 0!==u&&null!=u||(u=!0),void 0!==r&&null!=r||(r="."),arguments.length<5&&(a=!1);var o,c=[],s=0;if((t="string"==typeof t?document.getElementById(t):t).constructor==Array||"undefined"!=typeof NodeList&&t.constructor==NodeList)for(;o=t[s++];)c=c.concat(n(o,i,a,l));else c=n(t,i,a,l);return e(c,u,r)}});
@@ -1073,7 +1162,35 @@ input[type="text"] {
              }
     return arguments[0];
 }
-
+	function modalUp() {
+		var modal = document.getElementById('successModal');
+		var span = document.getElementsByClassName("close")[0];
+		    modal.style.display = "block";
+		span.onclick = function() {
+		    modal.style.display = "none";
+		}		
+		window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+		}
+	}
+	
+	function postConfig(json) {
+		var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function()
+        {
+            if(xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            {
+                console.log(xmlHttp.responseText);
+                // Get the modal
+                modalUp();
+            }
+        }
+        xmlHttp.open("post", "/form"); 
+        xmlHttp.send(json); 
+	}
+	
 	function gunfigure()
 	{		
 		var formData = form2js('testForm', '.', true);
@@ -1081,8 +1198,13 @@ input[type="text"] {
 		var formData3 = form2js('testForm3', '.', true);
 		var formData4 = form2js('testForm4', '.', true);
 		var formData5 = form2js('testForm5', '.', true);
-		var pairs = extend(formData2,formData3, formData4, formData5)
-		document.getElementById('testArea').innerHTML = JSON.stringify(extend(pairs,formData), null, '\t').replace(/"(-?(\d+\.?\d*|\.\d+))"/g,"$1").replace(/"(-?(true|false))"/g,"$1");		
+		var pairs = extend(formData2,formData3, formData4, formData5) 
+		var jsontosend = JSON.stringify(extend(pairs,formData), null, '\t').replace(/"(-?(\d+\.?\d*|\.\d+))"/g,"$1").replace(/"(-?(true|false))"/g,"$1");
+		document.getElementById('testArea').innerHTML = jsontosend;
+		//var polodata = JSON.stringify(formData2);
+		//console.log(polodata);
+		//localStorage.setItem("poloniexdata", polodata);
+		//postConfig(jsontosend);
 	}
 
 	function fillPairsMenus() {
@@ -1093,8 +1215,7 @@ input[type="text"] {
 	  var polopairs = ["Select a pair...","BTC_AMP", "BTC_ARDR", "BTC_BCN", "BTC_BCY", "BTC_BELA", "BTC_BLK", "BTC_BTCD", "BTC_BTM", "BTC_BTS", "BTC_BURST", "BTC_CLAM", "BTC_DASH", "BTC_DCR", "BTC_DGB", "BTC_DOGE", "BTC_EMC", "BTC_ETC", "BTC_ETH", "BTC_EXP", "BTC_FCT", "BTC_FLDC", "BTC_FLO", "BTC_GAME", "BTC_GNO", "BTC_GNT", "BTC_GRC", "BTC_HUC", "BTC_LBC", "BTC_LSK", "BTC_LTC", "BTC_MAID", "BTC_NAUT", "BTC_NAV", "BTC_NEOS", "BTC_NMC", "BTC_NOTE", "BTC_NXC", "BTC_NXT", "BTC_OMNI", "BTC_PASC", "BTC_PINK", "BTC_POT", "BTC_PPC", "BTC_RADS", "BTC_REP", "BTC_RIC", "BTC_SBD", "BTC_SC", "BTC_SJCX", "BTC_STEEM", "BTC_STR", "BTC_STRAT", "BTC_SYS", "BTC_VIA", "BTC_VRC", "BTC_VTC", "BTC_XBC", "BTC_XCP", "BTC_XEM", "BTC_XMR", "BTC_XPM", "BTC_XRP", "BTC_XVC", "BTC_ZEC", "ETH_ETC", "ETH_GNO", "ETH_GNT", "ETH_LSK", "ETH_REP", "ETH_STEEM", "ETH_ZEC"];
 	  var bittrexpairs = ["Select a pair...","BTC-1ST","BTC-2GIVE","BTC-ABY","BTC-ADT","BTC-ADX","BTC-AEON","BTC-AGRS","BTC-AMP","BTC-ANT","BTC-APX","BTC-ARDR","BTC-ARK","BTC-AUR","BTC-BAT","BTC-BAY","BTC-BCC","BTC-BCY","BTC-BITB","BTC-BLITZ","BTC-BLK","BTC-BLOCK","BTC-BNT","BTC-BRK","BTC-BRX","BTC-BSD","BTC-BTA","BTC-BTCD","BTC-BTS","BTC-BURST","BTC-BYC","BTC-CANN","BTC-CFI","BTC-CLAM","BTC-CLOAK","BTC-CLUB","BTC-COVAL","BTC-CPC","BTC-CRB","BTC-CRW","BTC-CURE","BTC-CVC","BTC-DAR","BTC-DASH","BTC-DCR","BTC-DCT","BTC-DGB","BTC-DGD","BTC-DMD","BTC-DOGE","BTC-DOPE","BTC-DRACO","BTC-DTB","BTC-DYN","BTC-EBST","BTC-EDG","BTC-EFL","BTC-EGC","BTC-EMC","BTC-EMC2","BTC-ENRG","BTC-ERC","BTC-ETC","BTC-ETH","BTC-EXCL","BTC-EXP","BTC-FAIR","BTC-FCT","BTC-FLDC","BTC-FLO","BTC-FTC","BTC-FUN","BTC-GAM","BTC-GAME","BTC-GBG","BTC-GBYTE","BTC-GCR","BTC-GEO","BTC-GLD","BTC-GNO","BTC-GNT","BTC-GOLOS","BTC-GRC","BTC-GRS","BTC-GUP","BTC-HKG","BTC-HMQ","BTC-INCNT","BTC-INFX","BTC-IOC","BTC-ION","BTC-IOP","BTC-KMD","BTC-KORE","BTC-LBC","BTC-LGD","BTC-LMC","BTC-LSK","BTC-LTC","BTC-LUN","BTC-MAID","BTC-MCO","BTC-MEME","BTC-MLN","BTC-MONA","BTC-MTL","BTC-MUE","BTC-MUSIC","BTC-MYST","BTC-NAUT","BTC-NAV","BTC-NBT","BTC-NEO","BTC-NEOS","BTC-NLG","BTC-NMR","BTC-NXC","BTC-NXS","BTC-NXT","BTC-OK","BTC-OMG","BTC-OMNI","BTC-PART","BTC-PAY","BTC-PDC","BTC-PINK","BTC-PIVX","BTC-PKB","BTC-POT","BTC-PPC","BTC-PTC","BTC-PTOY","BTC-QRL","BTC-QTUM","BTC-QWARK","BTC-RADS","BTC-RBY","BTC-RDD","BTC-REP","BTC-RISE","BTC-RLC","BTC-SBD","BTC-SC","BTC-SEC","BTC-SEQ","BTC-SHIFT","BTC-SIB","BTC-SLR","BTC-SLS","BTC-SNGLS","BTC-SNRG","BTC-SNT","BTC-SPHR","BTC-SPR","BTC-START","BTC-STEEM","BTC-STORJ","BTC-STRAT","BTC-SWIFT","BTC-SWT","BTC-SYNX","BTC-SYS","BTC-THC","BTC-TIME","BTC-TKN","BTC-TKS","BTC-TRIG","BTC-TRST","BTC-TRUST","BTC-TX","BTC-UBQ","BTC-UNB","BTC-UNO","BTC-VIA","BTC-VOX","BTC-VRC","BTC-VRM","BTC-VTC","BTC-VTR","BTC-WAVES","BTC-WINGS","BTC-XAUR","BTC-XBB","BTC-XCP","BTC-XDN","BTC-XEL","BTC-XEM","BTC-XLM","BTC-XMG","BTC-XMR","BTC-XMY","BTC-XRP","BTC-XST","BTC-XVC","BTC-XVG","BTC-XWC","BTC-XZC","BTC-ZCL","BTC-ZEC","BTC-ZEN","ETH-1ST","ETH-ADT","ETH-ADX","ETH-ANS","ETH-ANT","ETH-BAT","ETH-BCC","ETH-BNT","ETH-BTS","ETH-CFI","ETH-CRB","ETH-CVC","ETH-DASH","ETH-DGB","ETH-DGD","ETH-ETC","ETH-FCT","ETH-FUN","ETH-GNO","ETH-GNT","ETH-GUP","ETH-HMQ","ETH-LGD","ETH-LTC","ETH-LUN","ETH-MCO","ETH-MTL","ETH-MYST","ETH-NMR","ETH-OMG","ETH-PAY","ETH-PTOY","ETH-QRL","ETH-QTUM","ETH-REP","ETH-RLC","ETH-SC","ETH-SNGLS","ETH-SNT","ETH-STORJ","ETH-STRAT","ETH-TIME","ETH-TKN","ETH-TRST","ETH-WAVES","ETH-WINGS","ETH-XEM","ETH-XLM","ETH-XMR","ETH-XRP","ETH-ZEC","USDT-ANS","USDT-BCC","USDT-BTC","USDT-DASH","USDT-ETC","USDT-ETH","USDT-LTC","USDT-XMR","USDT-XRP","USDT-ZEC","BTC-SAFEX","BTC-NEO","ETH-NEO","USDT-NEO"];
 	  var krakenpairs = ["Select a pair...","XBTEUR","XBTUSD","XBTJPY","XBTGBP","XBTCAD","BCHEUR","BCHUSD","BCHXBT","DASHEUR","DASHUSD","DASHXBT","EOSETH","EOSEUR","EOSUSD","EOSXBT","GNOETH","GNOEUR","GNOUSD","GNOXBT","USDTUSD","ETCETH","ETCXBT","ETCEUR","ETCUSD","ETHXBT","ETHXBT.d","ETHCAD","ETHCAD.d","ETHEUR","ETHEUR.d","ETHGBP","ETHGBP.d","ETHJPY","ETHJPY.d","ETHUSD","ETHUSD.d","ICNETH","ICNXBT","LTCXBT","LTCEUR","LTCUSD","MLNETH","MLNXBT","REPETH","REPXBT","REPEUR","REPUSD","XBTCAD.d","XBTEUR.d","XBTGBP.d","XBTJPY.d","XBTUSD.d","XDGXBT","XLMXBT","XLMEUR","XLMUSD","XMRXBT","XMREUR","XMRUSD","XRPXBT","XRPCAD","XRPEUR","XRPJPY","XRPUSD","ZECXBT","ZECEUR","ZECUSD"];
-	  var cryptopiapairs = ["Select a pair...","$$$_BTC","1337_BTC","21M_BTC","300_BTC","42_BTC","4CHN_BTC","611_BTC","808_BTC","888_BTC","8BIT_BTC","ABC_BTC","ABY_BTC","AC_BTC","ACC_BTC","ACOIN_BTC","ADC_BTC","ADST_BTC","ALEX_BTC","ALL_BTC","ALT_BTC","AMP_BTC","ANI_BTC","ARC_BTC","ARCO_BTC","ARG_BTC","ARGUS_BTC","ARI_BTC","ARK_BTC","ATMS_BTC","ATOM_BTC","AU_BTC","AUR_BTC","B@_BTC","B3_BTC","BAY_BTC","BBR_BTC","BCF_BTC","BCH_BTC","BCN_BTC","BEEZ_BTC","BENJI_BTC","BERN_BTC","BEST_BTC","BIP_BTC","BITB_BTC","BITS_BTC","BLC_BTC","BLK_BTC","BNC_BTC","BNX_BTC","BOB_BTC","BOLI_BTC","BRO_BTC","BSD_BTC","BSTY_BTC","BTA_BTC","BTB_BTC","BTCD_BTC","BTCS_BTC","BTG_BTC","BTX_BTC","BUCKS_BTC","BUMBA_BTC","BVB_BTC","BVC_BTC","BXC_BTC","C2_BTC","CACH_BTC","CANN_BTC","CAP_BTC","CAR_BTC","CAT_BTC","CBX_BTC","CC_BTC","CCN_BTC","CDC_BTC","CDN_BTC","CFC_BTC","CFT_BTC","CHAO_BTC","CHC_BTC","CHESS_BTC","CHIEF_BTC","CJ_BTC","CLAM_BTC","CLOAK_BTC","CMT_BTC","CNO_BTC","COAL_BTC","COE_BTC","CON_BTC","CORG_BTC","CPN_BTC","CQST_BTC","CRAVE_BTC","CREA_BTC","CRX_BTC","CRYPT_BTC","CSC_BTC","CTIC2_BTC","CXT_BTC","DALC_BTC","DARK_BTC","DASH_BTC","DAXX_BTC","DCN_BTC","DCR_BTC","DCY_BTC","DDF_BTC","DEM_BTC","DGB_BTC","DGC_BTC","DIBC_BTC","DNR_BTC","DOGE_BTC","DON_BTC","DOPE_BTC","DOT_BTC","DRP_BTC","DRXNE_BTC","DSH_BTC","DUO_BTC","EBG_BTC","EC_BTC","ECO_BTC","ECOB_BTC","EDC_BTC","EDRC_BTC","EFL_BTC","EGC_BTC","ELC_BTC","ELS_BTC","EMB_BTC","EMC_BTC","EMC2_BTC","EMD_BTC","EQT_BTC","ERSO_BTC","ERY_BTC","ETB_BTC","ETC_BTC","ETH_BTC","EUC_BTC","EVIL_BTC","EVO_BTC","EXP_BTC","FAME_BTC","FAZZ_BTC","FCN_BTC","FCT_BTC","FFC_BTC","FJC_BTC","FLASH_BTC","FLAX_BTC","FLT_BTC","FONZ_BTC","FOOT_BTC","FORT_BTC","FRC_BTC","FRN_BTC","FST_BTC","FTC_BTC","FUEL_BTC","FUZZ_BTC","GAIA_BTC","GAME_BTC","GAP_BTC","GAY_BTC","GBYTE_BTC","GEERT_BTC","GEO_BTC","GLD_BTC","GNO_BTC","GNT_BTC","GP_BTC","GPL_BTC","GPU_BTC","GRN_BTC","GRS_BTC","GRW_BTC","GRWI_BTC","GUN_BTC","HAL_BTC","HBN_BTC","HUSH_BTC","HXX_BTC","HYP_BTC","I0C_BTC","ICOB_BTC","IEC_BTC","IFLT_BTC","IFT_BTC","IMPCH_BTC","IMS_BTC","IN_BTC","INCNT_BTC","INFX_BTC","INPAY_BTC","INSN_BTC","IOU_BTC","IRL_BTC","ITI_BTC","IXC_BTC","JET_BTC","KASH_BTC","KAYI_BTC","KDC_BTC","KED_BTC","KEK_BTC","KING_BTC","KMD_BTC","KOBO_BTC","KRB_BTC","KURT_BTC","KUSH_BTC","LANA_BTC","LBC_BTC","LDC_BTC","LDOGE_BTC","LEMON_BTC","LEPEN_BTC","LINDA_BTC","LINX_BTC","LIT_BTC","LIZI_BTC","LTB_BTC","LTC_BTC","MAC_BTC","MAGN_BTC","MAID_BTC","MAR_BTC","MARS_BTC","MARX_BTC","MCRN_BTC","MEC_BTC","MER_BTC","MGO_BTC","MINEX_BTC","MINT_BTC","MLITE_BTC","MNE_BTC","MNM_BTC","MOIN_BTC","MOJO_BTC","MOTO_BTC","MSP_BTC","MST_BTC","MTLMC_BTC","MUSIC_BTC","MZC_BTC","NAMO_BTC","NAV_BTC","NET_BTC","NETKO_BTC","NEVA_BTC","NKA_BTC","NLC2_BTC","NMC_BTC","NOBL_BTC","NOTE_BTC","NSR_BTC","NTRN_BTC","NVC_BTC","NXS_BTC","NYAN_BTC","OFF_BTC","OK_BTC","OOO_BTC","OPAL_BTC","ORB_BTC","OSC_BTC","OTX_BTC","OX_BTC","PAK_BTC","PASC_BTC","PASL_BTC","PCC_BTC","PEPE_BTC","PHS_BTC","PIE_BTC","PIGGY_BTC","PING_BTC","PINK_BTC","PIVX_BTC","PLC_BTC","PLR_BTC","POST_BTC","POSW_BTC","POT_BTC","PPC_BTC","PR_BTC","PROC_BTC","PTC_BTC","PUT_BTC","PXC_BTC","PXI_BTC","Q2C_BTC","QBT_BTC","QRK_BTC","QTL_BTC","RAIN_BTC","RBT_BTC","RBX_BTC","RBY_BTC","RC_BTC","RDD_BTC","RED_BTC","REP_BTC","RIYA_BTC","RNS_BTC","RPC_BTC","SAFEX_BTC","SAK_BTC","SAND_BTC","SBC_BTC","SC_BTC","SCD_BTC","SCORE_BTC","SEL_BTC","SFC_BTC","SHA_BTC","SHRM_BTC","SIB_BTC","SIGT_BTC","SKC_BTC","SKR_BTC","SKY_BTC","SLG_BTC","SMART_BTC","SMC_BTC","SOIL_BTC","SONG_BTC","SOON_BTC","SPACE_BTC","SPT_BTC","SQL_BTC","SRC_BTC","START_BTC","STC_BTC","STRAT_BTC","STV_BTC","SUMO_BTC","SWING_BTC","SXC_BTC","SYNX_BTC","TAJ_BTC","TEK_BTC","TER_BTC","TES_BTC","TGC_BTC","TIC_BTC","TIT_BTC","TOA_BTC","TOP_BTC","TOR_BTC","TRC_BTC","TRI_BTC","TRK_BTC","TRUMP_BTC","TSE_BTC","TTC_BTC","TX_BTC","UBQ_BTC","UIS_BTC","UMO_BTC","UNB_BTC","UNIC_BTC","UNIFY_BTC","UNITS_BTC","UNO_BTC","UR_BTC","USNBT_BTC","UTC_BTC","V_BTC","VCC_BTC","VIDZ_BTC","VISIO_BTC","VRC_BTC","VRM_BTC","VSM_BTC","VUC_BTC","WAVES_BTC","WDC_BTC","WEED_BTC","WLC_BTC","WRC_BTC","WSX_BTC","WW_BTC","XBC_BTC","XBTS_BTC","XBY_BTC","XCO_BTC","XCRE_BTC","XCT_BTC","XCXT_BTC","XEM_BTC","XGR_BTC","XID_BTC","XJO_BTC","XLR_BTC","XMG_BTC","XMR_BTC","XMY_BTC","XPD_BTC","XPM_BTC","XPTX_BTC","XRA_BTC","XRE_BTC","XRY_BTC","XSPEC_BTC","XVG_BTC","XZC_BTC","YOVI_BTC","ZCL_BTC","ZEC_BTC","ZEIT_BTC","ZER_BTC","ZET_BTC","ZOI_BTC","ZSE_BTC"
-];
+	  var cryptopiapairs = ["Select a pair...","$$$_BTC","1337_BTC","21M_BTC","300_BTC","42_BTC","4CHN_BTC","611_BTC","808_BTC","888_BTC","8BIT_BTC","ABC_BTC","ABY_BTC","AC_BTC","ACC_BTC","ACOIN_BTC","ADC_BTC","ADST_BTC","ALEX_BTC","ALL_BTC","ALT_BTC","AMP_BTC","ANI_BTC","ARC_BTC","ARCO_BTC","ARG_BTC","ARGUS_BTC","ARI_BTC","ARK_BTC","ATMS_BTC","ATOM_BTC","AU_BTC","AUR_BTC","B@_BTC","B3_BTC","BAY_BTC","BBR_BTC","BCF_BTC","BCH_BTC","BCN_BTC","BEEZ_BTC","BENJI_BTC","BERN_BTC","BEST_BTC","BIP_BTC","BITB_BTC","BITS_BTC","BLC_BTC","BLK_BTC","BNC_BTC","BNX_BTC","BOB_BTC","BOLI_BTC","BRO_BTC","BSD_BTC","BSTY_BTC","BTA_BTC","BTB_BTC","BTCD_BTC","BTCS_BTC","BTG_BTC","BTX_BTC","BUCKS_BTC","BUMBA_BTC","BVB_BTC","BVC_BTC","BXC_BTC","C2_BTC","CACH_BTC","CANN_BTC","CAP_BTC","CAR_BTC","CAT_BTC","CBX_BTC","CC_BTC","CCN_BTC","CDC_BTC","CDN_BTC","CFC_BTC","CFT_BTC","CHAO_BTC","CHC_BTC","CHESS_BTC","CHIEF_BTC","CJ_BTC","CLAM_BTC","CLOAK_BTC","CMT_BTC","CNO_BTC","COAL_BTC","COE_BTC","CON_BTC","CORG_BTC","CPN_BTC","CQST_BTC","CRAVE_BTC","CREA_BTC","CRX_BTC","CRYPT_BTC","CSC_BTC","CTIC2_BTC","CXT_BTC","DALC_BTC","DARK_BTC","DASH_BTC","DAXX_BTC","DCN_BTC","DCR_BTC","DCY_BTC","DDF_BTC","DEM_BTC","DGB_BTC","DGC_BTC","DIBC_BTC","DNR_BTC","DOGE_BTC","DON_BTC","DOPE_BTC","DOT_BTC","DRP_BTC","DRXNE_BTC","DSH_BTC","DUO_BTC","EBG_BTC","EC_BTC","ECO_BTC","ECOB_BTC","EDC_BTC","EDRC_BTC","EFL_BTC","EGC_BTC","ELC_BTC","ELS_BTC","EMB_BTC","EMC_BTC","EMC2_BTC","EMD_BTC","EQT_BTC","ERSO_BTC","ERY_BTC","ETB_BTC","ETC_BTC","ETH_BTC","EUC_BTC","EVIL_BTC","EVO_BTC","EXP_BTC","FAME_BTC","FAZZ_BTC","FCN_BTC","FCT_BTC","FFC_BTC","FJC_BTC","FLASH_BTC","FLAX_BTC","FLT_BTC","FONZ_BTC","FOOT_BTC","FORT_BTC","FRC_BTC","FRN_BTC","FST_BTC","FTC_BTC","FUEL_BTC","FUZZ_BTC","GAIA_BTC","GAME_BTC","GAP_BTC","GAY_BTC","GBYTE_BTC","GEERT_BTC","GEO_BTC","GLD_BTC","GNO_BTC","GNT_BTC","GP_BTC","GPL_BTC","GPU_BTC","GRN_BTC","GRS_BTC","GRW_BTC","GRWI_BTC","GUN_BTC","HAL_BTC","HBN_BTC","HUSH_BTC","HXX_BTC","HYP_BTC","I0C_BTC","ICOB_BTC","IEC_BTC","IFLT_BTC","IFT_BTC","IMPCH_BTC","IMS_BTC","IN_BTC","INCNT_BTC","INFX_BTC","INPAY_BTC","INSN_BTC","IOU_BTC","IRL_BTC","ITI_BTC","IXC_BTC","JET_BTC","KASH_BTC","KAYI_BTC","KDC_BTC","KED_BTC","KEK_BTC","KING_BTC","KMD_BTC","KOBO_BTC","KRB_BTC","KURT_BTC","KUSH_BTC","LANA_BTC","LBC_BTC","LDC_BTC","LDOGE_BTC","LEMON_BTC","LEPEN_BTC","LINDA_BTC","LINX_BTC","LIT_BTC","LIZI_BTC","LTB_BTC","LTC_BTC","MAC_BTC","MAGN_BTC","MAID_BTC","MAR_BTC","MARS_BTC","MARX_BTC","MCRN_BTC","MEC_BTC","MER_BTC","MGO_BTC","MINEX_BTC","MINT_BTC","MLITE_BTC","MNE_BTC","MNM_BTC","MOIN_BTC","MOJO_BTC","MOTO_BTC","MSP_BTC","MST_BTC","MTLMC_BTC","MUSIC_BTC","MZC_BTC","NAMO_BTC","NAV_BTC","NET_BTC","NETKO_BTC","NEVA_BTC","NKA_BTC","NLC2_BTC","NMC_BTC","NOBL_BTC","NOTE_BTC","NSR_BTC","NTRN_BTC","NVC_BTC","NXS_BTC","NYAN_BTC","OFF_BTC","OK_BTC","OOO_BTC","OPAL_BTC","ORB_BTC","OSC_BTC","OTX_BTC","OX_BTC","PAK_BTC","PASC_BTC","PASL_BTC","PCC_BTC","PEPE_BTC","PHS_BTC","PIE_BTC","PIGGY_BTC","PING_BTC","PINK_BTC","PIVX_BTC","PLC_BTC","PLR_BTC","POST_BTC","POSW_BTC","POT_BTC","PPC_BTC","PR_BTC","PROC_BTC","PTC_BTC","PUT_BTC","PXC_BTC","PXI_BTC","Q2C_BTC","QBT_BTC","QRK_BTC","QTL_BTC","RAIN_BTC","RBT_BTC","RBX_BTC","RBY_BTC","RC_BTC","RDD_BTC","RED_BTC","REP_BTC","RIYA_BTC","RNS_BTC","RPC_BTC","SAFEX_BTC","SAK_BTC","SAND_BTC","SBC_BTC","SC_BTC","SCD_BTC","SCORE_BTC","SEL_BTC","SFC_BTC","SHA_BTC","SHRM_BTC","SIB_BTC","SIGT_BTC","SKC_BTC","SKR_BTC","SKY_BTC","SLG_BTC","SMART_BTC","SMC_BTC","SOIL_BTC","SONG_BTC","SOON_BTC","SPACE_BTC","SPT_BTC","SQL_BTC","SRC_BTC","START_BTC","STC_BTC","STRAT_BTC","STV_BTC","SUMO_BTC","SWING_BTC","SXC_BTC","SYNX_BTC","TAJ_BTC","TEK_BTC","TER_BTC","TES_BTC","TGC_BTC","TIC_BTC","TIT_BTC","TOA_BTC","TOP_BTC","TOR_BTC","TRC_BTC","TRI_BTC","TRK_BTC","TRUMP_BTC","TSE_BTC","TTC_BTC","TX_BTC","UBQ_BTC","UIS_BTC","UMO_BTC","UNB_BTC","UNIC_BTC","UNIFY_BTC","UNITS_BTC","UNO_BTC","UR_BTC","USNBT_BTC","UTC_BTC","V_BTC","VCC_BTC","VIDZ_BTC","VISIO_BTC","VRC_BTC","VRM_BTC","VSM_BTC","VUC_BTC","WAVES_BTC","WDC_BTC","WEED_BTC","WLC_BTC","WRC_BTC","WSX_BTC","WW_BTC","XBC_BTC","XBTS_BTC","XBY_BTC","XCO_BTC","XCRE_BTC","XCT_BTC","XCXT_BTC","XEM_BTC","XGR_BTC","XID_BTC","XJO_BTC","XLR_BTC","XMG_BTC","XMR_BTC","XMY_BTC","XPD_BTC","XPM_BTC","XPTX_BTC","XRA_BTC","XRE_BTC","XRY_BTC","XSPEC_BTC","XVG_BTC","XZC_BTC","YOVI_BTC","ZCL_BTC","ZEC_BTC","ZEIT_BTC","ZER_BTC","ZET_BTC","ZOI_BTC","ZSE_BTC"];
 	   for (var i = 0; i < polopairs.length; i++) {
 	    var opt = polopairs[i];
 	    var el = document.createElement("option");
@@ -1143,7 +1264,9 @@ input[type="text"] {
       var pair = thisrow.cells[1].childNodes[0].value
 		var strategy = thisrow.cells[2].childNodes[0].value;
 		var strategyInput = thisrow.cells[2].childNodes[0];
+		 
 		strategyInput.name = "pairs."+exchange+"."+pair+".strategy";
+		pair.name = "pairs."+exchange+"."+pair;
 	}
 	
 	function addRow(tableID) {
@@ -1199,10 +1322,12 @@ input[type="text"] {
       var thisrow = getNearestTableAncestor(row);
       var exchange = thisrow.parentElement.parentElement.id;
       console.log(exchange);
-      var pair = thisrow.cells[1].childNodes[0].value
+		var pair = thisrow.cells[1].childNodes[0].value;
+   //   var pair = selector.value;
       var newcellnum = thisrow.cells.length;
       var newcell = thisrow.insertCell(newcellnum);
-	    newcell.innerHTML = selector.value+" <input  name='pairs."+exchange+"."+pair+"[override]["+selector.value+"]' type='text'></input><a onclick='removeOverride(this)'>  (-)</a>";
+	  newcell.innerHTML = selector.value+" <input name='pairs."+exchange+"."+pair+".[override]["+selector.value+"]' type='text'></input><a style='cursor:pointer'onclick='removeOverride(this)'>  (-)</a>";
+	   
  
 		}
 	function	removeOverride(cell){
@@ -1212,9 +1337,28 @@ input[type="text"] {
 			thisrow.deleteCell(cellNumber);
 			var colCount = thisrow.parentElement.rows[1].cells.length;
 			
-			console.log(tableid);
 			}
-		
+			function storeValues() {
+		var polotable = document.getElementById("poloniex").innerHTML;
+		localStorage.setItem("poloniex", polotable);
+		console.log(polotable);		
+	}
+	function loadValues() {
+		var poloniex = localStorage.getItem("poloniex");
+		var polotable = document.getElementById("poloniex")
+	polotable.innerHTML = "";
+	polotable.innerHTML = poloniex;
+	populateForm();
+	}
+
+			function populateForm()
+			{
+				var data = localStorage.getItem("poloniexdata");
+				console.log(data);
+				data = JSON.parse(data);
+				js2form(document.getElementById('testForm2'), data);
+				
+			}
 	fillPairsMenus();
 
 </script>
