@@ -2,7 +2,7 @@
 Localized Gunbot Configuration interface written in all all native web code. (Pure HTML/CSS/JS)
 
 ## NOTICE
-### Gunfigrator is updated for Gunbot v. 4.0.4 - In each release candidate as of recently, new parameters have been added.
+### Gunfigrator is updated for Gunbot v. 4.0.5 - In each release candidate as of recently, new parameters have been added.
 ### It is possible that if you use Gunfigurator for a different 4.0.x version of Gunbot, it may throw errors.
 ### I am working now to make a 'Version Switcher' for Gunfigurator to avoid this confusion.
 ### Report bugs!
