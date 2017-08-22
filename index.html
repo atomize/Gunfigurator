@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Gunfigurator BETA</title>
-  <meta name="description" content="A Config Generator for Gunbot 4.0.5">
+  <meta name="description" content="Gunfigurator [singlefile] A Config Generator for Gunbot 4.0.5">
 
 <style>
 *{margin:0;padding:0;}
@@ -235,9 +235,8 @@ input[type="text"] {
   <label for="toggle-tab5">Cryptopia </label>
 <input type="button" onclick="gunfigure();"name="tabs" id="genbutton" style="display:none;" />
   <label for="genbutton">GENERATE</label>
- 
-  <input id="loadbutton" type="button" value="Load Pairs" onclick="loadValues()" style="display:none;"/>
-  <label for="loadbutton">Restore</label>
+  <input type="file" id="fileinput" style="display:none;"/>
+ <label for="fileinput">Import</label>
   
 <div id="tab1" class="tab">
 <form id="testForm">
@@ -1143,7 +1142,23 @@ input[type="text"] {
 
 
 <pre><code id="testArea"></code></pre>
+<div id="successModal" class="modal">
 
+  <!-- Modal content -->
+  <div class="modal-content" style="text-align:center;">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>You are Gunfigured!</h2>
+    </div>
+    <div class="modal-body">
+      <p>Your file was saved as config.js</p>
+      <p>Check your Gunbot logs to make sure the configuration change was noticed!!!</p>
+    </div>
+    <div class="modal-footer">
+      <h3>Gunfigurator v1.0.0 ---- Berti</h3>
+    </div>
+  </div>
+</div>
 
 
 <script type="text/javascript">
@@ -1734,32 +1749,45 @@ input[type="text"] {
 	//fillPairsMenus();
 
   
-   document.getElementById('files').addEventListener('change', readBlob, false);
-	function readBlob() {
-//var files = evt.target.files;
-   var files = document.getElementById('files').files;
-    if (!files.length) {
-      alert('Please select a file!');
+  document.getElementById('fileinput').addEventListener('change', loadFile, false);
+function loadFile() {
+    var input, file, fr;
+
+    if (typeof window.FileReader !== 'function') {
+      alert("The file API isn't supported on this browser yet.");
       return;
     }
 
-    var file = files[0];
-   
-    var reader = new FileReader();
-
-    // If we use onloadend, we need to check the readyState.
-   reader.onload = function(evt) {
-     // if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-     var loaded = JSON.parse(evt.target.result);
-    // var loaded = evt.target.result;
-        document.getElementById('testArea').innerHTML = JSON.stringify(loaded, null, 4);
-        //document.getElementById('testArea').innerHTML = loaded;
-     // }
+    input = document.getElementById('fileinput');
+    if (!input) {
+      alert("Um, couldn't find the fileinput element.");
     }
-    reader.readAsText(file);
-    storeValues();
-  }
+    else if (!input.files) {
+      alert("This browser doesn't seem to support the `files` property of file inputs.");
+    }
+    else if (!input.files[0]) {
+      alert("Please select a file before clicking 'Load'");
+    }
+    else {
+      file = input.files[0];
+      fr = new FileReader();
+      fr.onload = receivedText;
+      fr.readAsText(file);
+    }
 
+    function receivedText(e) {
+      lines = e.target.result;
+      var newArr = JSON.parse(lines); 
+     // console.log(JSON.stringify(newArr));
+      document.getElementById('testArea').innerHTML = JSON.stringify(newArr, null, 4);
+      storeValues();
+    loadValues();
+    }
+    
+  }
+	if (localStorage.getItem("configFile") !== undefined){
+		loadValues();
+		}
 </script>
 </body>
 </html>
