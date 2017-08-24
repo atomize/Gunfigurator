@@ -1673,6 +1673,16 @@ input[type="text"] {
 	js2form(document.getElementById('testForm'), data);
 	//var config = JSON.parse(localStorage.getItem("configFile"));
 	  loadConfig();
+			  var y = document.getElementById('testForm').querySelectorAll('input[name*="AVGMINIMUM"]');
+	  var z = document.getElementById('testForm').querySelectorAll('input[name*="PP_BUY"]');
+  var i;
+for (i = 0; i < y.length; i++) {
+    y[i].addEventListener('input', precise(y[i]), false);
+    z[i].addEventListener('input', precise(z[i]), false);
+}
+for (i = 0; i < z.length; i++) {
+    z[i].addEventListener('input', precise(z[i]), false);
+}
 	}
 
 	function buildTableRow(exchange, pair, strategy, override) { //overrides is is an array value
@@ -1788,12 +1798,7 @@ function loadFile() {
 	if (localStorage.getItem("configFile") !== undefined){
 		loadValues();
 		}
-	var undoScinot = document.querySelector('input');
- undoScinot.addEventListener('input', precise(this.value),true);
-
-  function precise(elem) {
-    elem.value = Number(elem.value).toFixed(8);
-  }
+	
 </script>
 </body>
 </html>
