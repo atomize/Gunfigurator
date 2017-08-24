@@ -1511,7 +1511,10 @@ input[type="text"] {
 	  xmlHttp.send(json);
 	}
 
-  
+   function precise(elem) {
+    elem.value = Number(elem.value).toFixed(8);
+  }
+
 	function gunfigure() {
 
 	  var formData = form2js('testForm', '.', true);
