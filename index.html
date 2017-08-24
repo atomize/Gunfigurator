@@ -1511,9 +1511,6 @@ input[type="text"] {
 	  xmlHttp.send(json);
 	}
 
-   function precise(elem) {
-    elem.value = Number(elem.value).toFixed(8);
-  }
 
 	function gunfigure() {
 
@@ -1685,8 +1682,11 @@ for (i = 0; i < y.length; i++) {
 for (i = 0; i < z.length; i++) {
     z[i].addEventListener('input', precise(z[i]), false);
 }
-		gunfigure();
+		//gunfigure();
 	}
+   function precise(elem) {
+    elem.value = Number(elem.value).toFixed(8);
+  }
 
 	function buildTableRow(exchange, pair, strategy, override) { //overrides is is an array value
 	  var table = document.getElementById(exchange);
