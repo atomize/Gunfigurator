@@ -1788,6 +1788,12 @@ function loadFile() {
 	if (localStorage.getItem("configFile") !== undefined){
 		loadValues();
 		}
+	var undoScinot = document.querySelector('input');
+ undoScinot.addEventListener('input', precise(this.value),true);
+
+  function precise(elem) {
+    elem.value = Number(elem.value).toFixed(8);
+  }
 </script>
 </body>
 </html>
