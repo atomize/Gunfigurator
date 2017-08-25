@@ -13,7 +13,6 @@ Localized Gunbot Configuration interface written in all all native web code. (Pu
 
 
 #### To Do:
-#### Give ability to load and tweak a current config.js
 #### Make it look better.
 
 ##### If you like this at all please feel free to buy me beer!
