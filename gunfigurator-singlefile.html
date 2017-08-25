@@ -2,11 +2,11 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Gunfigurator BETA</title>
-  <meta name="description" content="Gunfigurator [singlefile] A Config Generator for Gunbot 4.0.5">
-
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Gunfigurator BETA</title>
+	<meta name="description" content="A Config Generator for Gunbot 4.0.5">
+	<link rel="stylesheet" type="text/css" href="gunfigurator.css">
 <style>
 *{margin:0;padding:0;}
 
@@ -213,10 +213,79 @@ input[type="text"] {
     font-size: 20px;
 }
 .row1 {display:none;}
+
+
+
+.loading {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+
+
+
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+
 </style>
 </head>
 <body>
 	
+
 
 <div id="tabs">
 
@@ -239,7 +308,7 @@ input[type="text"] {
  <label for="fileinput">Import</label>
   
 <div id="tab1" class="tab">
-<form id="testForm">
+<form id="globalForm">
 <div class="datagrid">
 	<div id="strategies">
   <table>
@@ -406,7 +475,7 @@ input[type="text"] {
 <td><input name="" value="" type="text"disabled></input></td>
 <td><input name="strategies.gain.BUY_LEVEL" value="0.1" type="text"></input></td>
 <td><input name="strategies.gain.GAIN" value="2" type="text"></input></td>
-<td><input name="strategies.gain.PP_BUY" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.gain.PP_BUY" oninput="precise(this)"value="0.00000001" type="text"></input></td>
 <td><input name="strategies.gain.PP_SELL" value="0.12345678" type="text"></input></td>
 <td><input name="strategies.gain.BUYLVL" value="0.1" type="text"></input></td>
 <td><input name="strategies.gain.BUYLVL1" value="1" type="text"></input></td>
@@ -514,7 +583,7 @@ input[type="text"] {
 <td><select name="strategies.gainstepgain.PANIC_SELL"><option value="false">FALSE</option><option value="true">TRUE</option></select></td>
 <td><input name="strategies.gainstepgain.LASTPOINTS" value="1" type="text"></input></td>
 <td><input name="strategies.gainstepgain.AVGPOINTS" value="10" type="text"></input></td>
-<td><input name="strategies.gainstepgain.AVGMINIMUM" value="0.00000001" type="text"></input></td>
+<td><input name="strategies.gainstepgain.AVGMINIMUM"  value="0.00000001" type="text"></input></td>
 <td><input name="strategies.gainstepgain.EMA1" value="200" type="text"></input></td>
 <td><input name="strategies.gainstepgain.EMA2" value="50" type="text"></input></td>
       </tr>
@@ -827,7 +896,7 @@ input[type="text"] {
 		<input type="button" value="Add Pair" onclick="addRow('poloniex')"/> <input type="button" value="Remove Pair" onclick="deleteRow('poloniex')"/>
 		
   
-<form id="testForm2">
+<form id="poloniexForm">
 <div class="datagrid">
   <table id="poloniex">
 	  
@@ -905,7 +974,7 @@ input[type="text"] {
 <div id="tab3" class="tab">
 <div id="addPairDiv">
 	<input type="button" value="Add Pair" onclick="addRow('bittrex')"/> <input type="button" value="Remove Pair" onclick="deleteRow('bittrex')"/>
-	<form id="testForm3">
+	<form id="bittrexForm">
 <div class="datagrid">
     <table id="bittrex">
 	  
@@ -984,7 +1053,7 @@ input[type="text"] {
 <div id="tab4" class="tab">	
 <div id="addPairDiv">
 	<input type="button" value="Add Pair" onclick="addRow('kraken')"/> <input type="button" value="Remove Pair" onclick="deleteRow('kraken')"/>
-	<form id="testForm4">
+	<form id="krakenForm">
 <div class="datagrid">
      <table id="kraken">
 	  
@@ -1062,7 +1131,7 @@ input[type="text"] {
 <div id="tab5" class="tab">
 <div id="addPairDiv">
 	<input type="button" value="Add Pair" onclick="addRow('cryptopia')"/> <input type="button" value="Remove Pair" onclick="deleteRow('cryptopia')"/>
-	<form id="testForm5">
+	<form id="cryptopiaForm">
 <div class="datagrid">
      <table id="cryptopia">
 	  
@@ -1159,317 +1228,99 @@ input[type="text"] {
     </div>
   </div>
 </div>
+</body>
+<script type="text/javascript" src="https://unpkg.com/ccxt"></script>
+<script>
+!function(e,t){"undefined"!=typeof exports&&"undefined"!=typeof module&&module.exports?module.exports=t():"function"==typeof define&&define.amd?define(t):e.form2js=t()}(this,function(){"use strict";function e(e,t,n){var r,u,a,o,f,i,l,s,c,p,d,g,h={},m={};for(r=0;r<e.length;r++)if(f=e[r].value,!t||""!==f&&null!==f){for(g=e[r].name.split(n),i=[],l=h,s="",u=0;u<g.length;u++)if((d=g[u].split("][")).length>1)for(a=0;a<d.length;a++)if(0==a?d[a]=d[a]+"]":a==d.length-1?d[a]="["+d[a]:d[a]="["+d[a]+"]",p=d[a].match(/([a-z_]+)?\[([a-z_][a-z0-9_]+?)\]/i))for(o=1;o<p.length;o++)p[o]&&i.push(p[o]);else i.push(d[a]);else i=i.concat(d);for(u=0;u<i.length;u++)(d=i[u]).indexOf("[]")>-1&&u==i.length-1?(s+=c=d.substr(0,d.indexOf("[")),l[c]||(l[c]=[]),l[c].push(f)):d.indexOf("[")>-1?(m[s+="_"+(c=d.substr(0,d.indexOf("[")))+"_"+(p=d.replace(/(^([a-z_]+)?\[)|(\]$)/gi,""))]||(m[s]={}),""==c||l[c]||(l[c]=[]),u==i.length-1?""==c?(l.push(f),m[s][p]=l[l.length-1]):(l[c].push(f),m[s][p]=l[c][l[c].length-1]):m[s][p]||(/^[0-9a-z_]+\[?/i.test(i[u+1])?l[c].push({}):l[c].push([]),m[s][p]=l[c][l[c].length-1]),l=m[s][p]):(s+=d,u<i.length-1?(l[d]||(l[d]={}),l=l[d]):l[d]=f)}return h}function t(e,t,u,a){var o=r(e,t,u,a);return o.length>0?o:n(e,t,u,a)}function n(e,t,n,u){for(var a=[],o=e.firstChild;o;)a=a.concat(r(o,t,n,u)),o=o.nextSibling;return a}function r(e,t,r,o){if(e.disabled&&!o)return[];var f,i,l,s=u(e,r);return f=t&&t(e),f&&f.name?l=[f]:""!=s&&e.nodeName.match(/INPUT|TEXTAREA/i)?l=null===(i=a(e,o))?[]:[{name:s,value:i}]:""!=s&&e.nodeName.match(/SELECT/i)?(i=a(e,o),l=[{name:s.replace(/\[\]$/,""),value:i}]):l=n(e,t,r,o),l}function u(e,t){return e.name&&""!=e.name?e.name:t&&e.id&&""!=e.id?e.id:""}function a(e,t){if(e.disabled&&!t)return null;switch(e.nodeName){case"INPUT":case"TEXTAREA":switch(e.type.toLowerCase()){case"radio":if(e.checked&&"false"===e.value)return!1;case"checkbox":if(e.checked&&"true"===e.value)return!0;if(!e.checked&&"true"===e.value)return!1;if(e.checked)return e.value;break;case"button":case"reset":case"submit":case"image":return"";default:return e.value}break;case"SELECT":return o(e)}return null}function o(e){var t,n,r,u=[];if(!e.multiple)return e.value;for(n=0,r=(t=e.getElementsByTagName("option")).length;r>n;n++)t[n].selected&&u.push(t[n].value);return u}return function(n,r,u,a,o,f){f=!!f,void 0!==u&&null!=u||(u=!0),void 0!==r&&null!=r||(r="."),arguments.length<5&&(o=!1);var i,l=[],s=0;if((n="string"==typeof n?document.getElementById(n):n).constructor==Array||"undefined"!=typeof NodeList&&n.constructor==NodeList)for(;i=n[s++];)l=l.concat(t(i,a,o,f));else l=t(n,a,o,f);return e(l,u,r)}}),this.JSON||(this.JSON={}),function(){function f(e){return 10>e?"0"+e:e}function quote(e){return escapable.lastIndex=0,escapable.test(e)?'"'+e.replace(escapable,function(e){var t=meta[e];return"string"==typeof t?t:"\\u"+("0000"+e.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+e+'"'}function str(e,t){var n,r,u,a,o,f=gap,i=t[e];switch(i&&"object"==typeof i&&"function"==typeof i.toJSON&&(i=i.toJSON(e)),"function"==typeof rep&&(i=rep.call(t,e,i)),typeof i){case"string":return quote(i);case"number":return isFinite(i)?String(i):"null";case"boolean":case"null":return String(i);case"object":if(!i)return"null";if(gap+=indent,o=[],"[object Array]"===Object.prototype.toString.apply(i)){for(a=i.length,n=0;a>n;n+=1)o[n]=str(n,i)||"null";return u=0===o.length?"[]":gap?"[\n"+gap+o.join(",\n"+gap)+"\n"+f+"]":"["+o.join(",")+"]",gap=f,u}if(rep&&"object"==typeof rep)for(a=rep.length,n=0;a>n;n+=1)"string"==typeof(r=rep[n])&&(u=str(r,i))&&o.push(quote(r)+(gap?": ":":")+u);else for(r in i)Object.hasOwnProperty.call(i,r)&&(u=str(r,i))&&o.push(quote(r)+(gap?": ":":")+u);return u=0===o.length?"{}":gap?"{\n"+gap+o.join(",\n"+gap)+"\n"+f+"}":"{"+o.join(",")+"}",gap=f,u}}"function"!=typeof Date.prototype.toJSON&&(Date.prototype.toJSON=function(e){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(e){return this.valueOf()});var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={"\b":"\\b","	":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},rep;"function"!=typeof JSON.stringify&&(JSON.stringify=function(e,t,n){var r;if(gap="",indent="","number"==typeof n)for(r=0;n>r;r+=1)indent+=" ";else"string"==typeof n&&(indent=n);if(rep=t,t&&"function"!=typeof t&&("object"!=typeof t||"number"!=typeof t.length))throw new Error("JSON.stringify");return str("",{"":e})}),"function"!=typeof JSON.parse&&(JSON.parse=function(text,reviver){function walk(e,t){var n,r,u=e[t];if(u&&"object"==typeof u)for(n in u)Object.hasOwnProperty.call(u,n)&&(void 0!==(r=walk(u,n))?u[n]=r:delete u[n]);return reviver.call(e,t,u)}var j;if(text=String(text),cx.lastIndex=0,cx.test(text)&&(text=text.replace(cx,function(e){return"\\u"+("0000"+e.charCodeAt(0).toString(16)).slice(-4)})),/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))return j=eval("("+text+")"),"function"==typeof reviver?walk({"":j},""):j;throw new SyntaxError("JSON.parse")})}(),function(e,t){"undefined"!=typeof exports&&"undefined"!=typeof module&&module.exports?module.exports=t():"function"==typeof define&&define.amd?define(t):e.js2form=t()}(this,function(){"use strict";function e(e,r,a,o,f){arguments.length<3&&(a="."),arguments.length<4&&(o=null),arguments.length<5&&(f=!1),e="string"==typeof e?document.getElementById(e):e;var l,s;l=u(r),s=n(e,f,a,{},!0);for(var c=0;c<l.length;c++){var p=l[c].name,d=l[c].value;"undefined"!=typeof s[p]?t(s[p],d):"undefined"!=typeof s[p.replace(i,"[]")]?t(s[p.replace(i,"[]")],d):"undefined"!=typeof s[p.replace(i,"")]&&t(s[p.replace(i,"")],d)}}function t(e,t){var n,r,u;if(e instanceof Array)for(r=0;r<e.length;r++)(e[r].value==t||t===!0)&&(e[r].checked=!0);else if(c.test(e.nodeName))e.value=t;else if(/SELECT/i.test(e.nodeName))for(n=e.getElementsByTagName("option"),r=0,u=n.length;u>r;r++)if(n[r].value==t){if(n[r].selected=!0,e.multiple)break}else e.multiple||(n[r].selected=!1)}function n(e,t,u,a,o){arguments.length<4&&(a={});for(var f,l,s,c,p,d,g,h={},m=e.firstChild;m;){if(f="",m.name&&""!=m.name?f=m.name:t&&m.id&&""!=m.id&&(f=m.id),""==f){var y=n(m,t,u,a,o);for(s in y)if("undefined"==typeof h[s])h[s]=y[s];else for(c=0;c<y[s].length;c++)h[s].push(y[s][c])}else if(/SELECT/i.test(m.nodeName))for(p=0,g=m.getElementsByTagName("option"),d=g.length;d>p;p++)o&&(g[p].selected=!1),l=r(f,u,a),h[l]=m;else/INPUT/i.test(m.nodeName)&&/CHECKBOX|RADIO/i.test(m.type)?(o&&(m.checked=!1),l=r(f,u,a),l=l.replace(i,"[]"),h[l]||(h[l]=[]),h[l].push(m)):(o&&(m.value=""),l=r(f,u,a),h[l]=m);m=m.nextSibling}return h}function r(e,t,n){var r,u,a,o,f,i,c=[],p=e.split(t);for(e=e.replace(s,"[$1].[$2]"),i=0;i<p.length;i++)r=p[i],c.push(r),u=r.match(l),null!=u&&(a=c.join(t),o=a.replace(l,"$3"),a=a.replace(l,"$1"),"undefined"==typeof n[a]&&(n[a]={lastIndex:-1,indexes:{}}),(""==o||"undefined"==typeof n[a].indexes[o])&&(n[a].lastIndex++,n[a].indexes[o]=n[a].lastIndex),f=n[a].indexes[o],c[c.length-1]=r.replace(l,"$1$2"+f+"$4"));return a=c.join(t),a=a.replace("].[","][")}function u(e,t){var n,r,u=[];if(1==arguments.length&&(t=0),null==e)u=[{name:"",value:null}];else if("string"==typeof e||"number"==typeof e||"date"==typeof e||"boolean"==typeof e)u=[{name:"",value:e}];else if(e instanceof Array)for(n=0;n<e.length;n++)r="["+n+"]",u=u.concat(a(e[n],r,t+1));else for(n in e)r=n,u=u.concat(a(e[n],r,t+1));return u}function a(e,t,n){var r,a,i,l=[],s=u(e,n+1);for(a=0;a<s.length;a++)r=t,o.test(s[a].name)?r+=s[a].name:f.test(s[a].name)&&(r+="."+s[a].name),i={name:r,value:s[a].value},l.push(i);return l}var o=/^\[\d+?\]/,f=/^[a-zA-Z_][a-zA-Z_0-9]*/,i=/\[[0-9]+?\]$/,l=/(.*)(\[)([0-9]*)(\])$/,s=/\[([0-9]+)\]\[([0-9]+)\]/g,c=/INPUT|TEXTAREA/i;return e});
 
+(async () => {
 
-<script type="text/javascript">
-	!function(e,n){"undefined"!=typeof exports&&"undefined"!=typeof module&&module.exports?module.exports=n():"function"==typeof define&&define.amd?define(n):e.form2js=n()}(this,function(){"use strict";function e(e,n,t){var r,u,i,a,l,o,c,s,f,d,h,m,g={},p={};for(r=0;r<e.length;r++)if(l=e[r].value,!n||""!==l&&null!==l){for(m=e[r].name.split(t),o=[],c=g,s="",u=0;u<m.length;u++)if((h=m[u].split("][")).length>1)for(i=0;i<h.length;i++)if(0==i?h[i]=h[i]+"]":i==h.length-1?h[i]="["+h[i]:h[i]="["+h[i]+"]",d=h[i].match(/([a-z_]+)?\[([a-z_][a-z0-9_]+?)\]/i))for(a=1;a<d.length;a++)d[a]&&o.push(d[a]);else o.push(h[i]);else o=o.concat(h);for(u=0;u<o.length;u++)(h=o[u]).indexOf("[]")>-1&&u==o.length-1?(s+=f=h.substr(0,h.indexOf("[")),c[f]||(c[f]=[]),c[f].push(l)):h.indexOf("[")>-1?(p[s+="_"+(f=h.substr(0,h.indexOf("[")))+"_"+(d=h.replace(/(^([a-z_]+)?\[)|(\]$)/gi,""))]||(p[s]={}),""==f||c[f]||(c[f]=[]),u==o.length-1?""==f?(c.push(l),p[s][d]=c[c.length-1]):(c[f].push(l),p[s][d]=c[f][c[f].length-1]):p[s][d]||(/^[0-9a-z_]+\[?/i.test(o[u+1])?c[f].push({}):c[f].push([]),p[s][d]=c[f][c[f].length-1]),c=p[s][d]):(s+=h,u<o.length-1?(c[h]||(c[h]={}),c=c[h]):c[h]=l)}return g}function n(e,n,u,i){var a=r(e,n,u,i);return a.length>0?a:t(e,n,u,i)}function t(e,n,t,u){for(var i=[],a=e.firstChild;a;)i=i.concat(r(a,n,t,u)),a=a.nextSibling;return i}function r(e,n,r,a){if(e.disabled&&!a)return[];var l,o,c,s=u(e,r);return l=n&&n(e),l&&l.name?c=[l]:""!=s&&e.nodeName.match(/INPUT|TEXTAREA/i)?c=null===(o=i(e,a))?[]:[{name:s,value:o}]:""!=s&&e.nodeName.match(/SELECT/i)?(o=i(e,a),c=[{name:s.replace(/\[\]$/,""),value:o}]):c=t(e,n,r,a),c}function u(e,n){return e.name&&""!=e.name?e.name:n&&e.id&&""!=e.id?e.id:""}function i(e,n){if(e.disabled&&!n)return null;switch(e.nodeName){case"INPUT":case"TEXTAREA":switch(e.type.toLowerCase()){case"radio":if(e.checked&&"false"===e.value)return!1;case"checkbox":if(e.checked&&"true"===e.value)return!0;if(!e.checked&&"true"===e.value)return!1;if(e.checked)return e.value;break;case"button":case"reset":case"submit":case"image":return"";default:return e.value}break;case"SELECT":return a(e)}return null}function a(e){var n,t,r,u=[];if(!e.multiple)return e.value;for(t=0,r=(n=e.getElementsByTagName("option")).length;t<r;t++)n[t].selected&&u.push(n[t].value);return u}return function(t,r,u,i,a,l){l=!!l,void 0!==u&&null!=u||(u=!0),void 0!==r&&null!=r||(r="."),arguments.length<5&&(a=!1);var o,c=[],s=0;if((t="string"==typeof t?document.getElementById(t):t).constructor==Array||"undefined"!=typeof NodeList&&t.constructor==NodeList)for(;o=t[s++];)c=c.concat(n(o,i,a,l));else c=n(t,i,a,l);return e(c,u,r)}});
-
-	this.JSON||(this.JSON={}),function(){function f(t){return t<10?"0"+t:t}function quote(t){return escapable.lastIndex=0,escapable.test(t)?'"'+t.replace(escapable,function(t){var e=meta[t];return"string"==typeof e?e:"\\u"+("0000"+t.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+t+'"'}function str(t,e){var n,r,f,o,u,i=gap,a=e[t];switch(a&&"object"==typeof a&&"function"==typeof a.toJSON&&(a=a.toJSON(t)),"function"==typeof rep&&(a=rep.call(e,t,a)),typeof a){case"string":return quote(a);case"number":return isFinite(a)?String(a):"null";case"boolean":case"null":return String(a);case"object":if(!a)return"null";if(gap+=indent,u=[],"[object Array]"===Object.prototype.toString.apply(a)){for(o=a.length,n=0;n<o;n+=1)u[n]=str(n,a)||"null";return f=0===u.length?"[]":gap?"[\n"+gap+u.join(",\n"+gap)+"\n"+i+"]":"["+u.join(",")+"]",gap=i,f}if(rep&&"object"==typeof rep)for(o=rep.length,n=0;n<o;n+=1)"string"==typeof(r=rep[n])&&(f=str(r,a))&&u.push(quote(r)+(gap?": ":":")+f);else for(r in a)Object.hasOwnProperty.call(a,r)&&(f=str(r,a))&&u.push(quote(r)+(gap?": ":":")+f);return f=0===u.length?"{}":gap?"{\n"+gap+u.join(",\n"+gap)+"\n"+i+"}":"{"+u.join(",")+"}",gap=i,f}}"function"!=typeof Date.prototype.toJSON&&(Date.prototype.toJSON=function(t){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(t){return this.valueOf()});var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},rep;"function"!=typeof JSON.stringify&&(JSON.stringify=function(t,e,n){var r;if(gap="",indent="","number"==typeof n)for(r=0;r<n;r+=1)indent+=" ";else"string"==typeof n&&(indent=n);if(rep=e,e&&"function"!=typeof e&&("object"!=typeof e||"number"!=typeof e.length))throw new Error("JSON.stringify");return str("",{"":t})}),"function"!=typeof JSON.parse&&(JSON.parse=function(text,reviver){function walk(t,e){var n,r,f=t[e];if(f&&"object"==typeof f)for(n in f)Object.hasOwnProperty.call(f,n)&&(void 0!==(r=walk(f,n))?f[n]=r:delete f[n]);return reviver.call(t,e,f)}var j;if(text=String(text),cx.lastIndex=0,cx.test(text)&&(text=text.replace(cx,function(t){return"\\u"+("0000"+t.charCodeAt(0).toString(16)).slice(-4)})),/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))return j=eval("("+text+")"),"function"==typeof reviver?walk({"":j},""):j;throw new SyntaxError("JSON.parse")})}();
-(function (root, factory)
-{
-	if (typeof exports !== 'undefined' && typeof module !== 'undefined' && module.exports) {
-		// NodeJS
-		module.exports = factory();
-	}
-	else if (typeof define === 'function' && define.amd)
-	{
-		// AMD. Register as an anonymous module.
-		define(factory);
-	}
-	else
-	{
-		// Browser globals
-		root.js2form = factory();
-	}
-}(this, function ()
-{
-	"use strict";
-
-	var _subArrayRegexp = /^\[\d+?\]/,
-			_subObjectRegexp = /^[a-zA-Z_][a-zA-Z_0-9]*/,
-			_arrayItemRegexp = /\[[0-9]+?\]$/,
-			_lastIndexedArrayRegexp = /(.*)(\[)([0-9]*)(\])$/,
-			_arrayOfArraysRegexp = /\[([0-9]+)\]\[([0-9]+)\]/g,
-			_inputOrTextareaRegexp = /INPUT|TEXTAREA/i;
-
-	/**
-	 *
-	 * @param rootNode
-	 * @param data
-	 * @param delimiter
-	 * @param nodeCallback
-	 * @param useIdIfEmptyName
-	 */
-	function js2form(rootNode, data, delimiter, nodeCallback, useIdIfEmptyName)
-	{
-		if (arguments.length < 3) delimiter = '.';
-		if (arguments.length < 4) nodeCallback = null;
-		if (arguments.length < 5) useIdIfEmptyName = false;
-
-		rootNode = (typeof rootNode == 'string') ? document.getElementById(rootNode) : rootNode;
+    let plnx = new ccxt.poloniex ({ verbose: false }) // log HTTP requests
+    let btrx = new ccxt.bittrex ({ verbose: false }) // log HTTP requests
+     let krkn    = new ccxt.kraken ({ verbose: false })
+     let cpia = new ccxt.cryptopia ({ verbose: false }) // log HTTP requests
+     plnx.proxy = 'https://cors-anywhere.herokuapp.com/'
+     btrx.proxy = 'https://cors-anywhere.herokuapp.com/'
+     krkn.proxy = 'https://cors-anywhere.herokuapp.com/'
+     cpia.proxy = 'https://cors-anywhere.herokuapp.com/'
+    await plnx.load_markets () // request markets
+    await btrx.load_markets ()
+    await krkn.load_markets ()
+    await cpia.load_markets ()
+  
+    
+	
+	var firstel = document.createElement("option");
+	  firstel.textContent = "Select a pair...";
+	  firstel.value = firstel.textContent;
+		var poloniex = document.querySelector(".selectNumber");
+		var bittrex = document.getElementById("selectNumber2");
+		var kraken = document.getElementById("fillKraken");
+		var cryptopia = document.getElementById("fillCryp");
+		poloniex.appendChild(firstel);
+		bittrex.appendChild(firstel);
+		kraken.appendChild(firstel);
+		cryptopia.appendChild(firstel);
+	
+    
+	function listPairs(exchange){
+		var ex_pairs = Object.keys (exchange.markets);
 		
-		var fieldValues,
-				formFieldsByName;
-
-		fieldValues = object2array(data);
-		formFieldsByName = getFields(rootNode, useIdIfEmptyName, delimiter, {}, true);
-
-		for (var i = 0; i < fieldValues.length; i++)
-		{
-			var fieldName = fieldValues[i].name,
-					fieldValue = fieldValues[i].value;
-
-			if (typeof formFieldsByName[fieldName] != 'undefined')
-			{
-				setValue(formFieldsByName[fieldName], fieldValue);
-			}
-			else if (typeof formFieldsByName[fieldName.replace(_arrayItemRegexp, '[]')] != 'undefined')
-			{
-				setValue(formFieldsByName[fieldName.replace(_arrayItemRegexp, '[]')], fieldValue);
-			}
-			else if (typeof formFieldsByName[fieldName.replace(_arrayItemRegexp, "")] != 'undefined') {
-				setValue(formFieldsByName[fieldName.replace(_arrayItemRegexp, "")], fieldValue);
-			}
+	for ( var pairs in ex_pairs){
+	var ids = ex_pairs[pairs];
+	//console.log(exchange.markets[ids].id); 
+	
+	switch(exchange.id){
+		case 'poloniex':
+		var poloniex = document.querySelector(".selectNumber");
+		
+	  var opt = exchange.markets[ids].id;
+	  var el = document.createElement("option");
+	  el.textContent = opt;
+	  el.value = opt;
+	  poloniex.appendChild(el);
+	
+		break;
+		case 'bittrex':
+		var bittrex = document.getElementById("selectNumber2");
+		
+	  var opt = exchange.markets[ids].id;
+	  var el = document.createElement("option");
+	  el.textContent = opt;
+	  el.value = opt;
+	  bittrex.appendChild(el);
+  
+		break;
+		case 'kraken':
+		var kraken = document.getElementById("fillKraken");
+		
+	  var opt = exchange.markets[ids].id;
+	  var el = document.createElement("option");
+	  el.textContent = opt;
+	  el.value = opt;
+	  kraken.appendChild(el);
+  
+		break;
+		case 'cryptopia':
+		var cryptopia = document.getElementById("fillCryp");
+		
+	  var opt = exchange.markets[ids].quote+"_"+exchange.markets[ids].base;
+	  var el = document.createElement("option");
+	  el.textContent = opt;
+	  el.value = opt;
+	  cryptopia.appendChild(el);
+		
+	
 		}
 	}
-
-	function setValue(field, value)
-	{
-		var children, i, l;
-
-		if (field instanceof Array)
-		{
-			for(i = 0; i < field.length; i++)
-			{
-				if (field[i].value == value || value === true) field[i].checked = true;
-			}
-		}
-		else if (_inputOrTextareaRegexp.test(field.nodeName))
-		{
-			field.value = value;
-		}
-		else if (/SELECT/i.test(field.nodeName))
-		{
-			children = field.getElementsByTagName('option');
-			for (i = 0,l = children.length; i < l; i++)
-			{
-				if (children[i].value == value)
-				{
-					children[i].selected = true;
-					if (field.multiple) break;
-				}
-				else if (!field.multiple)
-				{
-					children[i].selected = false;
-				}
-			}
-		}
 	}
-
-	function getFields(rootNode, useIdIfEmptyName, delimiter, arrayIndexes, shouldClean)
-	{
-		if (arguments.length < 4) arrayIndexes = {};
-
-		var result = {},
-			currNode = rootNode.firstChild,
-			name, nameNormalized,
-			subFieldName,
-			i, j, l,
-			options;
-
-		while (currNode)
-		{
-			name = '';
-
-			if (currNode.name && currNode.name != '')
-			{
-				name = currNode.name;
-			}
-			else if (useIdIfEmptyName && currNode.id && currNode.id != '')
-			{
-				name = currNode.id;
-			}
-
-			if (name == '')
-			{
-				var subFields = getFields(currNode, useIdIfEmptyName, delimiter, arrayIndexes, shouldClean);
-				for (subFieldName in subFields)
-				{
-					if (typeof result[subFieldName] == 'undefined')
-					{
-						result[subFieldName] = subFields[subFieldName];
-					}
-					else
-					{
-						for (i = 0; i < subFields[subFieldName].length; i++)
-						{
-							result[subFieldName].push(subFields[subFieldName][i]);
-						}
-					}
-				}
-			}
-			else
-			{
-				if (/SELECT/i.test(currNode.nodeName))
-				{
-					for(j = 0, options = currNode.getElementsByTagName('option'), l = options.length; j < l; j++)
-					{
-						if (shouldClean)
-						{
-							options[j].selected = false;
-						}
-
-						nameNormalized = normalizeName(name, delimiter, arrayIndexes);
-						result[nameNormalized] = currNode;
-					}
-				}
-				else if (/INPUT/i.test(currNode.nodeName) && /CHECKBOX|RADIO/i.test(currNode.type))
-				{
-					if(shouldClean)
-					{
-						currNode.checked = false;
-					}
-
-					nameNormalized = normalizeName(name, delimiter, arrayIndexes);
-					nameNormalized = nameNormalized.replace(_arrayItemRegexp, '[]');
-					if (!result[nameNormalized]) result[nameNormalized] = [];
-					result[nameNormalized].push(currNode);
-				}
-				else
-				{
-					if (shouldClean)
-					{
-						currNode.value = '';
-					}
-
-					nameNormalized = normalizeName(name, delimiter, arrayIndexes);
-					result[nameNormalized] = currNode;
-				}
-			}
-
-			currNode = currNode.nextSibling;
-		}
-
-		return result;
-	}
-
-	/**
-	 * Normalizes names of arrays, puts correct indexes (consecutive and ordered by element appearance in HTML)
-	 * @param name
-	 * @param delimiter
-	 * @param arrayIndexes
-	 */
-	function normalizeName(name, delimiter, arrayIndexes)
-	{
-		var nameChunksNormalized = [],
-				nameChunks = name.split(delimiter),
-				currChunk,
-				nameMatches,
-				nameNormalized,
-				currIndex,
-				newIndex,
-				i;
-
-		name = name.replace(_arrayOfArraysRegexp, '[$1].[$2]');
-		for (i = 0; i < nameChunks.length; i++)
-		{
-			currChunk = nameChunks[i];
-			nameChunksNormalized.push(currChunk);
-			nameMatches = currChunk.match(_lastIndexedArrayRegexp);
-			if (nameMatches != null)
-			{
-				nameNormalized = nameChunksNormalized.join(delimiter);
-				currIndex = nameNormalized.replace(_lastIndexedArrayRegexp, '$3');
-				nameNormalized = nameNormalized.replace(_lastIndexedArrayRegexp, '$1');
-
-				if (typeof (arrayIndexes[nameNormalized]) == 'undefined')
-				{
-					arrayIndexes[nameNormalized] = {
-						lastIndex: -1,
-						indexes: {}
-					};
-				}
-
-				if (currIndex == '' || typeof arrayIndexes[nameNormalized].indexes[currIndex] == 'undefined')
-				{
-					arrayIndexes[nameNormalized].lastIndex++;
-					arrayIndexes[nameNormalized].indexes[currIndex] = arrayIndexes[nameNormalized].lastIndex;
-				}
-
-				newIndex = arrayIndexes[nameNormalized].indexes[currIndex];
-				nameChunksNormalized[nameChunksNormalized.length - 1] = currChunk.replace(_lastIndexedArrayRegexp, '$1$2' + newIndex + '$4');
-			}
-		}
-
-		nameNormalized = nameChunksNormalized.join(delimiter);
-		nameNormalized = nameNormalized.replace('].[', '][');
-		return nameNormalized;
-	}
-
-	function object2array(obj, lvl)
-	{
-		var result = [], i, name;
-
-		if (arguments.length == 1) lvl = 0;
-
-        if (obj == null)
-        {
-            result = [{ name: "", value: null }];
-        }
-        else if (typeof obj == 'string' || typeof obj == 'number' || typeof obj == 'date' || typeof obj == 'boolean')
-        {
-            result = [
-                { name: "", value : obj }
-            ];
-        }
-        else if (obj instanceof Array)
-        {
-            for (i = 0; i < obj.length; i++)
-            {
-                name = "[" + i + "]";
-                result = result.concat(getSubValues(obj[i], name, lvl + 1));
-            }
-        }
-        else
-        {
-            for (i in obj)
-            {
-                name = i;
-                result = result.concat(getSubValues(obj[i], name, lvl + 1));
-            }
-        }
-
-		return result;
-    }
-
-	function getSubValues(subObj, name, lvl)
-	{
-		var itemName;
-		var result = [], tempResult = object2array(subObj, lvl + 1), i, tempItem;
-
-		for (i = 0; i < tempResult.length; i++)
-		{
-			itemName = name;
-			if (_subArrayRegexp.test(tempResult[i].name))
-			{
-				itemName += tempResult[i].name;
-			}
-			else if (_subObjectRegexp.test(tempResult[i].name))
-			{
-				itemName += '.' + tempResult[i].name;
-			}
-
-			tempItem = { name: itemName, value: tempResult[i].value };
-			result.push(tempItem);
-		}
-
-		return result;
-	}
-
-	return js2form;
-
-}));
-
+	listPairs(plnx);
+	listPairs(btrx);
+	listPairs(krkn);
+	listPairs(cpia);
+	initalize();
+   
+}) ()
 
 	function extend() {
 	  for (var i = 1; i < arguments.length; i++)
@@ -1498,76 +1349,38 @@ input[type="text"] {
 	  }
 	}
 
-	function postConfig(json) {
+	function postConfig(json, modal) {
 	  var xmlHttp = new XMLHttpRequest();
 	  xmlHttp.onreadystatechange = function() {
 	    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-	      console.log(xmlHttp.responseText);
-	      // Get the modal
+	    //  console.log(xmlHttp.responseText);
+	    if (modal !== undefined) {
+			
 	      modalUp();
+	    }
 	    }
 	  }
 	  xmlHttp.open("post", "/form");
 	  xmlHttp.send(json);
 	}
 
-  
-	function gunfigure() {
+	function precise(elem) {
+	  elem.value = Number(elem.value).toFixed(8);
+	}
 
-	  var formData = form2js('testForm', '.', true);
-	  var formData2 = form2js('testForm2', '.', true);
-	  var formData3 = form2js('testForm3', '.', true);
-	  var formData4 = form2js('testForm4', '.', true);
-	  var formData5 = form2js('testForm5', '.', true);
+	function gunfigure() {
+	  var formData = form2js('globalForm', '.', true);
+	  var formData2 = form2js('poloniexForm', '.', true);
+	  var formData3 = form2js('bittrexForm', '.', true);
+	  var formData4 = form2js('krakenForm', '.', true);
+	  var formData5 = form2js('cryptopiaForm', '.', true);
 	  var pairs = extend(formData2, formData3, formData4, formData5)
 	  var jsontosend = JSON.stringify(extend(pairs, formData), null, '\t').replace(/"(-?(\d+\.?\d*|\.\d+))"/g, "$1").replace(/"(-?(true|false))"/g, "$1");
 	  document.getElementById('testArea').innerHTML = jsontosend;
-	//  var defaultData = JSON.stringify(formData);
-	//  localStorage.setItem("defaultConfig", defaultData);
-	  //console.log(polodata);
-	 storeValues();
-	 // postConfig(jsontosend);
+	  storeValues();
+	  
 	}
 
-
-	var poloniex = document.querySelector(".selectNumber");
-	var bittrex = document.getElementById("selectNumber2");
-	var kraken = document.getElementById("fillKraken");
-	var cryptopia = document.getElementById("fillCryp");
-	var polopairs = ["Select a pair...", "BTC_AMP", "BTC_ARDR", "BTC_BCN", "BTC_BCY", "BTC_BELA", "BTC_BLK", "BTC_BTCD", "BTC_BTM", "BTC_BTS", "BTC_BURST", "BTC_CLAM", "BTC_DASH", "BTC_DCR", "BTC_DGB", "BTC_DOGE", "BTC_EMC", "BTC_ETC", "BTC_ETH", "BTC_EXP", "BTC_FCT", "BTC_FLDC", "BTC_FLO", "BTC_GAME", "BTC_GNO", "BTC_GNT", "BTC_GRC", "BTC_HUC", "BTC_LBC", "BTC_LSK", "BTC_LTC", "BTC_MAID", "BTC_NAUT", "BTC_NAV", "BTC_NEOS", "BTC_NMC", "BTC_NOTE", "BTC_NXC", "BTC_NXT", "BTC_OMNI", "BTC_PASC", "BTC_PINK", "BTC_POT", "BTC_PPC", "BTC_RADS", "BTC_REP", "BTC_RIC", "BTC_SBD", "BTC_SC", "BTC_SJCX", "BTC_STEEM", "BTC_STR", "BTC_STRAT", "BTC_SYS", "BTC_VIA", "BTC_VRC", "BTC_VTC", "BTC_XBC", "BTC_XCP", "BTC_XEM", "BTC_XMR", "BTC_XPM", "BTC_XRP", "BTC_XVC", "BTC_ZEC", "ETH_ETC", "ETH_GNO", "ETH_GNT", "ETH_LSK", "ETH_REP", "ETH_STEEM", "ETH_ZEC"];
-	var bittrexpairs = ["Select a pair...", "BTC-1ST", "BTC-2GIVE", "BTC-ABY", "BTC-ADT", "BTC-ADX", "BTC-AEON", "BTC-AGRS", "BTC-AMP", "BTC-ANT", "BTC-APX", "BTC-ARDR", "BTC-ARK", "BTC-AUR", "BTC-BAT", "BTC-BAY", "BTC-BCC", "BTC-BCY", "BTC-BITB", "BTC-BLITZ", "BTC-BLK", "BTC-BLOCK", "BTC-BNT", "BTC-BRK", "BTC-BRX", "BTC-BSD", "BTC-BTA", "BTC-BTCD", "BTC-BTS", "BTC-BURST", "BTC-BYC", "BTC-CANN", "BTC-CFI", "BTC-CLAM", "BTC-CLOAK", "BTC-CLUB", "BTC-COVAL", "BTC-CPC", "BTC-CRB", "BTC-CRW", "BTC-CURE", "BTC-CVC", "BTC-DAR", "BTC-DASH", "BTC-DCR", "BTC-DCT", "BTC-DGB", "BTC-DGD", "BTC-DMD", "BTC-DOGE", "BTC-DOPE", "BTC-DRACO", "BTC-DTB", "BTC-DYN", "BTC-EBST", "BTC-EDG", "BTC-EFL", "BTC-EGC", "BTC-EMC", "BTC-EMC2", "BTC-ENRG", "BTC-ERC", "BTC-ETC", "BTC-ETH", "BTC-EXCL", "BTC-EXP", "BTC-FAIR", "BTC-FCT", "BTC-FLDC", "BTC-FLO", "BTC-FTC", "BTC-FUN", "BTC-GAM", "BTC-GAME", "BTC-GBG", "BTC-GBYTE", "BTC-GCR", "BTC-GEO", "BTC-GLD", "BTC-GNO", "BTC-GNT", "BTC-GOLOS", "BTC-GRC", "BTC-GRS", "BTC-GUP", "BTC-HKG", "BTC-HMQ", "BTC-INCNT", "BTC-INFX", "BTC-IOC", "BTC-ION", "BTC-IOP", "BTC-KMD", "BTC-KORE", "BTC-LBC", "BTC-LGD", "BTC-LMC", "BTC-LSK", "BTC-LTC", "BTC-LUN", "BTC-MAID", "BTC-MCO", "BTC-MEME", "BTC-MLN", "BTC-MONA", "BTC-MTL", "BTC-MUE", "BTC-MUSIC", "BTC-MYST", "BTC-NAUT", "BTC-NAV", "BTC-NBT", "BTC-NEO", "BTC-NEOS", "BTC-NLG", "BTC-NMR", "BTC-NXC", "BTC-NXS", "BTC-NXT", "BTC-OK", "BTC-OMG", "BTC-OMNI", "BTC-PART", "BTC-PAY", "BTC-PDC", "BTC-PINK", "BTC-PIVX", "BTC-PKB", "BTC-POT", "BTC-PPC", "BTC-PTC", "BTC-PTOY", "BTC-QRL", "BTC-QTUM", "BTC-QWARK", "BTC-RADS", "BTC-RBY", "BTC-RDD", "BTC-REP", "BTC-RISE", "BTC-RLC", "BTC-SBD", "BTC-SC", "BTC-SEC", "BTC-SEQ", "BTC-SHIFT", "BTC-SIB", "BTC-SLR", "BTC-SLS", "BTC-SNGLS", "BTC-SNRG", "BTC-SNT", "BTC-SPHR", "BTC-SPR", "BTC-START", "BTC-STEEM", "BTC-STORJ", "BTC-STRAT", "BTC-SWIFT", "BTC-SWT", "BTC-SYNX", "BTC-SYS", "BTC-THC", "BTC-TIME", "BTC-TKN", "BTC-TKS", "BTC-TRIG", "BTC-TRST", "BTC-TRUST", "BTC-TX", "BTC-UBQ", "BTC-UNB", "BTC-UNO", "BTC-VIA", "BTC-VOX", "BTC-VRC", "BTC-VRM", "BTC-VTC", "BTC-VTR", "BTC-WAVES", "BTC-WINGS", "BTC-XAUR", "BTC-XBB", "BTC-XCP", "BTC-XDN", "BTC-XEL", "BTC-XEM", "BTC-XLM", "BTC-XMG", "BTC-XMR", "BTC-XMY", "BTC-XRP", "BTC-XST", "BTC-XVC", "BTC-XVG", "BTC-XWC", "BTC-XZC", "BTC-ZCL", "BTC-ZEC", "BTC-ZEN", "ETH-1ST", "ETH-ADT", "ETH-ADX", "ETH-ANS", "ETH-ANT", "ETH-BAT", "ETH-BCC", "ETH-BNT", "ETH-BTS", "ETH-CFI", "ETH-CRB", "ETH-CVC", "ETH-DASH", "ETH-DGB", "ETH-DGD", "ETH-ETC", "ETH-FCT", "ETH-FUN", "ETH-GNO", "ETH-GNT", "ETH-GUP", "ETH-HMQ", "ETH-LGD", "ETH-LTC", "ETH-LUN", "ETH-MCO", "ETH-MTL", "ETH-MYST", "ETH-NMR", "ETH-OMG", "ETH-PAY", "ETH-PTOY", "ETH-QRL", "ETH-QTUM", "ETH-REP", "ETH-RLC", "ETH-SC", "ETH-SNGLS", "ETH-SNT", "ETH-STORJ", "ETH-STRAT", "ETH-TIME", "ETH-TKN", "ETH-TRST", "ETH-WAVES", "ETH-WINGS", "ETH-XEM", "ETH-XLM", "ETH-XMR", "ETH-XRP", "ETH-ZEC", "USDT-ANS", "USDT-BCC", "USDT-BTC", "USDT-DASH", "USDT-ETC", "USDT-ETH", "USDT-LTC", "USDT-XMR", "USDT-XRP", "USDT-ZEC", "BTC-SAFEX", "BTC-NEO", "ETH-NEO", "USDT-NEO"];
-	var krakenpairs = ["Select a pair...", "XBTEUR", "XBTUSD", "XBTJPY", "XBTGBP", "XBTCAD", "BCHEUR", "BCHUSD", "BCHXBT", "DASHEUR", "DASHUSD", "DASHXBT", "EOSETH", "EOSEUR", "EOSUSD", "EOSXBT", "GNOETH", "GNOEUR", "GNOUSD", "GNOXBT", "USDTUSD", "ETCETH", "ETCXBT", "ETCEUR", "ETCUSD", "ETHXBT", "ETHXBT.d", "ETHCAD", "ETHCAD.d", "ETHEUR", "ETHEUR.d", "ETHGBP", "ETHGBP.d", "ETHJPY", "ETHJPY.d", "ETHUSD", "ETHUSD.d", "ICNETH", "ICNXBT", "LTCXBT", "LTCEUR", "LTCUSD", "MLNETH", "MLNXBT", "REPETH", "REPXBT", "REPEUR", "REPUSD", "XBTCAD.d", "XBTEUR.d", "XBTGBP.d", "XBTJPY.d", "XBTUSD.d", "XDGXBT", "XLMXBT", "XLMEUR", "XLMUSD", "XMRXBT", "XMREUR", "XMRUSD", "XRPXBT", "XRPCAD", "XRPEUR", "XRPJPY", "XRPUSD", "ZECXBT", "ZECEUR", "ZECUSD"];
-	var cryptopiapairs = ["Select a pair...", "$$$_BTC", "1337_BTC", "21M_BTC", "300_BTC", "42_BTC", "4CHN_BTC", "611_BTC", "808_BTC", "888_BTC", "8BIT_BTC", "ABC_BTC", "ABY_BTC", "AC_BTC", "ACC_BTC", "ACOIN_BTC", "ADC_BTC", "ADST_BTC", "ALEX_BTC", "ALL_BTC", "ALT_BTC", "AMP_BTC", "ANI_BTC", "ARC_BTC", "ARCO_BTC", "ARG_BTC", "ARGUS_BTC", "ARI_BTC", "ARK_BTC", "ATMS_BTC", "ATOM_BTC", "AU_BTC", "AUR_BTC", "B@_BTC", "B3_BTC", "BAY_BTC", "BBR_BTC", "BCF_BTC", "BCH_BTC", "BCN_BTC", "BEEZ_BTC", "BENJI_BTC", "BERN_BTC", "BEST_BTC", "BIP_BTC", "BITB_BTC", "BITS_BTC", "BLC_BTC", "BLK_BTC", "BNC_BTC", "BNX_BTC", "BOB_BTC", "BOLI_BTC", "BRO_BTC", "BSD_BTC", "BSTY_BTC", "BTA_BTC", "BTB_BTC", "BTCD_BTC", "BTCS_BTC", "BTG_BTC", "BTX_BTC", "BUCKS_BTC", "BUMBA_BTC", "BVB_BTC", "BVC_BTC", "BXC_BTC", "C2_BTC", "CACH_BTC", "CANN_BTC", "CAP_BTC", "CAR_BTC", "CAT_BTC", "CBX_BTC", "CC_BTC", "CCN_BTC", "CDC_BTC", "CDN_BTC", "CFC_BTC", "CFT_BTC", "CHAO_BTC", "CHC_BTC", "CHESS_BTC", "CHIEF_BTC", "CJ_BTC", "CLAM_BTC", "CLOAK_BTC", "CMT_BTC", "CNO_BTC", "COAL_BTC", "COE_BTC", "CON_BTC", "CORG_BTC", "CPN_BTC", "CQST_BTC", "CRAVE_BTC", "CREA_BTC", "CRX_BTC", "CRYPT_BTC", "CSC_BTC", "CTIC2_BTC", "CXT_BTC", "DALC_BTC", "DARK_BTC", "DASH_BTC", "DAXX_BTC", "DCN_BTC", "DCR_BTC", "DCY_BTC", "DDF_BTC", "DEM_BTC", "DGB_BTC", "DGC_BTC", "DIBC_BTC", "DNR_BTC", "DOGE_BTC", "DON_BTC", "DOPE_BTC", "DOT_BTC", "DRP_BTC", "DRXNE_BTC", "DSH_BTC", "DUO_BTC", "EBG_BTC", "EC_BTC", "ECO_BTC", "ECOB_BTC", "EDC_BTC", "EDRC_BTC", "EFL_BTC", "EGC_BTC", "ELC_BTC", "ELS_BTC", "EMB_BTC", "EMC_BTC", "EMC2_BTC", "EMD_BTC", "EQT_BTC", "ERSO_BTC", "ERY_BTC", "ETB_BTC", "ETC_BTC", "ETH_BTC", "EUC_BTC", "EVIL_BTC", "EVO_BTC", "EXP_BTC", "FAME_BTC", "FAZZ_BTC", "FCN_BTC", "FCT_BTC", "FFC_BTC", "FJC_BTC", "FLASH_BTC", "FLAX_BTC", "FLT_BTC", "FONZ_BTC", "FOOT_BTC", "FORT_BTC", "FRC_BTC", "FRN_BTC", "FST_BTC", "FTC_BTC", "FUEL_BTC", "FUZZ_BTC", "GAIA_BTC", "GAME_BTC", "GAP_BTC", "GAY_BTC", "GBYTE_BTC", "GEERT_BTC", "GEO_BTC", "GLD_BTC", "GNO_BTC", "GNT_BTC", "GP_BTC", "GPL_BTC", "GPU_BTC", "GRN_BTC", "GRS_BTC", "GRW_BTC", "GRWI_BTC", "GUN_BTC", "HAL_BTC", "HBN_BTC", "HUSH_BTC", "HXX_BTC", "HYP_BTC", "I0C_BTC", "ICOB_BTC", "IEC_BTC", "IFLT_BTC", "IFT_BTC", "IMPCH_BTC", "IMS_BTC", "IN_BTC", "INCNT_BTC", "INFX_BTC", "INPAY_BTC", "INSN_BTC", "IOU_BTC", "IRL_BTC", "ITI_BTC", "IXC_BTC", "JET_BTC", "KASH_BTC", "KAYI_BTC", "KDC_BTC", "KED_BTC", "KEK_BTC", "KING_BTC", "KMD_BTC", "KOBO_BTC", "KRB_BTC", "KURT_BTC", "KUSH_BTC", "LANA_BTC", "LBC_BTC", "LDC_BTC", "LDOGE_BTC", "LEMON_BTC", "LEPEN_BTC", "LINDA_BTC", "LINX_BTC", "LIT_BTC", "LIZI_BTC", "LTB_BTC", "LTC_BTC", "MAC_BTC", "MAGN_BTC", "MAID_BTC", "MAR_BTC", "MARS_BTC", "MARX_BTC", "MCRN_BTC", "MEC_BTC", "MER_BTC", "MGO_BTC", "MINEX_BTC", "MINT_BTC", "MLITE_BTC", "MNE_BTC", "MNM_BTC", "MOIN_BTC", "MOJO_BTC", "MOTO_BTC", "MSP_BTC", "MST_BTC", "MTLMC_BTC", "MUSIC_BTC", "MZC_BTC", "NAMO_BTC", "NAV_BTC", "NET_BTC", "NETKO_BTC", "NEVA_BTC", "NKA_BTC", "NLC2_BTC", "NMC_BTC", "NOBL_BTC", "NOTE_BTC", "NSR_BTC", "NTRN_BTC", "NVC_BTC", "NXS_BTC", "NYAN_BTC", "OFF_BTC", "OK_BTC", "OOO_BTC", "OPAL_BTC", "ORB_BTC", "OSC_BTC", "OTX_BTC", "OX_BTC", "PAK_BTC", "PASC_BTC", "PASL_BTC", "PCC_BTC", "PEPE_BTC", "PHS_BTC", "PIE_BTC", "PIGGY_BTC", "PING_BTC", "PINK_BTC", "PIVX_BTC", "PLC_BTC", "PLR_BTC", "POST_BTC", "POSW_BTC", "POT_BTC", "PPC_BTC", "PR_BTC", "PROC_BTC", "PTC_BTC", "PUT_BTC", "PXC_BTC", "PXI_BTC", "Q2C_BTC", "QBT_BTC", "QRK_BTC", "QTL_BTC", "RAIN_BTC", "RBT_BTC", "RBX_BTC", "RBY_BTC", "RC_BTC", "RDD_BTC", "RED_BTC", "REP_BTC", "RIYA_BTC", "RNS_BTC", "RPC_BTC", "SAFEX_BTC", "SAK_BTC", "SAND_BTC", "SBC_BTC", "SC_BTC", "SCD_BTC", "SCORE_BTC", "SEL_BTC", "SFC_BTC", "SHA_BTC", "SHRM_BTC", "SIB_BTC", "SIGT_BTC", "SKC_BTC", "SKR_BTC", "SKY_BTC", "SLG_BTC", "SMART_BTC", "SMC_BTC", "SOIL_BTC", "SONG_BTC", "SOON_BTC", "SPACE_BTC", "SPT_BTC", "SQL_BTC", "SRC_BTC", "START_BTC", "STC_BTC", "STRAT_BTC", "STV_BTC", "SUMO_BTC", "SWING_BTC", "SXC_BTC", "SYNX_BTC", "TAJ_BTC", "TEK_BTC", "TER_BTC", "TES_BTC", "TGC_BTC", "TIC_BTC", "TIT_BTC", "TOA_BTC", "TOP_BTC", "TOR_BTC", "TRC_BTC", "TRI_BTC", "TRK_BTC", "TRUMP_BTC", "TSE_BTC", "TTC_BTC", "TX_BTC", "UBQ_BTC", "UIS_BTC", "UMO_BTC", "UNB_BTC", "UNIC_BTC", "UNIFY_BTC", "UNITS_BTC", "UNO_BTC", "UR_BTC", "USNBT_BTC", "UTC_BTC", "V_BTC", "VCC_BTC", "VIDZ_BTC", "VISIO_BTC", "VRC_BTC", "VRM_BTC", "VSM_BTC", "VUC_BTC", "WAVES_BTC", "WDC_BTC", "WEED_BTC", "WLC_BTC", "WRC_BTC", "WSX_BTC", "WW_BTC", "XBC_BTC", "XBTS_BTC", "XBY_BTC", "XCO_BTC", "XCRE_BTC", "XCT_BTC", "XCXT_BTC", "XEM_BTC", "XGR_BTC", "XID_BTC", "XJO_BTC", "XLR_BTC", "XMG_BTC", "XMR_BTC", "XMY_BTC", "XPD_BTC", "XPM_BTC", "XPTX_BTC", "XRA_BTC", "XRE_BTC", "XRY_BTC", "XSPEC_BTC", "XVG_BTC", "XZC_BTC", "YOVI_BTC", "ZCL_BTC", "ZEC_BTC", "ZEIT_BTC", "ZER_BTC", "ZET_BTC", "ZOI_BTC", "ZSE_BTC"];
-	for (var i = 0; i < polopairs.length; i++) {
-	  var opt = polopairs[i];
-	  var el = document.createElement("option");
-	  el.textContent = opt;
-	  el.value = opt;
-	  poloniex.appendChild(el);
-	}
-	for (var i = 0; i < bittrexpairs.length; i++) {
-	  var opt = bittrexpairs[i];
-	  var el = document.createElement("option");
-	  el.textContent = opt;
-	  el.value = opt;
-	  bittrex.appendChild(el);
-	}
-
-	for (var i = 0; i < krakenpairs.length; i++) {
-	  var opt = krakenpairs[i];
-	  var el = document.createElement("option");
-	  el.textContent = opt;
-	  el.value = opt;
-	  kraken.appendChild(el);
-	}
-
-	for (var i = 0; i < cryptopiapairs.length; i++) {
-	  var opt = cryptopiapairs[i];
-	  var el = document.createElement("option");
-	  el.textContent = opt;
-	  el.value = opt;
-	  cryptopia.appendChild(el);
-	}
 
 
 	function getNearestTableAncestor(htmlElementNode) {
@@ -1590,7 +1403,6 @@ input[type="text"] {
 	  strategyInput.name = "pairs." + exchange + "." + pair + ".strategy";
 	  pairInput.id = pair;
 	}
-
 
 	function addRow(tableID) {
 	  var table = document.getElementById(tableID);
@@ -1657,32 +1469,24 @@ input[type="text"] {
 	}
 
 	function storeValues() {
-		var configFile = document.getElementById('testArea').innerHTML;
+	  var configFile = document.getElementById('testArea').innerHTML;
 	  localStorage.setItem("configFile", configFile);
-	  
-	  	  
-
-	  console.log(configFile);
 	}
 
 	function loadValues() {
-		//var data = localStorage.getItem("defaultConfig");
-		var data = JSON.parse(localStorage.getItem("configFile"));
-		//data = JSON.parse(data);
-		//console.log(data);
-	js2form(document.getElementById('testForm'), data);
-	//var config = JSON.parse(localStorage.getItem("configFile"));
+	  var data = JSON.parse(localStorage.getItem("configFile"));
+	  js2form(document.getElementById('globalForm'), data);
 	  loadConfig();
-			  var y = document.getElementById('testForm').querySelectorAll('input[name*="AVGMINIMUM"]');
-	  var z = document.getElementById('testForm').querySelectorAll('input[name*="PP_BUY"]');
-  var i;
-for (i = 0; i < y.length; i++) {
-    y[i].addEventListener('input', precise(y[i]), false);
-    z[i].addEventListener('input', precise(z[i]), false);
-}
-for (i = 0; i < z.length; i++) {
-    z[i].addEventListener('input', precise(z[i]), false);
-}
+	  var y = document.getElementById('globalForm').querySelectorAll('input[name*="AVGMINIMUM"]');
+	  var z = document.getElementById('globalForm').querySelectorAll('input[name*="PP_BUY"]');
+	  var i;
+	  for (i = 0; i < y.length; i++) {
+	    y[i].addEventListener('input', precise(y[i]), false);
+	  }
+	  for (i = 0; i < z.length; i++) {
+	    z[i].addEventListener('input', precise(z[i]), false);
+	  }
+	  gunfigure();
 	}
 
 	function buildTableRow(exchange, pair, strategy, override) { //overrides is is an array value
@@ -1712,39 +1516,34 @@ for (i = 0; i < z.length; i++) {
 	  var evt = document.createEvent("HTMLEvents");
 	  evt.initEvent("change", false, true);
 	  dd.dispatchEvent(evt);
-	 // console.log(Object.keys(override).length);
-	 if (override !== undefined) {
-	  for (var i = 0; i < Object.keys(override).length; i++) {
-	    var newcell = row.insertCell(colCount + i);
-	    var newInput = document.createElement("INPUT");
-	    var paramName = document.createTextNode(Object.keys(override)[i]);
-	    var textname = "pairs." + exchange + "." + pair + ".[override][" + Object.keys(override)[i] + "]"
-	    newInput.name = textname;
-	    var removeOverrideText = document.createTextNode("   (-)");
-	    var clearspace = document.createTextNode(" ");
-
-	    for (var parameters in override) { //2
-	      newInput.setAttribute("type", "text");
-	      newcell.appendChild(newInput).value = Object.values(override)[i];
+	  if (override !== undefined) {
+	    for (var i = 0; i < Object.keys(override).length; i++) {
+	      var newcell = row.insertCell(colCount + i);
+	      var newInput = document.createElement("INPUT");
+	      var paramName = document.createTextNode(Object.keys(override)[i]);
+	      var textname = "pairs." + exchange + "." + pair + ".[override][" + Object.keys(override)[i] + "]"
+	      newInput.name = textname;
+	      var removeOverrideText = document.createTextNode("   (-)");
+	      var clearspace = document.createTextNode(" ");
+	      for (var parameters in override) { //2
+	        newInput.setAttribute("type", "text");
+	        newcell.appendChild(newInput).value = Object.values(override)[i];
+	      }
+	      var newElem = document.createElement('a');
+	      newElem.id = ('takeaway');
+	      newElem.setAttribute("onclick", "removeOverride(this)");
+	      newElem.style.cursor = "pointer";
+	      newcell.appendChild(clearspace);
+	      newcell.appendChild(paramName);
+	      newElem.appendChild(removeOverrideText)
+	      newcell.appendChild(newElem);
+	      var removers = document.getElementById('takeaway');
 	    }
-
-	    var newElem = document.createElement('a');
-	    newElem.id = ('takeaway');
-	    newElem.setAttribute("onclick", "removeOverride(this)");
-	    newElem.style.cursor = "pointer";
-	    newcell.appendChild(clearspace);
-	    newcell.appendChild(paramName);
-	    newElem.appendChild(removeOverrideText)
-	    newcell.appendChild(newElem);
-	    var removers = document.getElementById('takeaway');
 	  }
-  }
-	  //
 	}
 
 	function loadConfig() {
-		var config = JSON.parse(localStorage.getItem("configFile"));	
-		//config = JSON.parse(config)	;
+	  var config = JSON.parse(localStorage.getItem("configFile"));
 	  for (var exchanges in config.pairs) { //6
 	    if (config.pairs.hasOwnProperty(exchanges)) { //5
 	      for (var pairs in config.pairs[exchanges]) { //4
@@ -1756,49 +1555,56 @@ for (i = 0; i < z.length; i++) {
 	    } //5
 	  } //6
 	}
-	//fillPairsMenus();
 
-  
-  document.getElementById('fileinput').addEventListener('change', loadFile, false);
-function loadFile() {
-    var input, file, fr;
+	document.getElementById('fileinput').addEventListener('change', loadFile, false);
 
-    if (typeof window.FileReader !== 'function') {
-      alert("The file API isn't supported on this browser yet.");
-      return;
-    }
+	function loadFile() {
+	  var input, file, fr;
 
-    input = document.getElementById('fileinput');
-    if (!input) {
-      alert("Um, couldn't find the fileinput element.");
-    }
-    else if (!input.files) {
-      alert("This browser doesn't seem to support the `files` property of file inputs.");
-    }
-    else if (!input.files[0]) {
-      alert("Please select a file before clicking 'Load'");
-    }
-    else {
-      file = input.files[0];
-      fr = new FileReader();
-      fr.onload = receivedText;
-      fr.readAsText(file);
-    }
+	  if (typeof window.FileReader !== 'function') {
+	    alert("The file API isn't supported on this browser yet.");
+	    return;
+	  }
 
-    function receivedText(e) {
-      lines = e.target.result;
-      var newArr = JSON.parse(lines); 
-     // console.log(JSON.stringify(newArr));
-      document.getElementById('testArea').innerHTML = JSON.stringify(newArr, null, 4);
-      storeValues();
-    loadValues();
-    }
-    
-  }
-	if (localStorage.getItem("configFile") !== undefined){
+	  input = document.getElementById('fileinput');
+	  if (!input) {
+	    alert("Um, couldn't find the fileinput element.");
+	  } else if (!input.files) {
+	    alert("This browser doesn't seem to support the `files` property of file inputs.");
+	  } else if (!input.files[0]) {
+	    alert("Please select a file before clicking 'Load'");
+	  } else {
+	    file = input.files[0];
+	    fr = new FileReader();
+	    fr.onload = receivedText;
+	    fr.readAsText(file);
+	  }
+
+	  function receivedText(e) {
+	    lines = e.target.result;
+	    var newArr = JSON.parse(lines);
+	    document.getElementById('testArea').innerHTML = JSON.stringify(newArr, null, 4);
+	    storeValues();
+	    loadValues();
+	  }
+
+	}
+	
+
+	
+	function initalize(){
+		if (localStorage.getItem("configFile") !== undefined){
 		loadValues();
 		}
+	
+}
+//console.log(new ccxt.poloniex ());
+
+
+
 
 </script>
-</body>
+
 </html>
+
+
